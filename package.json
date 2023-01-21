@@ -6,7 +6,11 @@
     "ui": "rimraf apps/ui/.next && nx run ui:serve --port 3000",
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test"
+    "test": "nx test",
+    "type-check": "tsc --pretty --noEmit",
+    "lint": "eslint . --ext ts,tsx",
+    "prebuild": "rimraf dist",
+    "prepare": "is-ci || husky install"
   },
   "private": true,
   "dependencies": {
@@ -42,7 +46,9 @@
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "babel-jest": "28.1.1",
+    "commitizen": "^4.3.0",
     "cypress": "^10.7.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "~8.15.0",
     "eslint-config-next": "13.0.0",
     "eslint-config-prettier": "8.1.0",
@@ -51,13 +57,29 @@
     "eslint-plugin-jsx-a11y": "6.6.1",
     "eslint-plugin-react": "7.31.8",
     "eslint-plugin-react-hooks": "4.6.0",
+    "husky": "^8.0.0",
+    "is-ci": "^3.0.1",
     "jest": "28.1.1",
     "jest-environment-jsdom": "28.1.1",
+    "lint-staged": "^13.1.0",
     "nx": "15.5.2",
     "prettier": "^2.6.2",
     "react-test-renderer": "18.2.0",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "~4.8.2"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json,md,css,scss,yml}": "prettier --write **/*.{js,ts,jsx,tsx,json,md,css,scss,yml}"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
