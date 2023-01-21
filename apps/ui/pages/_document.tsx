@@ -1,23 +1,23 @@
 import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import CreateEmotionCache from '../config/CreateEmotionCache';
+import CreateEmotionCache from '@/config/CreateEmotionCache';
 
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang='ar' dir='rtl'>
+      <Html lang="ar" dir="rtl">
         <Head>
-          <meta charSet='utf-8' />
-          <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
-          <meta name='theme-color' content='#6f31a0' />
-          <meta name='robots' content='index, nofollow' />
+          <meta charSet="utf-8" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <meta name="theme-color" content="#6f31a0" />
+          <meta name="robots" content="index, nofollow" />
           <meta
-            name='apple-mobile-web-app-status-bar-style'
-            content='black-translucent'
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
           />
-          <meta name='apple-mobile-web-app-capable' content='yes' />
-          <meta name='format-detection' content='telephone=no' />
-          <link rel='shortcut icon' href='/static/favicon.ico' />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="format-detection" content="telephone=no" />
+          <link rel="shortcut icon" href="/static/favicon.ico" />
 
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
