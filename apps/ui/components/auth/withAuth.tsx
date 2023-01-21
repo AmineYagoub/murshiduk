@@ -1,7 +1,7 @@
 import { notification, Spin } from 'antd';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { NextPageWithLayout } from '@/utils';
+import { NextPageWithLayout } from '@/utils/index';
 import HomeLayout from '@/layout/HomeLayout';
 
 const deleteAllCookies = () => {
