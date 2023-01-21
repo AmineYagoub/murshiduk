@@ -13,6 +13,8 @@
     "isolatedModules": true,
     "incremental": true,
     "types": ["jest", "node"],
+    "rootDir": ".",
+    "baseUrl": ".",
     "paths": {
       "@/valtio/*": ["valtio/*"],
       "@/graphql/*": ["graphql/*"],
