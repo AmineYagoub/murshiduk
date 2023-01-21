@@ -1,0 +1,17 @@
+.ant-table {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.ant-table-thead > tr > th {
+  background-color: #e1faeb !important;
+  color: #00b96b !important;
+}
+.ant-table-thead > tr > th::before {
+  background-color: #00b96b !important;
+}
+.anticon.blue {
+  color: cadetblue !important;
+}
+
+.anticon.hide {
+  visibility: hidden !important;
+}
