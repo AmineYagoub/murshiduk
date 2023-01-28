@@ -25,14 +25,6 @@ interface UI {
   slides: NodeListOf<Element>;
 }
 
-const images = [
-  '/img/istanbul.jpg',
-  '/img/trabzon.jpg',
-  '/img/cappadocia.jpg',
-  '/img/antalya.jpg',
-  '/img/amasya.jpg',
-];
-
 export class WebGLCarousel {
   private wrapper: HTMLSelectElement;
   private renderer: Renderer;
@@ -44,9 +36,11 @@ export class WebGLCarousel {
   private noiseTexture: Texture[];
   private colors: Color[];
   private state: State;
+  private images: string[];
   private ui: UI;
 
-  constructor() {
+  constructor(images: string[]) {
+    this.images = images;
     this.wrapper = document.querySelector('[data-canvas-wrapper]');
     this.state = {
       isAnimating: false,
@@ -200,7 +194,7 @@ export class WebGLCarousel {
    */
   private loadTextures() {
     return new Promise((resolve) => {
-      const textures = images.map((url) => this.loadTexture(url));
+      const textures = this.images.map((url) => this.loadTexture(url));
       const colorThief = new ColorThief();
       Promise
         // Load the images for the carousel
