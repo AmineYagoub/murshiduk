@@ -21,11 +21,12 @@ const nextConfig = {
   reactStrictMode: true,
   compiler: {
     emotion: true,
-    /*     removeConsole: {
-      exclude: ['error'],
-    }, */
+    removeConsole: true,
   },
   transpilePackages: ['antd'],
+  images: {
+    domains: ['flagcdn.com'],
+  },
   nx: {
     svgr: false,
   },
