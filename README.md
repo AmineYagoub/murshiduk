@@ -26,6 +26,7 @@ Travel Agency wep app
 
 - https://www.youtube.com/watch?v=pWYAzzfQP0w
 - https://github.com/mbarker84/codrops-masked-hero
+- https://codepen.io/EdoEdoEdo/pen/wLvVLL
 
 * my cv
 * https://tympanus.net/codrops/2022/01/03/building-a-scrollable-and-draggable-timeline-with-gsap/
