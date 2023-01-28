@@ -31,7 +31,7 @@ const ContactForm = () => {
 
   const handleFetchPhones = (e: FocusEvent<HTMLElement, Element> | null) => {
     if (phones.length === 0) {
-      fetch(process.env.NEXT_PUBLIC_COUNTRIES_ENDPOINT)
+      fetch('/api/data/countries')
         .then((res) => res.json())
         .then(({ data }) => {
           const phones = data.map((country) => ({
