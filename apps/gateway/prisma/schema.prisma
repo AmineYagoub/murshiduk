@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Permission {
+  id                    String    @id @default(uuid())
+  title                 String    @db.VarChar(100) @unique
+  description           String?   @db.VarChar(250) @default("")
+  created               DateTime  @default(now())
+  updated               DateTime  @updatedAt
+  roles                 Role[]
+}
+
+model Role {
+  id                    String    @id @default(uuid())
+  title                 String    @db.VarChar(100) @unique
+  description           String?   @db.VarChar(250) @default("")
+  created               DateTime  @default(now())
+  updated               DateTime  @updatedAt
+  permissions           Permission[]
+  users                 User[]
+}
+
+model User {
+  id                    String    @id @default(uuid())
+  email                 String    @db.VarChar(100) @unique
+  key                   Int       @db.UnsignedInt @unique
+  password              String    @db.Char(255)
+  emailConfirmed        Boolean?  @default(false)
+  agreement             Boolean
+  isActive              Boolean?  @default(false)
+  created               DateTime  @default(now())
+  updated               DateTime  @updatedAt
+
+  roleId                String
+  role                  Role      @relation(fields: [roleId], references: [id], onDelete: NoAction)
+  profile               Profile?
+  blogs                 Blog[]
+}
+
+model Profile {
+  id                    String    @id @default(uuid())
+  firstName             String?   @default("")
+  lastName              String?   @default("")
+  avatar                String?   @db.VarChar(1000) @default("")
+  instagram             String?   @default("")
+  facebook              String?   @default("")
+  twitter               String?   @default("")
+  dateOfBirth           DateTime?
+  created               DateTime  @default(now())
+  updated               DateTime  @updatedAt
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([firstName( sort: Desc)])
+}
+
+model Category {
+  id                    String     @id @default(uuid())
+  title                 String?    @db.VarChar(100) @unique
+  slug                  String?    @db.VarChar(100) @unique
+  parentId              String?
+  parent                Category?  @relation("CategoryParent", fields: [parentId], references: [id] , onDelete: SetNull)
+  childes               Category[] @relation("CategoryParent")
+  blogs                 Blog[]
+}
+
+model Blog {
+  id                    String     @id @default(uuid())
+  author                User       @relation(fields: [authorId], references: [id])
+  authorId              String
+  title                 String     @db.VarChar(100)
+  slug                  String     @db.VarChar(100) @unique
+  decsription           String     @db.VarChar(200) @unique
+  content               String     @db.Text
+  published             Boolean?   @default(true)
+  created               DateTime   @default(now())
+  updated               DateTime   @updatedAt
+  categories            Category[]
+}
+
+model Contact {
+  id                    String     @id @default(uuid())
+  name                  String
+  phone                 String     @unique
+  flightTime            DateTime?
+  peoples               Int?       @default(0)
+  details               String?    @db.Text
+  created               DateTime   @default(now())
+  updated               DateTime   @updatedAt
+}
