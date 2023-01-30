@@ -31,6 +31,7 @@
     "antd": "^5.1.5",
     "core-js": "^3.27.1",
     "gsap": "^3.11.4",
+    "isomorphic-dompurify": "^0.26.0",
     "jodit": "^3.24.2",
     "next": "13.1.2",
     "ogl-typescript": "^0.1.40",
