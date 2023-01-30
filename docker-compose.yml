@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: percona
+    restart: unless-stopped
+    volumes:
+      - api-data:/var/lib/mysql
+    # Uncomment to change startup options
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass123
+      MYSQL_DATABASE: travel
+    ports:
+      - 3316:3306
+    networks:
+      - db_network
+
+networks:
+  db_network:
+
+volumes:
+  api-data: null
+
