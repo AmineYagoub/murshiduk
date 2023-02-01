@@ -22,4 +22,3 @@ networks:
 
 volumes:
   api-data: null
-

@@ -5,6 +5,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app/app.module';
+import { appConfig, AppConfigType } from '@travel/config';
 import { PrismaService } from './app/prisma.service';
 
 async function bootstrap() {
@@ -12,11 +13,11 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter()
   );
-  const port = 3000;
-  await app.listen(port, '0.0.0.0');
+  const config = app.get<AppConfigType>(appConfig.KEY);
+  await app.listen(config.port, '0.0.0.0');
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
-  Logger.log(`🚀 Application is running on: http://localhost:${port}`);
+  Logger.log(`🚀 Application is running on: ${config.url}`);
 }
 
 bootstrap();
