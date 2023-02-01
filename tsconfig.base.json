@@ -13,7 +13,10 @@
     "lib": ["ES2021", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@travel/config": ["libs/config/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
