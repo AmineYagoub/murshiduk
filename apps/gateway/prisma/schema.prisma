@@ -32,11 +32,8 @@ model Role {
 model User {
   id                    String    @id @default(uuid())
   email                 String    @db.VarChar(100) @unique
-  key                   Int       @db.UnsignedInt @unique
   password              String    @db.Char(255)
-  emailConfirmed        Boolean?  @default(false)
-  agreement             Boolean
-  isActive              Boolean?  @default(false)
+  isActive              Boolean?  @default(true)
   created               DateTime  @default(now())
   updated               DateTime  @updatedAt
 
@@ -54,6 +51,7 @@ model Profile {
   instagram             String?   @default("")
   facebook              String?   @default("")
   twitter               String?   @default("")
+  phone                 String?   @default("")
   dateOfBirth           DateTime?
   created               DateTime  @default(now())
   updated               DateTime  @updatedAt
@@ -79,7 +77,7 @@ model Blog {
   authorId              String
   title                 String     @db.VarChar(100)
   slug                  String     @db.VarChar(100) @unique
-  decsription           String     @db.VarChar(200) @unique
+  descriptionMeta       String     @db.VarChar(200) @unique
   content               String     @db.Text
   published             Boolean?   @default(true)
   created               DateTime   @default(now())
