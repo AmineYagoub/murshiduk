@@ -10,6 +10,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model App {
+  id                Int       @id @default(1)
+  title             String    @db.VarChar(70) @default("إسم الموقع")
+  description       String?   @db.VarChar(255) @default("")
+  bio               Json?     @db.Json // cv section
+  agreement         String    @db.Text
+  privacy           String    @db.Text
+  aboutUs           String    @db.Text
+  contactEmail      String?   @db.VarChar(255) @default("")
+  youtubeUrl        String?   @db.VarChar(255) @default("")
+  twitterUrl        String?   @db.VarChar(255) @default("")
+  facebookUrl       String?   @db.VarChar(255) @default("")
+  instagramUrl      String?   @db.VarChar(255) @default("")
+  playStorUrl       String?   @db.VarChar(255) @default("")
+  appStorUrl        String?   @db.VarChar(255) @default("")
+}
+
 model Permission {
   id                    String    @id @default(uuid())
   title                 String    @db.VarChar(100) @unique
@@ -47,6 +64,7 @@ model Profile {
   id                    String    @id @default(uuid())
   firstName             String?   @default("")
   lastName              String?   @default("")
+  title                 String?   @default("")
   avatar                String?   @db.VarChar(1000) @default("")
   instagram             String?   @default("")
   facebook              String?   @default("")

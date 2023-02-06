@@ -6,71 +6,41 @@ import NewCategory from '@/components/category/NewCategory';
 import EditCategory from '@/components/category/EditCategory';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import DeleteCategory from '@/components/category/DeleteCategory';
-
-interface DataType {
-  key: string;
-  title: string;
-  created: string;
-  updated: string;
-}
-
-const data: DataType[] = [
-  {
-    key: '1',
-    title: 'John Brown',
-    created: 'today',
-    updated: 'today',
-  },
-  {
-    key: '2',
-    title: 'Jim Green',
-    created: 'today',
-    updated: 'today',
-  },
-  {
-    key: '3',
-    title: 'Joe Black',
-    created: 'today',
-    updated: 'today',
-  },
-];
+import { Category, useCategories } from '@/hooks/category/query.hook';
 
 const AdminManageCategories = () => {
-  const onSuccess = () => {
-    console.log('first');
-  };
-  const columns: ColumnsType<DataType> = [
+  const { methods, data, isLoading, filteredInfo, sortedInfo } =
+    useCategories();
+
+  const columns: ColumnsType<Category> = [
     {
-      title: 'العنوان',
+      title: 'إسم القسم',
       dataIndex: 'title',
       key: 'title',
       render: (text) => <a>{text}</a>,
-    },
-    {
-      title: 'تاريخ الإنشاء',
-      dataIndex: 'created',
-      key: 'created',
-    },
-    {
-      title: 'آخر تحديث',
-      dataIndex: 'updated',
-      key: 'updated',
     },
     {
       title: 'الإجراءات',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <EditCategory onSuccess={onSuccess} record={record} />
-          <DeleteCategory onSuccess={onSuccess} record={record} />
+          <EditCategory record={record} />
+          <DeleteCategory record={record} />
         </Space>
       ),
     },
   ];
   return (
     <>
-      <NewCategory onSuccess={onSuccess} />
-      <Table columns={columns} dataSource={data} />
+      <NewCategory />
+      <Table
+        columns={columns}
+        dataSource={data}
+        size="large"
+        onChange={methods.handleTableChange}
+        pagination={methods.handlePagination}
+        loading={isLoading}
+      />
     </>
   );
 };

@@ -11,6 +11,31 @@ export class BlogService {
   ): Promise<Blog | null> {
     return this.prisma.blog.findUnique({
       where: blogWhereUniqueInput,
+      include: {
+        author: {
+          select: { profile: true, role: true },
+        },
+        categories: { select: { title: true, id: true, slug: true } },
+      },
+    });
+  }
+
+  async relatedBlogs(slug: string) {
+    return this.prisma.blog.findMany({
+      take: 5,
+      where: {
+        slug: {
+          not: slug,
+        },
+      },
+      select: {
+        title: true,
+        slug: true,
+        created: true,
+        author: {
+          select: { profile: true },
+        },
+      },
     });
   }
 
@@ -33,6 +58,12 @@ export class BlogService {
         cursor,
         where,
         orderBy,
+        include: {
+          author: {
+            select: { profile: true, role: true },
+          },
+          categories: { select: { title: true, id: true } },
+        },
       }),
     ]);
     return {

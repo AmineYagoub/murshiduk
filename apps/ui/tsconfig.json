@@ -16,8 +16,6 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@/valtio/*": ["valtio/*"],
-      "@/graphql/*": ["graphql/*"],
       "@/config/*": ["config/*"],
       "@/hooks/*": ["hooks/*"],
       "@/utils/*": ["utils/*"],

@@ -11,9 +11,20 @@ import { PrismaService } from './app/prisma.service';
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter()
+    new FastifyAdapter({})
   );
   const config = app.get<AppConfigType>(appConfig.KEY);
+  app.enableCors({
+    origin: 'http://localhost:8080',
+    credentials: true,
+    allowedHeaders: [
+      'Origin',
+      'X-Requested-With',
+      'Accept',
+      'Content-Type',
+      'Authorization',
+    ],
+  });
   await app.listen(config.port, '0.0.0.0');
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);

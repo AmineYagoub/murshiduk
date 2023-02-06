@@ -3,56 +3,18 @@ import { withAuth } from '@/components/auth/withAuth';
 import DashboardLayout from '@/layout/DashboardLayout';
 import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import EditBlog from '@/components/blog/EditBlog';
 import DeleteBlog from '@/components/blog/DeleteBlog';
 import PreviewBlog from '@/components/blog/PreviewBlog';
+import { Blog, useBlogs } from '@/hooks/blog/query.hook';
+import { formatDate } from '@/utils/index';
+import { getMapperLabel, rolesMappedTypes } from '@/utils/Mapper';
+import { Category } from '@/hooks/category/query.hook';
+import EditBlog from '@/components/blog/EditBlog';
 import NewBlog from '@/components/blog/NewBlog';
 
-interface DataType {
-  key: string;
-  title: string;
-  created: string;
-  updated: string;
-  author: string;
-  published: boolean;
-  categories: string[];
-}
-
-const data: DataType[] = [
-  {
-    key: '1',
-    title: 'John Brown',
-    created: 'today',
-    updated: 'today',
-    author: 'New York No. 1 Lake Park',
-    published: true,
-    categories: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    title: 'Jim Green',
-    created: 'today',
-    updated: 'today',
-    author: 'London No. 1 Lake Park',
-    published: true,
-    categories: ['loser'],
-  },
-  {
-    key: '3',
-    title: 'Joe Black',
-    created: 'today',
-    updated: 'today',
-    author: 'Sidney No. 1 Lake Park',
-    published: true,
-    categories: ['cool', 'teacher'],
-  },
-];
-
 const AdminManageBlogs = () => {
-  const onSuccess = () => {
-    console.log('first');
-  };
-  const columns: ColumnsType<DataType> = [
+  const { methods, data, isLoading, filteredInfo, sortedInfo } = useBlogs();
+  const columns: ColumnsType<Blog> = [
     {
       title: 'العنوان',
       dataIndex: 'title',
@@ -63,21 +25,28 @@ const AdminManageBlogs = () => {
       title: 'الكاتب',
       dataIndex: 'author',
       key: 'author',
+      render: (_, { author }) => (
+        <>
+          <div>
+            {author.profile.firstName} {author.profile.lastName}
+          </div>
+          <Tag color="blue">
+            {getMapperLabel(rolesMappedTypes, author.role.title)}
+          </Tag>
+        </>
+      ),
     },
     {
       title: 'الأقسام',
       key: 'categories',
       dataIndex: 'categories',
-      render: (_, { categories }) => (
+      render: (categories: Category[]) => (
         <>
           {categories.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
+            const color = tag.title.length < 20 ? 'gold' : 'green';
             return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
+              <Tag color={color} key={tag.title}>
+                {tag.title}
               </Tag>
             );
           })}
@@ -88,28 +57,37 @@ const AdminManageBlogs = () => {
       title: 'تاريخ الإنشاء',
       dataIndex: 'created',
       key: 'created',
+      render: (date) => <span>{formatDate(date)}</span>,
     },
     {
       title: 'آخر تحديث',
       dataIndex: 'updated',
       key: 'updated',
+      render: (date) => <span>{formatDate(date)}</span>,
     },
     {
       title: 'الإجراءات',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <EditBlog onSuccess={onSuccess} record={record} />
-          <DeleteBlog onSuccess={onSuccess} record={record} />
-          <PreviewBlog />
+          <EditBlog record={record} />
+          <DeleteBlog record={record} />
+          <PreviewBlog record={record} />
         </Space>
       ),
     },
   ];
   return (
     <>
-      <NewBlog onSuccess={onSuccess} />
-      <Table columns={columns} dataSource={data} />
+      <NewBlog />
+      <Table
+        columns={columns}
+        dataSource={data}
+        size="large"
+        onChange={methods.handleTableChange}
+        pagination={methods.handlePagination}
+        loading={isLoading}
+      />
     </>
   );
 };

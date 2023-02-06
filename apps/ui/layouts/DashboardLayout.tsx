@@ -9,12 +9,12 @@ import {
   AppstoreFilled,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import { AppRoutes } from '../utils';
+import { AppRoutes } from '../utils/index';
 import Link from 'next/link';
 
 const { Header, Footer, Sider, Content } = Layout;
 
-const StyledContent = styled(Content)({
+export const StyledContent = styled(Content)({
   width: '95% !important',
   backgroundColor: 'rgba(255, 255, 255, 0.3)',
   minHeight: '90vh !important',

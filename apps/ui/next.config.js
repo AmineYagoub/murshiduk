@@ -21,7 +21,7 @@ const nextConfig = {
   reactStrictMode: true,
   compiler: {
     emotion: true,
-    removeConsole: true,
+    // removeConsole: true,
   },
   transpilePackages: ['antd'],
   images: {

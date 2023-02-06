@@ -6,6 +6,9 @@ import {
   Param,
   Delete,
   Controller,
+  Query,
+  DefaultValuePipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import slugify from '../utils/slugify';
 import { Prisma } from '@prisma/client';
@@ -14,6 +17,7 @@ import { CreateCategoryDto } from '../dto/category/create';
 import { UpdateCategoryDto } from '../dto/category/update';
 import { CategoryPaginationDto } from '../dto/category/pagination';
 import { OrderBlogArgs, WhereBlogArgs } from '../dto/blog/pagination';
+import { OrderByType } from '../dto/common/pagination';
 
 @Controller('category')
 export class CategoryController {
@@ -32,31 +36,40 @@ export class CategoryController {
   @Post()
   async createCategory(@Body() body: CreateCategoryDto) {
     const { parentId, title } = body;
-    return this.categoryService.createCategory({
+    const input: Prisma.CategoryCreateInput = {
       title,
-      parent: {
+      slug: slugify(title),
+    };
+    if (parentId) {
+      input.parent = {
         connect: {
           id: parentId,
         },
-      },
-      slug: slugify(title),
-    });
+      };
+    }
+    return this.categoryService.createCategory(input);
   }
 
   @Put(':id')
-  async updateCategory(@Body() body: UpdateCategoryDto) {
-    const { categoryId, parentId, title } = body;
-    return this.categoryService.updateCategory({
-      where: { id: categoryId },
-      data: {
-        title,
-        parent: {
-          connect: {
-            id: parentId,
-          },
+  async updateCategory(
+    @Param('id') id: string,
+    @Body() body: UpdateCategoryDto
+  ) {
+    const { parentId, title } = body;
+    const input: Prisma.CategoryCreateInput = {
+      title,
+      slug: slugify(title),
+    };
+    if (parentId) {
+      input.parent = {
+        connect: {
+          id: parentId,
         },
-        slug: slugify(title),
-      },
+      };
+    }
+    return this.categoryService.updateCategory({
+      where: { id },
+      data: input,
     });
   }
 
@@ -66,13 +79,16 @@ export class CategoryController {
   }
 
   @Get('filter')
-  async getFilteredCategories(@Body() body: CategoryPaginationDto) {
-    const { skip, take, where, orderBy } = body;
+  async getFilteredCategories(
+    @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip: number,
+    @Query('take', new DefaultValuePipe(10), ParseIntPipe) take: number,
+    @Query('search', new DefaultValuePipe(undefined)) search: string
+  ) {
     return this.categoryService.categories({
       skip,
       take,
-      where: this.buildWhere(where),
-      orderBy: this.buildSorter(orderBy),
+      where: this.buildWhere({ search }),
+      orderBy: { title: Prisma.SortOrder.asc },
     });
   }
 

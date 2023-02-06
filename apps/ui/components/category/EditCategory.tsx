@@ -2,20 +2,10 @@ import { useState } from 'react';
 import { Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import CategoryForm from './CategoryForm';
+import { Category } from '@/hooks/category/query.hook';
 
-const EditCategory = ({
-  onSuccess,
-  record,
-}: {
-  onSuccess: () => void;
-  record: unknown;
-}) => {
+const EditCategory = ({ record }: { record: Category }) => {
   const [open, setOpen] = useState(false);
-
-  const onCreate = (values: any) => {
-    console.log('Received values of form: ', values);
-    setOpen(false);
-  };
 
   return (
     <>
@@ -28,8 +18,8 @@ const EditCategory = ({
       />
 
       <CategoryForm
+        record={record}
         open={open}
-        onCreate={onCreate}
         onCancel={() => {
           setOpen(false);
         }}

@@ -1,13 +1,15 @@
 import { Button } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
+import { LinkOutlined } from '@ant-design/icons';
+import { Blog } from '@/hooks/blog/query.hook';
 
-const PreviewBlog = () => {
+const PreviewBlog = ({ record }: { record: Blog }) => {
   return (
     <Button
       shape="circle"
-      icon={<EyeOutlined style={{ color: '#6f31a0' }} />}
+      icon={<LinkOutlined style={{ color: 'blue' }} />}
       type="primary"
       ghost
+      href={`/blog/${record.slug}`}
     />
   );
 };

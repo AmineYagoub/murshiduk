@@ -1,21 +1,14 @@
 import { Logger } from '@/utils/Logger';
 import { Button, Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { Category } from '@/hooks/category/query.hook';
+import { useDeleteCategory } from '@/hooks/category/mutation.hook';
 
-const DeleteCategory = ({
-  record,
-  onSuccess,
-}: {
-  record: unknown;
-  onSuccess: () => void;
-}) => {
-  const loading = false;
+const DeleteCategory = ({ record }: { record: Category }) => {
+  const { mutateAsync, isLoading } = useDeleteCategory();
   const confirmDelete = async () => {
     try {
-      const data = null;
-      if (data) {
-        onSuccess();
-      }
+      await mutateAsync(record.id);
     } catch (error) {
       Logger.log(error);
     }
@@ -29,7 +22,7 @@ const DeleteCategory = ({
         shape="circle"
         icon={<DeleteOutlined />}
         danger
-        loading={loading}
+        loading={isLoading}
       />
     </Popconfirm>
   );

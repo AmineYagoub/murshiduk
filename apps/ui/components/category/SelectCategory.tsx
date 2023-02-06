@@ -2,15 +2,15 @@ import debounce from 'lodash/debounce';
 import { Form, Select, Spin } from 'antd';
 import type { SelectProps } from 'antd/es/select';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { fetchCategories } from '@/hooks/category/query.hook';
+import { useQuery } from '@tanstack/react-query';
 
 interface DebounceSelectProps<ValueType>
   extends Omit<SelectProps<ValueType | ValueType[]>, 'options' | 'children'> {
   fetchOptions: (search: string) => Promise<ValueType[]>;
   debounceTimeout?: number;
-  isContest: boolean;
+  isDashboard: boolean;
 }
-
-const { Option } = Select;
 
 function DebounceSelect<
   ValueType extends {
@@ -20,8 +20,8 @@ function DebounceSelect<
   }
 >({
   fetchOptions,
-  isContest,
-  debounceTimeout = 800,
+  isDashboard,
+  debounceTimeout = 100,
   ...props
 }: DebounceSelectProps<ValueType>) {
   const [fetching, setFetching] = useState(false);
@@ -49,23 +49,29 @@ function DebounceSelect<
     return debounce(loadOptions, debounceTimeout);
   }, [fetchOptions, debounceTimeout]);
   return (
-    <Form.Item name="categories" label="الأقسام">
+    <Form.Item
+      name="categories"
+      label={isDashboard ? 'القسم الأب' : 'الأقسام'}
+      required={!isDashboard}
+      rules={[
+        {
+          required: !isDashboard,
+          message: 'يرجى تحديد قسم واحد على الأقل',
+        },
+      ]}
+    >
       <Select
         allowClear
         showArrow
+        showSearch
         labelInValue
         filterOption={false}
         onSearch={debounceFetcher}
         onFocus={() => debounceFetcher('')}
         notFoundContent={fetching ? <Spin size="small" /> : null}
+        options={options}
         {...props}
-      >
-        {options.map((el) => (
-          <Option key={el.value} value={el.value} label={el.label}>
-            <div>{el.label}</div>
-          </Option>
-        ))}
-      </Select>
+      />
     </Form.Item>
   );
 }
@@ -75,48 +81,47 @@ export interface TagValue {
   value: string;
 }
 
-const SelectCategory = ({
-  isContest,
-  isTeacher,
-}: {
-  isContest: boolean;
-  isTeacher: boolean;
-}) => {
+const SelectCategory = ({ isDashboard }: { isDashboard?: boolean }) => {
   const [value, setValue] = useState<TagValue[]>([]);
-  const [FindTopicsQuery] = [() => 10];
-  const fetchTags = useCallback(
-    async (search: string) => {
-      /* if (isTeacher) {
-        const { data } = await FindTopicsQuery({
-          variables: {
-            title: search,
-            level: selectedLevel,
-          },
-        });
-        return data.findTopics.map((topic) => ({
-          label: topic.title,
-          value: topic.id,
-          level: topic.level,
-        }));
-      } */
+  const [search, setSearch] = useState<string>('');
+  const { isFetching, refetch } = useQuery({
+    queryKey: ['category-search', search],
+    enabled: false,
+    queryFn: () =>
+      fetchCategories({
+        take: 100,
+        skip: 0,
+        where: { search },
+      }),
+  });
 
-      return [];
+  const fetchTags = useCallback(
+    async (val: string) => {
+      setSearch(val);
+      const { data } = await refetch();
+      return data
+        ? data.data.map((topic) => ({
+            label: topic.title,
+            value: topic.id,
+          }))
+        : [];
     },
-    [FindTopicsQuery, isTeacher]
+    [refetch]
   );
 
   return (
     <DebounceSelect
-      mode="multiple"
+      mode={isDashboard ? null : 'multiple'}
       maxTagCount={3}
       value={value}
-      placeholder="البحث عن الأقسام"
+      placeholder="حدد الأقسام"
       fetchOptions={fetchTags}
       onChange={(newValue) => {
         setValue(newValue as TagValue[]);
       }}
       style={{ width: '100%' }}
-      isContest={isContest}
+      isDashboard={isDashboard}
+      loading={isFetching}
     />
   );
 };

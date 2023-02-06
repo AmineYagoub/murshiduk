@@ -20,7 +20,7 @@ const WhyUsSection = dynamic(() => import('@/components/home/WhyUsSection'), {
 export default function Home() {
   return (
     <>
-      <HeroSection />
+      {/* <HeroSection /> */}
       <WhyUsSection />
       <TimeLineSection />
       <LatestBlogsSection />

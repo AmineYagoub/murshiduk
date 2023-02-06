@@ -6,6 +6,9 @@ import {
   Param,
   Delete,
   Controller,
+  Query,
+  DefaultValuePipe,
+  ParseIntPipe,
 } from '@nestjs/common';
 import {
   OrderBlogArgs,
@@ -17,6 +20,7 @@ import { Blog, Prisma } from '@prisma/client';
 import { BlogService } from './blog.service';
 import { CreateBlogDto } from '../dto/blog/create';
 import { UpdateBlogDto } from '../dto/blog/update';
+import { OrderByType } from '../dto/common/pagination';
 
 @Controller('blog')
 export class BlogController {
@@ -28,8 +32,10 @@ export class BlogController {
   }
 
   @Get('slug/:slug')
-  async getBlogBySlug(@Param('slug') slug: string): Promise<Blog> {
-    return this.blogService.blog({ slug });
+  async getBlogBySlug(@Param('slug') slug: string) {
+    const blog = await this.blogService.blog({ slug });
+    const recommended = await this.blogService.relatedBlogs(slug);
+    return { ...blog, recommended };
   }
 
   @Post()
@@ -61,13 +67,16 @@ export class BlogController {
   }
 
   @Put(':id')
-  async updateBlog(@Body() body: UpdateBlogDto): Promise<Blog> {
-    const { blogId, categories, ...rest } = body;
+  async updateBlog(
+    @Param('id') id: string,
+    @Body() body: UpdateBlogDto
+  ): Promise<Blog> {
+    const { categories, ...rest } = body;
     return this.blogService.updateBlog({
-      where: { id: blogId },
+      where: { id },
       data: {
         categories: {
-          connect: categories.map((id) => ({ id })),
+          set: categories.map((id) => ({ id })),
         },
         slug: slugify(body.title),
         ...rest,
@@ -81,16 +90,21 @@ export class BlogController {
   }
 
   @Get('filter')
-  async getFilteredBlogs(@Body() body: BlogPaginationDto): Promise<{
+  async getFilteredBlogs(
+    @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip: number,
+    @Query('take', new DefaultValuePipe(10), ParseIntPipe) take: number,
+    @Query('search', new DefaultValuePipe(undefined)) search: string,
+    @Query('created', new DefaultValuePipe(Prisma.SortOrder.desc))
+    created: OrderByType
+  ): Promise<{
     total: number;
     data: Blog[];
   }> {
-    const { skip, take, where, orderBy } = body;
     return this.blogService.blogs({
       skip,
       take,
-      where: this.buildWhere(where),
-      orderBy: this.buildSorter(orderBy),
+      where: this.buildWhere({ search }),
+      orderBy: this.buildSorter({ created }),
     });
   }
 
@@ -100,14 +114,16 @@ export class BlogController {
       for (const [key, value] of Object.entries(where)) {
         switch (key) {
           case 'search':
-            filter.OR = [
-              {
-                title: { contains: value },
-              },
-              {
-                content: { contains: value },
-              },
-            ];
+            if (value) {
+              filter.OR = [
+                {
+                  title: { contains: value },
+                },
+                {
+                  content: { contains: value },
+                },
+              ];
+            }
             break;
           case 'category':
             filter.categories = {

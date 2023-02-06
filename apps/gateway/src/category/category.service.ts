@@ -33,6 +33,7 @@ export class CategoryService {
         cursor,
         where,
         orderBy,
+        include: { parent: true },
       }),
     ]);
     return {

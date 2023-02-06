@@ -1,40 +1,46 @@
-import React, { useState } from 'react';
-import { Button, Form, Input, Modal, Radio } from 'antd';
+import { Form, Input, Modal } from 'antd';
 import SelectCategory from './SelectCategory';
-
-interface Values {
-  title: string;
-  description: string;
-  modifier: string;
-}
+import { useCreateCategory } from '@/hooks/category/mutation.hook';
+import { Category } from '@/hooks/category/query.hook';
+import { memo } from 'react';
 
 interface CreateFormProps {
   open: boolean;
-  onCreate: (values: Values) => void;
   onCancel: () => void;
+  record?: Category;
 }
 const CategoryForm: React.FC<CreateFormProps> = ({
   open,
-  onCreate,
   onCancel,
+  record,
 }) => {
   const [form] = Form.useForm();
+  if (record) {
+    form.setFieldsValue({
+      title: record.title,
+      categories: {
+        label: record.parent?.title,
+        value: record.parent?.id,
+      },
+    });
+  }
+  const { isLoading, mutateAsync } = useCreateCategory();
+  const handleOk = async () => {
+    const values = await form.getFieldsValue();
+    const { ok } = await mutateAsync({ ...values, id: record?.id });
+    if (ok) {
+      onCancel();
+      form.resetFields();
+    }
+  };
   return (
     <Modal
       open={open}
-      title="Create a new collection"
+      title={record ? 'تعديل القسم' : 'إضافة قسم جديد'}
+      confirmLoading={isLoading}
       onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then((values) => {
-            form.resetFields();
-            onCreate(values);
-          })
-          .catch((info) => {
-            console.log('Validate Failed:', info);
-          });
-      }}
+      onOk={handleOk}
+      destroyOnClose
     >
       <Form form={form} layout="vertical">
         <Form.Item
@@ -43,16 +49,16 @@ const CategoryForm: React.FC<CreateFormProps> = ({
           rules={[
             {
               required: true,
-              message: 'Please input the title of collection!',
+              message: 'يرجى كتابة إسم القسم!',
             },
           ]}
         >
           <Input />
         </Form.Item>
-        <SelectCategory isContest isTeacher />
+        <SelectCategory isDashboard />
       </Form>
     </Modal>
   );
 };
 
-export default CategoryForm;
+export default memo(CategoryForm);
