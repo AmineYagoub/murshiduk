@@ -1,7 +1,7 @@
-import { AppProps } from 'next/app';
-import 'antd/dist/reset.css';
 import './global.css';
+import 'antd/dist/reset.css';
 import theme from '@/config/Theme';
+import { AppProps } from 'next/app';
 import ar from 'antd/lib/locale/ar_EG';
 import { NextComponentType } from 'next';
 import { ReactElement, useEffect, useState } from 'react';
@@ -37,6 +37,7 @@ export default function CustomApp(props: MyAppProps) {
       rtl: true,
     });
   }, []);
+
   return (
     <CacheProvider value={emotionCache}>
       <ConfigProvider locale={ar} direction="rtl" theme={theme}>

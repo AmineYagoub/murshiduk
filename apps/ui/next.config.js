@@ -25,7 +25,7 @@ const nextConfig = {
   },
   transpilePackages: ['antd'],
   images: {
-    domains: ['flagcdn.com'],
+    domains: ['flagcdn.com', 'www.travellwd.com'],
   },
   nx: {
     svgr: false,

@@ -12,19 +12,21 @@ datasource db {
 
 model App {
   id                Int       @id @default(1)
-  title             String    @db.VarChar(70) @default("إسم الموقع")
+  title             String    @db.VarChar(70) @default("موقع السياحة")
   description       String?   @db.VarChar(255) @default("")
   bio               Json?     @db.Json // cv section
   agreement         String    @db.Text
   privacy           String    @db.Text
   aboutUs           String    @db.Text
-  contactEmail      String?   @db.VarChar(255) @default("")
-  youtubeUrl        String?   @db.VarChar(255) @default("")
-  twitterUrl        String?   @db.VarChar(255) @default("")
-  facebookUrl       String?   @db.VarChar(255) @default("")
-  instagramUrl      String?   @db.VarChar(255) @default("")
-  playStorUrl       String?   @db.VarChar(255) @default("")
-  appStorUrl        String?   @db.VarChar(255) @default("")
+  contactEmail      String?   @db.VarChar(20) @default("")
+  whatsApp          String?   @db.VarChar(20) @default("")
+  messengerId       String?   @db.VarChar(20) @default("")
+  youtubeUrl        String?   @db.VarChar(100) @default("")
+  twitterUrl        String?   @db.VarChar(100) @default("")
+  facebookUrl       String?   @db.VarChar(100) @default("")
+  instagramUrl      String?   @db.VarChar(100) @default("")
+  playStorUrl       String?   @db.VarChar(100) @default("")
+  appStorUrl        String?   @db.VarChar(100) @default("")
 }
 
 model Permission {
@@ -66,10 +68,6 @@ model Profile {
   lastName              String?   @default("")
   title                 String?   @default("")
   avatar                String?   @db.VarChar(1000) @default("")
-  instagram             String?   @default("")
-  facebook              String?   @default("")
-  twitter               String?   @default("")
-  phone                 String?   @default("")
   dateOfBirth           DateTime?
   created               DateTime  @default(now())
   updated               DateTime  @updatedAt
@@ -84,6 +82,8 @@ model Category {
   title                 String?    @db.VarChar(100) @unique
   slug                  String?    @db.VarChar(100) @unique
   parentId              String?
+  created               DateTime   @default(now())
+  updated               DateTime   @updatedAt
   parent                Category?  @relation("CategoryParent", fields: [parentId], references: [id] , onDelete: SetNull)
   childes               Category[] @relation("CategoryParent")
   blogs                 Blog[]

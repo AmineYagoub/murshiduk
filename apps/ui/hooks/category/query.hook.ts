@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { api, Pagination } from '@/utils/index';
+import { api } from '@/utils/index';
 import { useState } from 'react';
 import type {
   ColumnType,
@@ -8,45 +8,17 @@ import type {
   SorterResult,
 } from 'antd/es/table/interface';
 import { TableProps } from 'antd/es/table';
-
-export type Category = {
-  id: string;
-  title: string;
-  parent?: Category;
-};
-
-export type CategoryDataIndex = keyof Category;
-
-export const CategoryFields: { [P in CategoryDataIndex]: P } = {
-  id: 'id',
-  title: 'title',
-  parent: 'parent',
-};
-
-export enum OrderByType {
-  Asc = 'asc',
-  Desc = 'desc',
-}
-
-type WhereParams = {
-  search?: string;
-};
-type OrderByParams = {
-  created?: OrderByType;
-  updated?: OrderByType;
-};
-
-interface CategoryPaginationDto {
-  skip: number;
-  take: number;
-  where?: WhereParams;
-  orderBy?: OrderByParams;
-}
-
-interface CategoryResponse {
-  total: number;
-  data: Category[];
-}
+import {
+  Category,
+  CategoryDataIndex,
+  CategoryFields,
+  CategoryPaginationDto,
+  CategoryResponse,
+  OrderCategoryByParams,
+  OrderByType,
+  Pagination,
+  WhereCategoryParams,
+} from '@/utils/types';
 
 const fetchCategories = async (
   params: CategoryPaginationDto
@@ -67,8 +39,8 @@ const useCategories = () => {
     hasNextPage: false,
     hasPrevPage: false,
   });
-  const [where, setWhere] = useState<WhereParams>({});
-  const [orderBy, setOrderBy] = useState<OrderByParams>({});
+  const [where, setWhere] = useState<WhereCategoryParams>({});
+  const [orderBy, setOrderBy] = useState<OrderCategoryByParams>({});
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
@@ -116,7 +88,7 @@ const useCategories = () => {
     sorter: SorterResult<Category>
   ) => {
     const { field, order } = sorter;
-    const o: OrderByParams = {};
+    const o: OrderCategoryByParams = {};
 
     if (order) {
       for (const key in CategoryFields) {
@@ -127,7 +99,7 @@ const useCategories = () => {
       }
     }
 
-    const w: WhereParams = {};
+    const w: WhereCategoryParams = {};
 
     for (const [key, value] of Object.entries(filters)) {
       if (value) {

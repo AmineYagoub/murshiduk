@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { useState } from 'react';
 import { EditOutlined } from '@ant-design/icons';
-import { Blog } from '@/hooks/blog/query.hook';
+import type { Blog } from '@/utils/types';
 import BlogForm from './BlogForm';
 
 const EditBlog = ({ record }: { record: Blog }) => {

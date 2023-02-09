@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import CategoryForm from './CategoryForm';
-import { Category } from '@/hooks/category/query.hook';
+import type { Category } from '@/utils/types';
 
 const EditCategory = ({ record }: { record: Category }) => {
   const [open, setOpen] = useState(false);

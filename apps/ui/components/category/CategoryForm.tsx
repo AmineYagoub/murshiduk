@@ -1,8 +1,8 @@
 import { Form, Input, Modal } from 'antd';
 import SelectCategory from './SelectCategory';
 import { useCreateCategory } from '@/hooks/category/mutation.hook';
-import { Category } from '@/hooks/category/query.hook';
 import { memo } from 'react';
+import type { Category } from '@/utils/types';
 
 interface CreateFormProps {
   open: boolean;

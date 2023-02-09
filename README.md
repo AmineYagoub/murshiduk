@@ -31,3 +31,9 @@ Travel Agency wep app
 * my cv
 * https://tympanus.net/codrops/2022/01/03/building-a-scrollable-and-draggable-timeline-with-gsap/
 * https://codepen.io/michellebarker/full/QWqdqZV/597a468071d4dce3f7bf0ce80d6cb8d3
+
+Todo today
+
+- Admin settings with all pages - done
+- settings for all icons - done
+- pagination in all models with base queries --in progress

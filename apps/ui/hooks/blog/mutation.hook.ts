@@ -1,14 +1,6 @@
 import { api } from '@/utils/index';
+import type { BlogCreateInput } from '@/utils/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-interface BlogCreateInput {
-  id?: string;
-  title: string;
-  content: string;
-  descriptionMeta: string;
-  authorId: string;
-  categories: string[];
-}
 
 const useCreateBlog = () => {
   const client = useQueryClient();

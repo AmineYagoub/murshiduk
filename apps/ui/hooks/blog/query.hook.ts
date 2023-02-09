@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { api, Pagination } from '@/utils/index';
+import { api, AppRoutes } from '@/utils/index';
 import { useEffect, useState } from 'react';
 import type {
   ColumnType,
@@ -9,88 +9,27 @@ import type {
 } from 'antd/es/table/interface';
 import { TableProps } from 'antd/es/table';
 import { useRouter } from 'next/router';
-
-type Profile = {
-  avatar: string;
-  firstName: string;
-  lastName: string;
-};
-
-export type Blog = {
-  id: string;
-  title: string;
-  slug: string;
-  descriptionMeta: string;
-  content: string;
-  published: boolean;
-  created: string;
-  updated: string;
-  author: {
-    profile: Profile;
-    role: {
-      title: string;
-    };
-  };
-  categories: { id: string; title: string; slug: string }[];
-  recommended: {
-    title: string;
-    slug: string;
-    created: Date;
-    author: {
-      profile: Profile;
-    };
-  }[];
-};
-
-export type BlogDataIndex = keyof Blog;
-
-export const BlogFields: { [P in BlogDataIndex]: P } = {
-  id: 'id',
-  title: 'title',
-  slug: 'slug',
-  published: 'published',
-  author: 'author',
-  categories: 'categories',
-  content: 'content',
-  descriptionMeta: 'descriptionMeta',
-  created: 'created',
-  updated: 'updated',
-  recommended: 'recommended',
-};
-
-export enum OrderByType {
-  Asc = 'asc',
-  Desc = 'desc',
-}
-
-type WhereParams = {
-  search?: string;
-  published?: string;
-};
-type OrderByParams = {
-  created?: OrderByType;
-  updated?: OrderByType;
-};
-
-interface BlogPaginationDto {
-  skip: number;
-  take: number;
-  where?: WhereParams;
-  orderBy?: OrderByParams;
-}
-
-interface BlogResponse {
-  total: number;
-  data: Blog[];
-}
+import {
+  Blog,
+  BlogDataIndex,
+  BlogFields,
+  BlogPaginationDto,
+  BlogResponse,
+  OrderBlogByParams,
+  OrderByType,
+  Pagination,
+  WhereBlogParams,
+} from '@/utils/types';
 
 const fetchBlogs = async (params: BlogPaginationDto): Promise<BlogResponse> => {
-  let source = 'blog/filter';
-  const q = new URLSearchParams(params.where);
-  if (q.toString()) {
-    source += `?${q.toString()}`;
+  const { take, skip, orderBy, where } = params;
+  const query = new URLSearchParams({ take: String(take), skip: String(skip) });
+  for (const [key, val] of Object.entries({ ...where, ...orderBy })) {
+    if (val) {
+      query.append(key, val);
+    }
   }
-  return await api.get(source).json();
+  return await api.get(`blog/filter?${query.toString()}`).json();
 };
 
 const fetchBlog = async (slug: string): Promise<Blog> => {
@@ -98,15 +37,21 @@ const fetchBlog = async (slug: string): Promise<Blog> => {
 };
 
 const useBlogs = () => {
+  const router = useRouter();
+  const { query } = router;
   const [pagination, setPagination] = useState<Pagination>({
-    offset: 0,
-    limit: 10,
+    offset: (Number(query?.page) - 1) * Number(query?.pageSize) || 0,
+    limit: Number(query?.pageSize) || 10,
     total: 0,
     hasNextPage: false,
     hasPrevPage: false,
   });
-  const [where, setWhere] = useState<WhereParams>({});
-  const [orderBy, setOrderBy] = useState<OrderByParams>({});
+
+  const tag = String(query?.tag || '');
+  const search = decodeURIComponent(String(query?.search || ''));
+  const [defaultSearchValue] = useState(search);
+  const [where, setWhere] = useState<WhereBlogParams>({ search, tag });
+  const [orderBy, setOrderBy] = useState<OrderBlogByParams>({});
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
@@ -121,6 +66,7 @@ const useBlogs = () => {
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
   };
+
   const clearAllFilters = () => {
     setFilteredInfo({});
     setSortedInfo({});
@@ -133,6 +79,13 @@ const useBlogs = () => {
   };
 
   const onPaginationChange = (page: number, pageSize: number) => {
+    router.push(
+      {
+        query: { ...router.query, page, pageSize },
+      },
+      undefined,
+      { shallow: true }
+    );
     setPagination((prev) => ({
       ...prev,
       limit: pageSize,
@@ -154,7 +107,7 @@ const useBlogs = () => {
     sorter: SorterResult<Blog>
   ) => {
     const { field, order } = sorter;
-    const o: OrderByParams = {};
+    const o: OrderBlogByParams = {};
 
     if (order) {
       for (const key in BlogFields) {
@@ -165,7 +118,7 @@ const useBlogs = () => {
       }
     }
 
-    const w: WhereParams = {};
+    const w: WhereBlogParams = {};
 
     for (const [key, value] of Object.entries(filters)) {
       if (value) {
@@ -177,6 +130,20 @@ const useBlogs = () => {
     setWhere(w);
     setFilteredInfo(filters);
     setSortedInfo(sorter);
+  };
+
+  const onSearch = (value: string) => {
+    router.push(
+      {
+        query: { tag, search: encodeURIComponent(value) },
+      },
+      undefined,
+      { shallow: true }
+    );
+    setWhere((prev) => ({
+      ...prev,
+      search: value,
+    }));
   };
 
   const { data, isLoading, refetch } = useQuery({
@@ -198,6 +165,13 @@ const useBlogs = () => {
         orderBy,
       }),
   });
+
+  useEffect(() => {
+    if (data) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [data]);
+
   const methods = {
     handleReset,
     refetch,
@@ -205,11 +179,13 @@ const useBlogs = () => {
     handleSearch,
     handleTableChange,
     clearAllFilters,
+    onSearch,
     handlePagination: {
       total: data?.total ?? 0,
       pageSize: pagination.limit,
+      current: Number(query?.page || 1),
       pageSizeOptions: ['10', '20', '30', '50'],
-      showSizeChanger: true,
+      showSizeChanger: false,
       onShowSizeChange: onPaginationChange,
       onChange: onPaginationChange,
     },
@@ -221,6 +197,7 @@ const useBlogs = () => {
     isLoading,
     filteredInfo,
     sortedInfo,
+    defaultSearchValue,
   };
 };
 
@@ -241,4 +218,4 @@ const useBlog = () => {
   return { data };
 };
 
-export { useBlogs, useBlog, fetchBlog };
+export { useBlogs, useBlog, fetchBlog, fetchBlogs };

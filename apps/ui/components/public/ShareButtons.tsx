@@ -1,15 +1,33 @@
-import Script from 'next/script';
-import React from 'react';
+import { Space } from 'antd';
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TelegramShareButton,
+  TelegramIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  TwitterShareButton,
+  TwitterIcon,
+} from 'next-share';
 
-const ShareButtons = () => {
+const ShareButtons = ({ url, title }: { url: string; title: string }) => {
   return (
-    <>
-      <div className="sharethis-inline-share-buttons" />
-      <Script
-        async
-        src="https://platform-api.sharethis.com/js/sharethis.js#property=63e0bfa24a4876001374e0e3&product=inline-share-buttons&source=platform"
-      ></Script>
-    </>
+    <Space style={{ justifyContent: 'center', width: '100%' }}>
+      <small>شارك التدوينة: </small>
+
+      <FacebookShareButton url={url} title={title}>
+        <FacebookIcon size={32} round />
+      </FacebookShareButton>
+      <TelegramShareButton url={url} title={title}>
+        <TelegramIcon size={32} round />
+      </TelegramShareButton>
+      <WhatsappShareButton url={url} title={title}>
+        <WhatsappIcon size={32} round />
+      </WhatsappShareButton>
+      <TwitterShareButton url={url} title={title}>
+        <TwitterIcon size={32} round />
+      </TwitterShareButton>
+    </Space>
   );
 };
 

@@ -1,14 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/utils/index';
-
-type CategoryCreateInput = {
-  id?: string;
-  title: string;
-  categories?: {
-    value: string;
-  };
-  parentId?: string;
-};
+import type { CategoryCreateInput } from '@/utils/types';
 
 const useCreateCategory = () => {
   const client = useQueryClient();

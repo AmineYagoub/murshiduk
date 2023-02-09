@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Blog, Prisma } from '@prisma/client';
 import { PrismaService } from '../app/prisma.service';
+import slugify from '../utils/slugify';
 
 @Injectable()
 export class BlogService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {
+    this.seedBlogs().then(console.log);
+  }
 
   async blog(
     blogWhereUniqueInput: Prisma.BlogWhereUniqueInput
@@ -76,6 +79,41 @@ export class BlogService {
     return this.prisma.blog.create({
       data,
     });
+  }
+
+  async seedBlogs() {
+    await this.prisma.blog.deleteMany();
+    const categories = [
+      '2526d463-685c-4586-84cc-6ac750dd5f31',
+      '41bb4db6-9ca4-495d-970a-2bc678b3bfd8',
+      '56591349-7e0c-493a-b2e9-7a631e7ff3b4',
+      '8225702d-af85-489a-be4f-1275bfbc8e69',
+      '83f0d561-b6ee-4a2d-a9fb-dfae2c149c6a',
+      'fbdde059-f3ec-4d32-9113-9754b3b4a5e2',
+    ];
+
+    const data = Array.from({ length: 123 }).map((_, i) => {
+      const shuffledArray = categories.sort(() => 0.5 - Math.random());
+      const result = shuffledArray.slice(0, 2);
+      return {
+        title: `ant design part ${i}`,
+        slug: slugify(`ant design part ${i}`),
+        author: {
+          connect: {
+            id: '3d3bc583-d799-4289-88eb-757aecdfcb69',
+          },
+        },
+        categories: {
+          connect: result.map((id) => ({ id })),
+        },
+        descriptionMeta: `Ant Design, a design language for background applications, is refined by Ant UED Team. ${i}`,
+        content:
+          'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+      };
+    });
+    for await (const iterator of data) {
+      await this.createBlog(iterator);
+    }
   }
 
   async updateBlog(params: {

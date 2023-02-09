@@ -2,7 +2,7 @@ import { Logger } from '@/utils/Logger';
 import { Button, Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useDeleteBlog } from '@/hooks/blog/mutation.hook';
-import { Blog } from '@/hooks/blog/query.hook';
+import type { Blog } from '@/utils/types';
 
 const DeleteBlog = ({ record }: { record: Blog }) => {
   const { mutateAsync, isLoading } = useDeleteBlog();

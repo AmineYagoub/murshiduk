@@ -1,6 +1,6 @@
 import { Form, Input } from 'antd';
 import { Jodit } from 'jodit';
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect } from 'react';
 import 'jodit/build/jodit.es2018.min.css';
 
 interface EditorProps {

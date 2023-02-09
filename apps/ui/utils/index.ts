@@ -2,7 +2,6 @@ import config from '@/config/App';
 import ky from 'ky';
 export * from './AppRoutes';
 export * from './Logger';
-export * from './Types';
 export * from './animation/WebGLCarousel';
 
 export const api = ky.create({
@@ -40,4 +39,13 @@ export const readingTime = (article: HTMLDivElement) => {
   const wpm = 225;
   const words = text.trim().split(/\s+/).length;
   return Math.ceil(words / wpm);
+};
+
+export const getTitleMeta = (siteTitle: string, pageTitle?: string) =>
+  pageTitle ? `${siteTitle} | ${pageTitle}` : `${siteTitle}`;
+
+export const getFirstImageFromContent = (content: string) => {
+  return content
+    .match(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|webp|svg))/)
+    ?.shift();
 };

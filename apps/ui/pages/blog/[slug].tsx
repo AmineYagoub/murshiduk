@@ -1,15 +1,15 @@
-import { Avatar, Card, Col, Divider, Row, Tag } from 'antd';
+import Link from 'next/link';
+import styled from '@emotion/styled';
+import { formatDate } from '@/utils/index';
 import BlogLayout from '@/layout/BlogLayout';
+import { TagOutlined } from '@ant-design/icons';
 import Loading from '@/components/common/Loading';
 import { withAuth } from '@/components/auth/withAuth';
+import { Avatar, Card, Col, Divider, Row, Tag } from 'antd';
 import { fetchBlog, useBlog } from '@/hooks/blog/query.hook';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import styled from '@emotion/styled';
-import { TagOutlined } from '@ant-design/icons';
-import Link from 'next/link';
 import TwitterButton from '@/components/public/TwitterButton';
-import { formatDate } from '@/utils/index';
 import RelatedBlogs from '@/components/public/RelatedBlogs';
 import ShareButtons from '@/components/public/ShareButtons';
 
@@ -50,7 +50,7 @@ export const StyledArticle = styled('article')({
 });
 
 export const StyledCard = styled(Card)({
-  backgroundColor: 'rgba(31,41,55) !important',
+  background: 'linear-gradient(#2b2346, #232135)',
   position: 'sticky',
   top: 65,
   div: {
@@ -84,7 +84,7 @@ const BlogPage = () => {
           <StyledArticle>
             <h1>{data.title}</h1>
             {data.categories.map((cat) => (
-              <Link key={cat.id} href={`/blog/categories/${cat.slug}`}>
+              <Link key={cat.id} href={`/blog/tag/${cat.slug}`}>
                 <Tag color="green" icon={<TagOutlined />}>
                   {cat.title}
                 </Tag>
@@ -104,7 +104,7 @@ const BlogPage = () => {
               title={`${author.profile.firstName} ${author.profile.lastName}`}
               description="مرشد سياحي"
             />
-            <TwitterButton />
+            <TwitterButton twitter="@TwitterProfile" />
             <h5>
               هل تريد التعرف على تركيا من الداخل ومعرفة أهم المعلومات حول
               ثقافتها وأساسيات السياحة فيها ؟
@@ -115,7 +115,10 @@ const BlogPage = () => {
             </p>
             <p>تابعني على تويتر للحصول عليها مباشرة على هاتفك</p>
             <Divider />
-            <ShareButtons />
+            <ShareButtons
+              url={`http://localhost:8080/blog/${data.slug}`}
+              title={data.title}
+            />
           </StyledCard>
         </Col>
       </Row>
@@ -134,7 +137,7 @@ export async function getServerSideProps({ req, query }) {
   }
   try {
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery([['getBlog', blogSlug]], () =>
+    await queryClient.prefetchQuery(['getBlog', blogSlug], () =>
       fetchBlog(blogSlug)
     );
     return {

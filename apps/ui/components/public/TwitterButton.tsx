@@ -1,14 +1,18 @@
 import styled from '@emotion/styled';
-import Script from 'next/script';
+import { Button } from 'antd';
+import { TwitterOutlined } from '@ant-design/icons';
 
-const StyledDiv = styled('article')({
-  textAlign: 'center',
-  margin: '1em auto',
+const StyledTweet = styled(Button)({
+  backgroundColor: '#1d9bf0',
+  borderColor: '#1d9bf0',
+  marginTop: '2em',
+  color: '#fff',
+  fontWeight: 'bold',
 });
 
-const TwitterButton = () => {
-  return (
-    <StyledDiv>
+const TwitterButton = ({ twitter }: { twitter: string }) => {
+  {
+    /* <StyledDiv>
       <a
         href="https://twitter.com/intent/tweet?screen_name=TwitterDev&ref_src=twsrc%5Etfw"
         className="twitter-mention-button"
@@ -19,7 +23,16 @@ const TwitterButton = () => {
         Tweet to @TwitterDev
       </a>
       <Script async src="https://platform.twitter.com/widgets.js"></Script>
-    </StyledDiv>
+    </StyledDiv> */
+  }
+  return (
+    <StyledTweet
+      block
+      href={`https://twitter.com/intent/tweet?screen_name=${twitter}`}
+      icon={<TwitterOutlined />}
+    >
+      غرد على {twitter}
+    </StyledTweet>
   );
 };
 

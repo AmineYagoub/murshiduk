@@ -1,7 +1,7 @@
 import { Logger } from '@/utils/Logger';
 import { Button, Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { Category } from '@/hooks/category/query.hook';
+import type { Category } from '@/utils/types';
 import { useDeleteCategory } from '@/hooks/category/mutation.hook';
 
 const DeleteCategory = ({ record }: { record: Category }) => {

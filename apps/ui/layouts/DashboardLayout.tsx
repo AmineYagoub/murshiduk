@@ -68,7 +68,9 @@ const DashboardLayout = ({ children }) => {
               {
                 key: AppRoutes.AdminManageOrders,
                 icon: <AppstoreFilled className="hide" />,
-                label: <Link href={AppRoutes.AdminManageOrders}>الطلبات</Link>,
+                label: (
+                  <Link href={AppRoutes.AdminManageOrders}>طلبات التواصل</Link>
+                ),
               },
               {
                 key: AppRoutes.AdminManageCategories,

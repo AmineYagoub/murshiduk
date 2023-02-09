@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import { LinkOutlined } from '@ant-design/icons';
-import { Blog } from '@/hooks/blog/query.hook';
+import type { Blog } from '@/utils/types';
 
 const PreviewBlog = ({ record }: { record: Blog }) => {
   return (

@@ -1,11 +1,11 @@
 import { FormEvent, useState } from 'react';
 import { Alert, Button, Drawer, Space, Form, Input } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
-import { Blog } from '@/hooks/blog/query.hook';
 import { useCreateBlog } from '@/hooks/blog/mutation.hook';
 import SelectCategory from '../category/SelectCategory';
 import dynamic from 'next/dynamic';
 import Loading from '../common/Loading';
+import type { Blog } from '@/utils/types';
 
 const Editor = dynamic(() => import('../common/Editor'), {
   loading: () => <Loading />,

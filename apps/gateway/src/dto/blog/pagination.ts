@@ -11,7 +11,7 @@ export class WhereBlogArgs {
 
   published?: boolean;
 
-  category?: string;
+  tag?: string;
 }
 
 export class BlogPaginationDto extends PaginatedArgs<
