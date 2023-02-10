@@ -7,14 +7,16 @@ import { AuthModule } from '../authentication/auth.module';
 import { CategoryModule } from '../category/category.module';
 import { RoleModule } from '../authorizations/role.module';
 import { PrismaService } from './prisma.service';
+import { ContactModule } from '../contact/contact.module';
 
 @Module({
   imports: [
     AppConfigModule,
     BlogModule,
     AuthModule,
-    CategoryModule,
     RoleModule,
+    ContactModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

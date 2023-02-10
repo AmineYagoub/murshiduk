@@ -6,6 +6,7 @@ import SelectCategory from '../category/SelectCategory';
 import dynamic from 'next/dynamic';
 import Loading from '../common/Loading';
 import type { Blog } from '@/utils/types';
+import { authorId } from '@/utils/index';
 
 const Editor = dynamic(() => import('../common/Editor'), {
   loading: () => <Loading />,
@@ -42,7 +43,7 @@ const BlogForm: React.FC<CreateFormProps> = ({ open, onClose, record }) => {
       const { ok } = await mutateAsync({
         ...values,
         id: record?.id,
-        authorId: '66732fb6-cec6-4255-a503-6260069d9a86',
+        authorId: authorId,
         categories: values.categories.map((el) => el.value),
         content,
       });

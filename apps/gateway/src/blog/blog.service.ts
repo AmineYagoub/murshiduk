@@ -6,7 +6,7 @@ import slugify from '../utils/slugify';
 @Injectable()
 export class BlogService {
   constructor(private prisma: PrismaService) {
-    this.seedBlogs().then(console.log);
+    // this.seedBlogs();
   }
 
   async blog(
@@ -81,7 +81,7 @@ export class BlogService {
     });
   }
 
-  async seedBlogs() {
+  private async seedBlogs() {
     await this.prisma.blog.deleteMany();
     const categories = [
       '2526d463-685c-4586-84cc-6ac750dd5f31',

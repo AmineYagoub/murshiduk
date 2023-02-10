@@ -23,8 +23,8 @@ export default function Home() {
       {/* <HeroSection /> */}
       <WhyUsSection />
       <TimeLineSection />
-      <LatestBlogsSection />
       <ContactUsSection />
+      <LatestBlogsSection />
     </>
   );
 }

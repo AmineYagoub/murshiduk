@@ -1,9 +1,95 @@
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { withAuth } from '@/components/auth/withAuth';
 import DashboardLayout from '@/layout/DashboardLayout';
+import type { ColumnsType } from 'antd/es/table';
+import { useContacts } from '@/hooks/contact/query.hook';
+import { Contact } from '@/utils/types';
+import { Space, Table, Tag } from 'antd';
+import { formatDate } from '@/utils/index';
+import {
+  contactStatusMappedColors,
+  contactStatusMappedTypes,
+  getMapperLabel,
+} from '@/utils/Mapper';
+import PreviewContact from '@/components/contact/PreviewContact';
+import DeleteContact from '@/components/contact/DeleteContact';
 
 const AdminManageOrders = () => {
-  return <div className="page">AdminManageOrders</div>;
+  const { methods, data, isLoading } = useContacts();
+  console.log(data);
+  const columns: ColumnsType<Contact> = [
+    {
+      title: 'الإسم',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text) => <b>{text}</b>,
+    },
+    {
+      title: 'رقم الهاتف',
+      dataIndex: 'phone',
+      key: 'phone',
+      render: (_, { phone, phoneCode }) => (
+        <span dir="ltr">
+          +{phoneCode} {phone}
+        </span>
+      ),
+    },
+    {
+      title: 'البلد',
+      key: 'country',
+      dataIndex: 'country',
+    },
+    {
+      title: 'تاريخ التواصل',
+      dataIndex: 'created',
+      key: 'created',
+      render: (date) => <span>{formatDate(date, true)}</span>,
+    },
+    {
+      title: 'تاريخ بداية الرحلة',
+      dataIndex: 'flightTimeStart',
+      key: 'flightTimeStart',
+      render: (date) => <span>{formatDate(date)}</span>,
+    },
+    {
+      title: 'تاريخ نهاية الرحلة',
+      dataIndex: 'flightTimeEnd',
+      key: 'flightTimeEnd',
+      render: (date) => <span>{formatDate(date)}</span>,
+    },
+    {
+      title: 'الحالة',
+      dataIndex: 'status',
+      key: 'status',
+      render: (text) => (
+        <Tag
+          color={contactStatusMappedColors[text]}
+          style={{ padding: '5px 15px', fontWeight: 'bold' }}
+        >
+          {getMapperLabel(contactStatusMappedTypes, text)}
+        </Tag>
+      ),
+    },
+    {
+      title: 'الإجراءات',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <PreviewContact id={record.id} />
+          <DeleteContact id={record.id} />
+        </Space>
+      ),
+    },
+  ];
+  return (
+    <Table
+      columns={columns}
+      dataSource={data}
+      size="large"
+      pagination={methods.handlePagination}
+      loading={isLoading}
+    />
+  );
 };
 
 AdminManageOrders.getLayout = (page: EmotionJSX.Element) => (

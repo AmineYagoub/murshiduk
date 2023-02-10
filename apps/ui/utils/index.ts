@@ -3,6 +3,13 @@ import ky from 'ky';
 export * from './AppRoutes';
 export * from './Logger';
 export * from './animation/WebGLCarousel';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ar';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+dayjs.locale('ar');
+
+export const authorId = '3d3bc583-d799-4289-88eb-757aecdfcb69';
 
 export const api = ky.create({
   prefixUrl: config.API_URL,
@@ -23,16 +30,9 @@ export const api = ky.create({
   },
 });
 
-export const formatDate = (date) =>
-  new Intl.DateTimeFormat('ar-EG', {
-    hour: 'numeric',
-    minute: 'numeric',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    calendar: 'arabic',
-    dayPeriod: 'short',
-  }).format(new Date(date));
+export const formatDate = (date: string | Date, fromNow = false) => {
+  return fromNow ? dayjs(date).fromNow() : dayjs(date).format('DD/MM/YYYY');
+};
 
 export const readingTime = (article: HTMLDivElement) => {
   const text = article.innerText;

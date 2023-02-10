@@ -60,6 +60,7 @@ model User {
   role                  Role      @relation(fields: [roleId], references: [id], onDelete: NoAction)
   profile               Profile?
   blogs                 Blog[]
+  notes                 ContactNotes[]
 }
 
 model Profile {
@@ -104,12 +105,40 @@ model Blog {
 }
 
 model Contact {
-  id                    String     @id @default(uuid())
+  id                    String            @id @default(uuid())
   name                  String
-  phone                 String     @unique
-  flightTime            DateTime?
-  peoples               Int?       @default(0)
-  details               String?    @db.Text
-  created               DateTime   @default(now())
-  updated               DateTime   @updatedAt
+  phone                 String            @unique
+  phoneCode             String
+  country               String?
+  flightTimeStart       DateTime?
+  flightTimeEnd         DateTime?
+  adults                Int?              @default(0)
+  children              Int?              @default(0)
+  details               String?           @db.Text
+  status                ContactStatus     @default(NEW)
+  created               DateTime          @default(now())
+  updated               DateTime          @updatedAt
+  notes                 ContactNotes[]
+}
+
+
+model ContactNotes {
+  id                    String            @id @default(uuid())
+  content               String?           @db.Text
+  created               DateTime          @default(now())
+  updated               DateTime          @updatedAt
+
+  author                User              @relation(fields: [authorId], references: [id])
+  authorId              String
+
+  contact               Contact           @relation(fields: [contactId], references: [id])
+  contactId             String
+}
+
+enum ContactStatus {
+  NEW
+  OPEN  // Positive but need some time
+  OPEN_DEAL // Positive and redy to recieve the deal
+  CONNECTED // Accept the deal and become a custommer
+  NEGATIVE // Not intersted
 }

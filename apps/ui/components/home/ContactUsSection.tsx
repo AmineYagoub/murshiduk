@@ -32,13 +32,13 @@ const StyledSection = styled('section')({
     position: 'absolute',
     right: '50%',
     transform: 'translateX(50%) !important',
-    top: '30vh',
-    maxWidth: 600,
+    top: '25vh',
+    width: '100%',
+    maxWidth: 650,
     input: {
       background: 'transparent',
       border: '2px solid #fff',
       color: 'floralwhite !important',
-
       fontWeight: 'bold',
     },
     textArea: {
@@ -56,6 +56,19 @@ const StyledSection = styled('section')({
       border: '2px solid #fff',
       color: 'floralwhite',
       fontWeight: 'bold',
+      '& ::placeholder': {
+        color: '#ccc !important',
+      },
+      svg: {
+        color: '#ccc !important',
+      },
+    },
+    '.ant-input-number': {
+      background: 'transparent',
+      border: '2px solid #fff',
+      color: 'floralwhite',
+      fontWeight: 'bold',
+      width: '100%',
     },
 
     label: {
@@ -66,32 +79,35 @@ const StyledSection = styled('section')({
     },
     h6: {
       color: '#fff',
-      fontSize: '1rem',
-      textAlign: 'left',
-      marginBottom: '1em',
+      fontSize: '1.3rem',
+      fontWeight: 'bold',
+      marginBottom: '1.5em',
+    },
+  },
+  '.ant-result': {
+    marginTop: '25vh',
+    '.ant-result-title': {
+      color: '#fff',
+      fontSize: '2.5rem !important',
+    },
+    '.ant-result-subtitle': {
+      color: '#fff',
     },
   },
 });
 
 const ContactUsSection = () => {
   useEffect(() => {
-    /* Transition (from Scene2 to Scene3) */
     gsap.set('#scene3', { y: 580, visibility: 'visible' });
     const sceneTransition = gsap.timeline();
     ScrollTrigger.create({
       animation: sceneTransition,
       trigger: '.scrollElement',
-      start: 'top top',
+      start: 'top center',
       end: 'bottom 100%',
       scrub: 3,
     });
 
-    /*     sceneTransition.to(
-      '#h2-1',
-      { y: -680, scale: 1.5, transformOrigin: '50% 50%' },
-      0
-    );
-    sceneTransition.to('#bg_grad', { attr: { cy: '-80' } }, 0.0); */
     sceneTransition.to('#bg2', { y: 0 }, 0);
 
     /* Scene 3 */
@@ -117,8 +133,6 @@ const ContactUsSection = () => {
     //gradient value change
     scene3.to('#bg2-grad', { attr: { cy: 600 } }, 0);
     scene3.to('#bg2-grad', { attr: { r: 500 } }, 0);
-    // Scroll Back text
-    // scene3.fromTo('#arrow2', { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
     scene3.fromTo(
       '#form',
       { opacity: 0, y: 500 },
