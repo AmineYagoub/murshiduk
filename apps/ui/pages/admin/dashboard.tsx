@@ -2,7 +2,7 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
 import DashboardLayout from '@/layout/DashboardLayout';
 import styled from '@emotion/styled';
-import { Col, Row, Statistic, theme } from 'antd';
+import { Col, Row, Statistic } from 'antd';
 import Image from 'next/image';
 import { withAuth } from '@/components/auth/withAuth';
 import Head from 'next/head';
@@ -10,7 +10,7 @@ import { getTitleMeta } from '@/utils/index';
 import dynamic from 'next/dynamic';
 import Loading from '@/components/common/Loading';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { fetchApp } from '@/hooks/app/query.hook';
+import { fetchApp, useDashboard } from '@/hooks/app/query.hook';
 
 const CustomerCountriesChart = dynamic(
   () => import('@/components/partials/CustomerCountriesChart'),
@@ -32,36 +32,34 @@ const StyledCard = styled(Statistic)({
   },
 });
 
-const AdminDashboard = (props) => {
+const AdminDashboard = () => {
+  const { data, isLoading } = useDashboard();
   const items = [
     {
       title: 'عدد العملاء',
-      value: 14,
+      value: data?.users,
       suffix: 'عميل',
       icon: '/icons/dashboard/customer-loyalty.png',
     },
     {
       title: 'عدد التدوينات',
-      value: 14,
+      value: data?.blogs,
       suffix: 'تدوينة',
       icon: '/icons/dashboard/blog.png',
     },
     {
       title: 'عدد الأقسام',
-      value: 14,
+      value: data?.tags,
       suffix: 'قسم',
       icon: '/icons/dashboard/application.png',
     },
     {
       title: 'عدد التعليقات',
-      value: 14,
+      value: data?.comments,
       suffix: 'تعليق',
       icon: '/icons/dashboard/chat.png',
     },
   ];
-  const {
-    token: { colorPrimaryBg },
-  } = theme.useToken();
   return (
     <>
       <Head>
@@ -71,11 +69,11 @@ const AdminDashboard = (props) => {
         {items.map((item) => (
           <Col span={6} key={item.title}>
             <StyledCard
-              style={{ backgroundColor: colorPrimaryBg }}
               title={item.title}
               precision={0}
               value={item.value}
               suffix={item.suffix}
+              loading={isLoading}
               prefix={
                 <Image src={item.icon} width="60" height="60" alt="money" />
               }
@@ -88,7 +86,7 @@ const AdminDashboard = (props) => {
           <CustomersChart />
         </Col>
         <Col span={9}>
-          <CustomerCountriesChart data={[]} loading={false} />
+          <CustomerCountriesChart data={data?.countries} loading={isLoading} />
         </Col>
       </Row>
     </>

@@ -18,7 +18,6 @@ import { fetchApp } from '@/hooks/app/query.hook';
 
 const AdminManageOrders = () => {
   const { methods, data, isLoading } = useContacts();
-  console.log(data);
   const columns: ColumnsType<Contact> = [
     {
       title: 'الإسم',

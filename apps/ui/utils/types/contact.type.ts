@@ -1,11 +1,9 @@
 import { OrderByType } from './blog.type';
-import { Profile } from './user.type';
+import { User } from './user.type';
 
 export type Note = {
   content: string;
-  author: {
-    profile: Profile;
-  };
+  author: User;
   created: string | Date;
 };
 

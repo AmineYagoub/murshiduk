@@ -23,6 +23,11 @@ export class AppController {
     return this.appService.find(field);
   }
 
+  @Get('dashboard')
+  async dashboard() {
+    return this.appService.dashboard();
+  }
+
   @Put()
   async updateAppConfig(@Body() data: UpdateAppConfigDto) {
     return this.appService.update(data);

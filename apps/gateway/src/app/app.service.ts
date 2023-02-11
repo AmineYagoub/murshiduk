@@ -18,6 +18,38 @@ export class AppService {
       }
     });
   }
+
+  /**
+   * Create a App
+   *
+   * @param data Prisma.AppConfigCreateInput The AppConfig data.
+   * @returns Promise<AppConfig>
+   */
+  async dashboard() {
+    try {
+      const users = await this.prisma.contact.count();
+      const blogs = await this.prisma.blog.count();
+      const tags = await this.prisma.category.count();
+      const countries = await this.prisma.contact.groupBy({
+        by: ['country'],
+        _count: {
+          country: true,
+        },
+      });
+      return {
+        users,
+        blogs,
+        tags,
+        comments: 0,
+        countries: countries
+          .slice(0, 7)
+          .map((el) => ({ name: el.country, value: el._count.country })),
+      };
+    } catch (error) {
+      Logger.error(error.message);
+    }
+  }
+
   /**
    * Create a App
    *

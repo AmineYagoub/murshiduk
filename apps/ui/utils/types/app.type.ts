@@ -15,3 +15,16 @@ export type App = {
   playStorUrl?: string;
   appStorUrl?: string;
 };
+
+export type DashboardCountry = {
+  name: string;
+  value: number;
+};
+
+export type Dashboard = {
+  users: number;
+  blogs: number;
+  tags: number;
+  comments: number;
+  countries: DashboardCountry[];
+};

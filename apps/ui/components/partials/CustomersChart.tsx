@@ -5,18 +5,18 @@ import {
   TooltipComponent,
 } from 'echarts/components';
 import { FC } from 'react';
-import { Card, theme } from 'antd';
+import { Card } from 'antd';
 import * as echarts from 'echarts/core';
 import { BarChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import ReactEChartsCore from 'echarts-for-react/lib/core';
 echarts.use([
+  BarChart,
+  GridComponent,
+  CanvasRenderer,
+  LegendComponent,
   ToolboxComponent,
   TooltipComponent,
-  GridComponent,
-  LegendComponent,
-  BarChart,
-  CanvasRenderer,
 ]);
 
 const labelOption = {
@@ -40,11 +40,7 @@ const option = {
     },
   },
   legend: {
-    data: [
-      'عدد المسابقات',
-      'طلاب مشاركين مع مشرفين',
-      'طلاب مشاركين بدون مشرفين',
-    ],
+    data: ['تواصل إيجابي', 'تواصل سلبي'],
   },
   toolbox: {
     show: true,
@@ -63,7 +59,7 @@ const option = {
     {
       type: 'category',
       axisTick: { show: false },
-      data: ['2022', '2023', '2024', '2025'],
+      data: ['2023', '2024', '2025', '2026'],
     },
   ],
   yAxis: [
@@ -73,45 +69,34 @@ const option = {
   ],
   series: [
     {
-      name: 'عدد المسابقات',
+      name: 'تواصل إيجابي',
       type: 'bar',
       label: labelOption,
       emphasis: {
         focus: 'series',
       },
-      data: [33, 45, 55, 32],
-    },
-    {
-      name: 'طلاب مشاركين مع مشرفين',
-      type: 'bar',
-      label: labelOption,
-      emphasis: {
-        focus: 'series',
-      },
+      itemStyle: { color: 'teal' },
       data: [150, 232, 201, 154],
     },
     {
-      name: 'طلاب مشاركين بدون مشرفين',
+      name: 'تواصل سلبي',
       type: 'bar',
       label: labelOption,
       emphasis: {
         focus: 'series',
       },
+      itemStyle: { color: 'orange' },
       data: [98, 77, 101, 99],
     },
   ],
 };
 
 const CustomersChart: FC = (props) => {
-  const {
-    token: { colorPrimaryBg },
-  } = theme.useToken();
   return (
     <Card
       {...props}
-      title="أخر المسابقات"
+      title="تصنيف العملاء"
       style={{
-        backgroundColor: colorPrimaryBg,
         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
       }}
     >

@@ -1,3 +1,9 @@
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
+import '../public/global.css';
 import 'antd/dist/reset.css';
 import theme from '@/config/Theme';
 import { AppProps } from 'next/app';
@@ -8,11 +14,6 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { ConfigProvider, notification, Spin } from 'antd';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import CreateEmotionCache from '@/config/CreateEmotionCache';
-import {
-  Hydrate,
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 Spin.setDefaultIndicator(<Spin indicator={antIcon} />);
@@ -26,8 +27,17 @@ interface MyAppProps extends AppProps {
 }
 
 export default function CustomApp(props: MyAppProps) {
-  const queryClient = new QueryClient();
+  const [queryClient] = useState(() => new QueryClient());
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+  useEffect(() => {
+    notification.config({
+      placement: 'topRight',
+      duration: 4,
+      rtl: true,
+    });
+  }, []);
+
   return (
     <CacheProvider value={emotionCache}>
       <ConfigProvider locale={ar} direction="rtl" theme={theme}>

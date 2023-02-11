@@ -39,8 +39,8 @@ Todo today
 - pagination in all models with base queries -done
 - manage contacts - done
 
-* update profile and password
-* Dashboard analytics
+* update profile, avatar and password
+* Dashboard analytics - done
 * contact me page
 * RWD and PWA
 * SEO for all pages

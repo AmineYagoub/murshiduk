@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Button, Card, theme } from 'antd';
+import { Card } from 'antd';
 import ReactEChartsCore from 'echarts-for-react/lib/core';
 import * as echarts from 'echarts/core';
 import {
@@ -10,7 +10,7 @@ import {
 import { PieChart } from 'echarts/charts';
 import { LabelLayout } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
-import { AppRoutes } from '@/utils/AppRoutes';
+import { DashboardCountry } from '@/utils/types';
 
 echarts.use([
   ToolboxComponent,
@@ -22,14 +22,9 @@ echarts.use([
 ]);
 
 const CustomerCountriesChart: FC<{
-  data: any[];
+  data: DashboardCountry[];
   loading: boolean;
 }> = ({ data, loading }) => {
-  const getValue = (level: string) => {
-    if (data) {
-      return data?.find((el) => el.level === level)?.value || 0;
-    }
-  };
   const option = {
     tooltip: {
       trigger: 'item',
@@ -39,12 +34,12 @@ const CustomerCountriesChart: FC<{
 
       formatter: function (params) {
         return `${params.seriesName}<br />
-                ${params.name} سنة: ${params.data.value} طالب (${params.percent}%)`;
+                ${params.name}: ${params.data.value} عميل (${params.percent}%)`;
       },
     },
     legend: {
       top: 'top',
-      formatter: '{name} سنة',
+      formatter: '{name}',
     },
     toolbox: {
       show: true,
@@ -60,13 +55,13 @@ const CustomerCountriesChart: FC<{
     },
     series: [
       {
-        name: 'سن الطلاب',
+        name: 'عدد العملاء',
         type: 'pie',
         radius: [30, 100],
         center: ['50%', '50%'],
         roseType: 'area',
         label: {
-          formatter: '{c} طالب',
+          formatter: '{c} عميل',
           fontSize: 12,
         },
         emphasis: {
@@ -75,31 +70,14 @@ const CustomerCountriesChart: FC<{
         itemStyle: {
           borderRadius: 8,
         },
-        data: [
-          {
-            value: 'level',
-            name: '13',
-          },
-          { value: 'level', name: '14' },
-          { value: 'level', name: '15' },
-          { value: 'level', name: '16' },
-          { value: 'level', name: '17' },
-          { value: 'level', name: '18' },
-          { value: 'level', name: '19' },
-        ],
+        data,
       },
     ],
   };
-
-  const {
-    token: { colorPrimaryBg },
-  } = theme.useToken();
-
   return (
     <Card
-      title="عدد الطلاب المسجلين حسب السن"
+      title="تصنيف البلدان"
       style={{
-        backgroundColor: colorPrimaryBg,
         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
       }}
     >

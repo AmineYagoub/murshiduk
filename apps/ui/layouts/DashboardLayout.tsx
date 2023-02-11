@@ -115,7 +115,7 @@ const DashboardLayout = ({ children }) => {
         </Sider>
         <StyledContent>{children}</StyledContent>
       </Layout>
-      <Footer>Footer</Footer>
+      <Footer />
     </Layout>
   );
 };
