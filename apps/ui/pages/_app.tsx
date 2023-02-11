@@ -1,4 +1,3 @@
-import './global.css';
 import 'antd/dist/reset.css';
 import theme from '@/config/Theme';
 import { AppProps } from 'next/app';
@@ -27,17 +26,8 @@ interface MyAppProps extends AppProps {
 }
 
 export default function CustomApp(props: MyAppProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const queryClient = new QueryClient();
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
-  useEffect(() => {
-    notification.config({
-      placement: 'topRight',
-      duration: 4,
-      rtl: true,
-    });
-  }, []);
-
   return (
     <CacheProvider value={emotionCache}>
       <ConfigProvider locale={ar} direction="rtl" theme={theme}>

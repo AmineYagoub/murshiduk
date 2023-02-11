@@ -50,4 +50,4 @@ PrivacyPolicyPage.getLayout = (page: EmotionJSX.Element) => (
   <BlogLayout>{page}</BlogLayout>
 );
 
-export default withAuth(PrivacyPolicyPage, null, true);
+export default withAuth(PrivacyPolicyPage, true);

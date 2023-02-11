@@ -13,6 +13,8 @@ import {
 } from '@/utils/Mapper';
 import PreviewContact from '@/components/contact/PreviewContact';
 import DeleteContact from '@/components/contact/DeleteContact';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { fetchApp } from '@/hooks/app/query.hook';
 
 const AdminManageOrders = () => {
   const { methods, data, isLoading } = useContacts();
@@ -95,4 +97,21 @@ const AdminManageOrders = () => {
 AdminManageOrders.getLayout = (page: EmotionJSX.Element) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-export default withAuth(AdminManageOrders, null, true);
+
+export async function getServerSideProps() {
+  try {
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(['getApp'], () => fetchApp());
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+}
+
+export default withAuth(AdminManageOrders);

@@ -23,9 +23,9 @@ const nextConfig = {
     emotion: true,
     // removeConsole: true,
   },
-  transpilePackages: ['antd'],
+  transpilePackages: ['antd', 'echarts', 'zrender'],
   images: {
-    domains: ['flagcdn.com', 'www.travellwd.com'],
+    domains: ['flagcdn.com'],
   },
   nx: {
     svgr: false,

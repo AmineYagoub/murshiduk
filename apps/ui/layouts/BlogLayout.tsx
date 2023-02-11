@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import mobile from 'is-mobile';
 import { AppRoutes } from '../utils';
 import styled from '@emotion/styled';
@@ -13,6 +12,7 @@ import WhatsAppIcon from '@/components/common/icons/WhatsAppIcon';
 import { FloatButton, Layout, Menu, Button, Popover } from 'antd';
 import MessengerIcon from '@/components/common/icons/MessengerIcon';
 import { WhatsAppOutlined, LoadingOutlined } from '@ant-design/icons';
+import Logo from '@/components/common/Logo';
 
 const { Header } = Layout;
 
@@ -54,12 +54,7 @@ const BlogLayout = ({ children }) => {
   return (
     <Layout>
       <StyledHeader>
-        <Image
-          src="https://img.logoipsum.com/264.svg"
-          alt="logo"
-          width={150}
-          height={60}
-        />
+        <Logo />
         <nav>
           <Menu
             theme="light"

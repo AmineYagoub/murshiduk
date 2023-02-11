@@ -43,4 +43,4 @@ ContactUsPage.getLayout = (page: EmotionJSX.Element) => (
   <HomeLayout>{page}</HomeLayout>
 );
 
-export default withAuth(ContactUsPage, null, true);
+export default withAuth(ContactUsPage, true);

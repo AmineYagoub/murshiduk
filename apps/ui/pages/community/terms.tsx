@@ -71,4 +71,4 @@ TermsAndConditionsPage.getLayout = (page: EmotionJSX.Element) => (
   <BlogLayout>{page}</BlogLayout>
 );
 
-export default withAuth(TermsAndConditionsPage, null, true);
+export default withAuth(TermsAndConditionsPage, true);

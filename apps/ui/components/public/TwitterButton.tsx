@@ -11,20 +11,6 @@ const StyledTweet = styled(Button)({
 });
 
 const TwitterButton = ({ twitter }: { twitter: string }) => {
-  {
-    /* <StyledDiv>
-      <a
-        href="https://twitter.com/intent/tweet?screen_name=TwitterDev&ref_src=twsrc%5Etfw"
-        className="twitter-mention-button"
-        data-size="large"
-        data-lang="ar"
-        data-show-count="false"
-      >
-        Tweet to @TwitterDev
-      </a>
-      <Script async src="https://platform.twitter.com/widgets.js"></Script>
-    </StyledDiv> */
-  }
   return (
     <StyledTweet
       block

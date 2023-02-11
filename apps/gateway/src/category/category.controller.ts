@@ -18,16 +18,19 @@ import { UpdateCategoryDto } from '../dto/category/update';
 import { CategoryPaginationDto } from '../dto/category/pagination';
 import { OrderBlogArgs, WhereBlogArgs } from '../dto/blog/pagination';
 import { OrderByType } from '../dto/common/pagination';
+import { isPublic } from '../decorators/isPublic.decorator';
 
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @isPublic()
   @Get(':id')
   async getCategoryById(@Param('id') id: string) {
     return this.categoryService.category({ id });
   }
 
+  @isPublic()
   @Get('slug/:slug')
   async getCategoryBySlug(@Param('slug') slug: string) {
     return this.categoryService.category({ slug });

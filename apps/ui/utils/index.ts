@@ -6,6 +6,7 @@ export * from './animation/WebGLCarousel';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ar';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { User } from './types';
 dayjs.extend(relativeTime);
 dayjs.locale('ar');
 
@@ -43,6 +44,12 @@ export const readingTime = (article: HTMLDivElement) => {
 
 export const getTitleMeta = (siteTitle: string, pageTitle?: string) =>
   pageTitle ? `${siteTitle} | ${pageTitle}` : `${siteTitle}`;
+
+export const getProfileName = (user: User) => {
+  return user.profile
+    ? `${user.profile?.firstName} ${user.profile?.lastName}`
+    : 'يرجى إكمال البروفايل الخاص بك';
+};
 
 export const getFirstImageFromContent = (content: string) => {
   return content

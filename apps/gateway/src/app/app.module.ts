@@ -8,6 +8,8 @@ import { CategoryModule } from '../category/category.module';
 import { RoleModule } from '../authorizations/role.module';
 import { PrismaService } from './prisma.service';
 import { ContactModule } from '../contact/contact.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JWTAuthGuard } from '../guards/auth.guard';
 
 @Module({
   imports: [
@@ -19,6 +21,13 @@ import { ContactModule } from '../contact/contact.module';
     CategoryModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [
+    AppService,
+    PrismaService,
+    {
+      provide: APP_GUARD,
+      useClass: JWTAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

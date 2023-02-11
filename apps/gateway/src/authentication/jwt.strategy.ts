@@ -1,11 +1,10 @@
 import { parse } from 'cookie';
-import { ExtractJwt, Strategy } from 'passport-jwt';
-
-import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { AppConfigType, APP_CONFIG_REGISTER_KEY } from '@travel/config';
 import { PrismaService } from '../app/prisma.service';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { AppConfigType, APP_CONFIG_REGISTER_KEY } from '@travel/config';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
@@ -28,6 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     { sub, nonce }: { sub: string; nonce: string }
   ) {
     const cookies = request.headers['cookie'];
+
     if (!cookies) {
       throw new UnauthorizedException();
     }
@@ -41,9 +41,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException();
     }
     // TODO looking up the userId in a list of revoked tokens,
-    return this.prismaService.user.findUniqueOrThrow({
+    const user = await this.prismaService.user.findUniqueOrThrow({
       where: { id: sub },
       include: { profile: true, role: true },
     });
+    delete user.password;
+    return user;
   }
 }

@@ -37,4 +37,12 @@ Todo today
 - Admin settings with all pages - done
 - settings for all icons - done
 - pagination in all models with base queries -done
-- manage contacts
+- manage contacts - done
+
+* update profile and password
+* Dashboard analytics
+* contact me page
+* RWD and PWA
+* SEO for all pages
+* install minio
+* deploy to production

@@ -9,6 +9,8 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import DeleteCategory from '@/components/category/DeleteCategory';
 import { useCategories } from '@/hooks/category/query.hook';
 import { formatDate } from '@/utils/index';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { fetchApp } from '@/hooks/app/query.hook';
 
 const AdminManageCategories = () => {
   const { methods, data, isLoading, filteredInfo, sortedInfo } =
@@ -75,4 +77,20 @@ const AdminManageCategories = () => {
 AdminManageCategories.getLayout = (page: EmotionJSX.Element) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-export default withAuth(AdminManageCategories, null, true);
+export async function getServerSideProps() {
+  try {
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(['getApp'], () => fetchApp());
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+}
+
+export default withAuth(AdminManageCategories);

@@ -5,6 +5,8 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import TimeLineSection from '@/components/home/TimeLineSection';
 import ContactUsSection from '@/components/home/ContactUsSection';
 import LatestBlogsSection from '@/components/home/LatestBlogsSection';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { fetchApp } from '@/hooks/app/query.hook';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,4 +29,20 @@ export default function Home() {
       <LatestBlogsSection />
     </>
   );
+}
+
+export async function getServerSideProps() {
+  try {
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(['getApp'], () => fetchApp());
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
 }

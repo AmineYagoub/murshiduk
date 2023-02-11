@@ -7,5 +7,9 @@ const config = {
   API_URL: 'http://localhost:3000',
   JWT_TOKEN:
     typeof window === 'undefined' ? null : localStorage.getItem(jwtName),
+  JWT_NAME: jwtName,
+  REFRESH_JWT_NAME: refreshJwtName,
+  NONCE_NAME: nonceName,
+  IS_CLIENT: typeof window !== 'undefined',
 };
 export default config;

@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
 import { Avatar, List } from 'antd';
-import { formatDate } from '@/utils/index';
+import { formatDate, getProfileName } from '@/utils/index';
 import Link from 'next/link';
+import { User } from '@/utils/types';
 
 interface DataProp {
   title: string;
@@ -27,15 +28,15 @@ const RelatedBlogs: FC<{ data: DataProp[] }> = ({ data }) => {
         renderItem={(item) => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={item.author.profile.avatar} />}
+              avatar={<Avatar src={item.author.profile?.avatar} />}
               title={
                 <Link href={`/blog/${item.slug}`}>
                   <h3>{item.title}</h3>
                 </Link>
               }
-              description={`${item.author.profile.firstName} ${
-                item.author.profile.lastName
-              } - ${formatDate(item.created)}`}
+              description={`${getProfileName(
+                item.author as User
+              )} - ${formatDate(item.created)}`}
             />
           </List.Item>
         )}

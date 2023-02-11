@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { formatDate } from '@/utils/index';
+import { formatDate, getProfileName } from '@/utils/index';
 import BlogLayout from '@/layout/BlogLayout';
 import { TagOutlined } from '@ant-design/icons';
 import Loading from '@/components/common/Loading';
@@ -12,6 +12,7 @@ import { dehydrate, QueryClient } from '@tanstack/react-query';
 import TwitterButton from '@/components/public/TwitterButton';
 import RelatedBlogs from '@/components/public/RelatedBlogs';
 import ShareButtons from '@/components/public/ShareButtons';
+import { User } from '@/utils/types';
 
 export const StyledArticle = styled('article')({
   color: '#374151 !important',
@@ -66,7 +67,7 @@ export const StyledCard = styled(Card)({
 
 const BlogPage = () => {
   const { data } = useBlog();
-  const author = data?.author;
+  const author = data?.author as User;
   return data ? (
     <>
       <Row justify="space-around">
@@ -76,8 +77,8 @@ const BlogPage = () => {
             style={{ backgroundColor: 'transparent', boxShadow: 'none' }}
           >
             <Card.Meta
-              avatar={<Avatar src={author.profile.avatar} />}
-              title={`${author.profile.firstName} ${author.profile.lastName}`}
+              avatar={<Avatar src={author.profile?.avatar} />}
+              title={getProfileName(author)}
               description={`آخر تحديث تم ${formatDate(data.updated)}`}
             />
           </Card>
@@ -100,9 +101,9 @@ const BlogPage = () => {
         <Col span={6}>
           <StyledCard>
             <Card.Meta
-              avatar={<Avatar src={author.profile.avatar} size="large" />}
-              title={`${author.profile.firstName} ${author.profile.lastName}`}
-              description="مرشد سياحي"
+              avatar={<Avatar src={author.profile?.avatar} size="large" />}
+              title={getProfileName(author)}
+              description={author.profile?.title}
             />
             <TwitterButton twitter="@TwitterProfile" />
             <h5>
@@ -155,4 +156,4 @@ export async function getServerSideProps({ req, query }) {
 BlogPage.getLayout = (page: EmotionJSX.Element) => (
   <BlogLayout>{page}</BlogLayout>
 );
-export default withAuth(BlogPage, null, true);
+export default withAuth(BlogPage, true);

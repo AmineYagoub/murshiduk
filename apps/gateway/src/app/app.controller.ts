@@ -6,6 +6,7 @@ import {
   Query,
   Put,
 } from '@nestjs/common';
+import { isPublic } from '../decorators/isPublic.decorator';
 import { UpdateAppConfigDto } from '../dto/common/app.dto';
 
 import { AppService } from './app.service';
@@ -14,6 +15,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @isPublic()
   @Get()
   async findAppConfig(
     @Query('field', new DefaultValuePipe(undefined)) field?: string

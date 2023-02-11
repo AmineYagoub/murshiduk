@@ -8,7 +8,11 @@ import { withAuth } from '@/components/auth/withAuth';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { fetchBlogs, useBlogs } from '@/hooks/blog/query.hook';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { formatDate, getFirstImageFromContent } from '@/utils/index';
+import {
+  formatDate,
+  getFirstImageFromContent,
+  getProfileName,
+} from '@/utils/index';
 
 const limit = 10;
 const { Search } = Input;
@@ -76,15 +80,15 @@ const BlogPages = () => {
             }
           >
             <List.Item.Meta
-              avatar={<Avatar src={item.author.profile.avatar} />}
+              avatar={<Avatar src={item.author.profile?.avatar} />}
               title={
                 <Link href={`/blog/${item.slug}`}>
                   <h3>{item.title}</h3>
                 </Link>
               }
-              description={`${item.author.profile.firstName} ${
-                item.author.profile.lastName
-              } - ${formatDate(item.created)}`}
+              description={`${getProfileName(item.author)} - ${formatDate(
+                item.created
+              )}`}
             />
             {item.descriptionMeta}
           </List.Item>
@@ -132,4 +136,4 @@ export async function getServerSideProps({ req, query }) {
 BlogPages.getLayout = (page: EmotionJSX.Element) => (
   <BlogLayout>{page}</BlogLayout>
 );
-export default withAuth(BlogPages, null, true);
+export default withAuth(BlogPages, true);

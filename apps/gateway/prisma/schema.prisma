@@ -38,9 +38,14 @@ model Permission {
   roles                 Role[]
 }
 
+enum RoleTitle {
+  USER
+  ADMIN
+  MODERATOR
+}
 model Role {
   id                    String    @id @default(uuid())
-  title                 String    @db.VarChar(100) @unique
+  title                 RoleTitle @unique
   description           String?   @db.VarChar(250) @default("")
   created               DateTime  @default(now())
   updated               DateTime  @updatedAt
@@ -92,7 +97,7 @@ model Category {
 
 model Blog {
   id                    String     @id @default(uuid())
-  author                User       @relation(fields: [authorId], references: [id])
+  author                User       @relation(fields: [authorId], references: [id], onDelete: NoAction)
   authorId              String
   title                 String     @db.VarChar(100)
   slug                  String     @db.VarChar(100) @unique
@@ -128,7 +133,7 @@ model ContactNotes {
   created               DateTime          @default(now())
   updated               DateTime          @updatedAt
 
-  author                User              @relation(fields: [authorId], references: [id])
+  author                User              @relation(fields: [authorId], references: [id], onDelete: NoAction)
   authorId              String
 
   contact               Contact           @relation(fields: [contactId], references: [id])

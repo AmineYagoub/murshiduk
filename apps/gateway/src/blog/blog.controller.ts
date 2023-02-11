@@ -17,16 +17,19 @@ import { CreateBlogDto } from '../dto/blog/create';
 import { UpdateBlogDto } from '../dto/blog/update';
 import { OrderByType } from '../dto/common/pagination';
 import { OrderBlogArgs, WhereBlogArgs } from '../dto/blog/pagination';
+import { isPublic } from '../decorators/isPublic.decorator';
 
 @Controller('blog')
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
 
+  @isPublic()
   @Get(':id')
   async getBlogById(@Param('id') id: string): Promise<Blog> {
     return this.blogService.blog({ id });
   }
 
+  @isPublic()
   @Get('slug/:slug')
   async getBlogBySlug(@Param('slug') slug: string) {
     const blog = await this.blogService.blog({ slug });
@@ -85,6 +88,7 @@ export class BlogController {
     return this.blogService.deleteBlog({ id });
   }
 
+  @isPublic()
   @Get('filter')
   async getFilteredBlogs(
     @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip: number,

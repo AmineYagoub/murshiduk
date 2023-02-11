@@ -11,9 +11,11 @@ import DashboardLayout from '@/layout/DashboardLayout';
 import PreviewBlog from '@/components/blog/PreviewBlog';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { getMapperLabel, rolesMappedTypes } from '@/utils/Mapper';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { fetchApp } from '@/hooks/app/query.hook';
 
 const AdminManageBlogs = () => {
-  const { methods, data, isLoading, filteredInfo, sortedInfo } = useBlogs();
+  const { methods, data, isLoading } = useBlogs();
   const columns: ColumnsType<Blog> = [
     {
       title: 'العنوان',
@@ -95,4 +97,21 @@ const AdminManageBlogs = () => {
 AdminManageBlogs.getLayout = (page: EmotionJSX.Element) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-export default withAuth(AdminManageBlogs, null, true);
+
+export async function getServerSideProps() {
+  try {
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(['getApp'], () => fetchApp());
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+}
+
+export default withAuth(AdminManageBlogs);

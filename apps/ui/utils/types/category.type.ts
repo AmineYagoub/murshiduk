@@ -3,6 +3,7 @@ import { OrderByType } from './blog.type';
 export type Category = {
   id: string;
   title: string;
+  slug: string;
   parent?: Category;
   blogs?: { id: string }[];
 };
@@ -12,6 +13,7 @@ export type CategoryDataIndex = keyof Category;
 export const CategoryFields: { [P in CategoryDataIndex]: P } = {
   id: 'id',
   title: 'title',
+  slug: 'slug',
   parent: 'parent',
   blogs: 'blogs',
 };

@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, RoleTitle } from '@prisma/client';
 import { UserModel } from './auth.type';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -14,6 +14,7 @@ import { NonceService } from './nonce.service';
 import { PasswordService } from './password.service';
 import { PrismaService } from '../app/prisma.service';
 import { AppConfigType, APP_CONFIG_REGISTER_KEY } from '@travel/config';
+import { SignUpDto } from '../dto/auth/signup';
 
 @Injectable()
 export class AuthService {
@@ -31,15 +32,56 @@ export class AuthService {
    * @param data: SignUpDto
    * @returns Promise<boolean>
    */
-  async signUp(data: Prisma.UserCreateInput) {
+  async signUp() {
     try {
-      return this.prisma.user.create({ data });
+      const data = await this.buildUser({
+        email: 'user@example.com',
+        password: '12345',
+        role: RoleTitle.ADMIN,
+      });
+      await this.prisma.user.create({ data });
+      return true;
     } catch (error) {
       if (error.code === 'P2002') {
         throw new UnprocessableEntityException(error);
       }
       Logger.error(error);
     }
+  }
+
+  /**
+   * Build Prisma User Input.
+   *
+   * @param data SignUpDto
+   * @param emailToken string
+   * @returns Promise<Prisma.UserCreateInput>
+   */
+  private async buildUser(data: SignUpDto) {
+    const { password, email, role } = data;
+    const hashedPassword = await this.passwordService.hashPassword(password);
+    const user: Prisma.UserCreateInput = {
+      password: hashedPassword,
+      email,
+      role: {
+        connectOrCreate: {
+          create: {
+            title: role,
+          },
+          where: {
+            title: role,
+          },
+        },
+      },
+      profile: {
+        create: {
+          avatar: '/icons/user-avatar.svg',
+          firstName: 'ماجد',
+          lastName: 'الحربي',
+          dateOfBirth: new Date(),
+        },
+      },
+    };
+    return user;
   }
 
   /**
@@ -69,7 +111,7 @@ export class AuthService {
       return await this.generateJWTTokenFor(user);
     } catch (error) {
       Logger.error(error);
-      throw new HttpException(error, error?.status || HttpStatus.NOT_FOUND);
+      throw new UnauthorizedException(error.message);
     }
   }
 

@@ -48,4 +48,4 @@ AboutUsPage.getLayout = (page: EmotionJSX.Element) => (
   <BlogLayout>{page}</BlogLayout>
 );
 
-export default withAuth(AboutUsPage, null, true);
+export default withAuth(AboutUsPage, true);

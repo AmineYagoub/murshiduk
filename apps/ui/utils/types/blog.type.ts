@@ -1,4 +1,5 @@
-import { Profile } from './user.type';
+import { Profile, User } from './user.type';
+import { Category } from './category.type';
 
 export type Blog = {
   id: string;
@@ -9,13 +10,8 @@ export type Blog = {
   published: boolean;
   created: string;
   updated: string;
-  author: {
-    profile: Profile;
-    role: {
-      title: string;
-    };
-  };
-  categories: { id: string; title: string; slug: string }[];
+  author: User;
+  categories: Category[];
   recommended: {
     title: string;
     slug: string;

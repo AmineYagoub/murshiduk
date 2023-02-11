@@ -1,11 +1,13 @@
 import { Tabs } from 'antd';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { fetchApp } from '@/hooks/app/query.hook';
 import { withAuth } from '@/components/auth/withAuth';
 import DashboardLayout from '@/layout/DashboardLayout';
 import { AppRoutes, getTitleMeta } from '@/utils/index';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import AppSettingsForm from '@/components/settings/AppSettingsForm';
 
@@ -101,4 +103,21 @@ const AdminManageSettings = () => {
 AdminManageSettings.getLayout = (page: EmotionJSX.Element) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
-export default withAuth(AdminManageSettings, null, true);
+
+export async function getServerSideProps() {
+  try {
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(['getApp'], () => fetchApp());
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+}
+
+export default withAuth(AdminManageSettings);

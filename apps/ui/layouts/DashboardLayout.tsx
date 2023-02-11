@@ -6,11 +6,14 @@ import {
   MenuUnfoldOutlined,
   SettingFilled,
   HomeFilled,
+  LogoutOutlined,
   AppstoreFilled,
+  EnterOutlined,
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { AppRoutes } from '../utils/index';
 import Link from 'next/link';
+import Logo from '@/components/common/Logo';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -26,11 +29,12 @@ export const StyledContent = styled(Content)({
   },
 });
 
-const Logo = styled('div')({
-  height: 32,
-  margin: 16,
-  background: 'rgba(255, 255, 255, 0.3)',
-  maxWidth: 200,
+export const StyledHeader = styled(Header)({
+  boxShadow:
+    '0px 2px 4px rgba(31, 41, 55, 0.06), 0px 4px 6px rgba(100, 116, 139, 0.12)',
+  '.trigger': {
+    margin: '0 10px',
+  },
 });
 
 const DashboardLayout = ({ children }) => {
@@ -41,15 +45,13 @@ const DashboardLayout = ({ children }) => {
   } = theme.useToken();
   return (
     <Layout>
-      <Header
-        style={{ padding: 0, background: colorPrimaryBg, display: 'flex' }}
-      >
+      <StyledHeader style={{ background: colorPrimaryBg }}>
         <Logo />
         {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
           className: 'trigger',
           onClick: () => setCollapsed(!collapsed),
         })}
-      </Header>
+      </StyledHeader>
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed} theme="light">
           <Menu
@@ -67,10 +69,10 @@ const DashboardLayout = ({ children }) => {
               },
               {
                 key: AppRoutes.AdminManageOrders,
-                icon: <AppstoreFilled className="hide" />,
-                label: (
-                  <Link href={AppRoutes.AdminManageOrders}>طلبات التواصل</Link>
+                icon: (
+                  <EnterOutlined className="blue" style={{ marginRight: 20 }} />
                 ),
+                label: <Link href={AppRoutes.AdminManageOrders}>العملاء</Link>,
               },
               {
                 key: AppRoutes.AdminManageCategories,
@@ -81,12 +83,16 @@ const DashboardLayout = ({ children }) => {
               },
               {
                 key: AppRoutes.AdminManageBlogs,
-                icon: <AppstoreFilled className="hide" />,
+                icon: (
+                  <EnterOutlined className="blue" style={{ marginRight: 20 }} />
+                ),
                 label: <Link href={AppRoutes.AdminManageBlogs}>التدوينات</Link>,
               },
               {
                 key: AppRoutes.AdminManageComments,
-                icon: <AppstoreFilled className="hide" />,
+                icon: (
+                  <EnterOutlined className="blue" style={{ marginRight: 20 }} />
+                ),
                 label: (
                   <Link href={AppRoutes.AdminManageComments}>التعليقات</Link>
                 ),
@@ -97,6 +103,12 @@ const DashboardLayout = ({ children }) => {
                 label: (
                   <Link href={AppRoutes.AdminManageSettings}>الإعدادات</Link>
                 ),
+              },
+              {
+                key: AppRoutes.SignOut,
+                icon: <LogoutOutlined className="blue" />,
+
+                label: <Link href={AppRoutes.SignOut}>تسجيل الخروج</Link>,
               },
             ]}
           />

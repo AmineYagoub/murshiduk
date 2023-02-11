@@ -1,28 +1,23 @@
-import { ContactStatus } from './types';
+import { ContactStatus, RoleTitle } from './types';
 
 export type Mapper<T> = {
   value: T;
   label: string;
 };
-export enum RoleTitle {
-  Admin = 'ADMIN',
-  Moderator = 'MODERATOR',
-  User = 'USER',
-}
 
 export const rolesMappedTypes: Mapper<RoleTitle>[] = [
   {
     label: 'المدير العام',
-    value: RoleTitle.Admin,
+    value: RoleTitle.ADMIN,
   },
   {
     label: 'المشرف',
-    value: RoleTitle.Moderator,
+    value: RoleTitle.MODERATOR,
   },
 
   {
-    label: 'user',
-    value: RoleTitle.User,
+    label: 'المستخدم',
+    value: RoleTitle.USER,
   },
 ];
 

@@ -35,9 +35,8 @@ export class NonceInterceptor implements NestInterceptor {
       map((response) => {
         if (response) {
           const { nonce, ...jwt } = response;
-          // httpAdapter.getRequestUrl(ctx?.getRequest()), from filter
           const res = context.switchToHttp().getResponse();
-          res.setHeader('Cookie', this.buildCookie(nonce));
+          res.header('Set-Cookie', this.buildCookie(nonce));
           return jwt;
         }
       })
