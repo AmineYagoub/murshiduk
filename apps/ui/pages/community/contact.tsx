@@ -1,38 +1,55 @@
 import Head from 'next/head';
 import styled from '@emotion/styled';
-import HomeLayout from '@/layout/HomeLayout';
-
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { getTitleMeta } from '@/utils/index';
-import { App } from '@/utils/types';
+import BlogLayout from '@/layout/BlogLayout';
 import { withAuth } from '@/components/auth/withAuth';
+import ContactForm from '@/components/home/ContactForm';
+import { fetchApp, useApp } from '@/hooks/app/query.hook';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
 const StyledSection = styled('section')({
-  backgroundColor: '#f8f8f8 !important',
-  padding: '1em 5em',
-  p: {
-    whiteSpace: 'normal',
-    fontSize: '1.1rem',
+  height: '90vh',
+  form: {
+    top: '15vh',
+    backgroundImage: 'linear-gradient(to right, #29323c, #485563, #29323c)',
+    maxWidth: 750,
+    padding: '75px 75px 25px',
+    borderRadius: '25% 0',
+    textAlign: 'center',
+    filter: 'drop-shadow(5px 5px 10px #666)',
+  },
+  '.ant-result-title': {
+    color: '#222 !important',
+  },
+  '.ant-result-subtitle': {
+    color: '#222 !important',
   },
 });
 
-export function ContactUsPage({ data }: { data: App }) {
+export function ContactUsPage() {
+  const { data } = useApp();
   return (
     <StyledSection>
       <Head>
         <title>{getTitleMeta(data?.title, 'تواصل معي')}</title>
         <meta name="description" content={data?.description} />
       </Head>
-      <article dangerouslySetInnerHTML={{ __html: data.aboutUs }} />
+      <ContactForm />
     </StyledSection>
   );
 }
 
-export async function getServerSideProps({ req, query }) {
+export async function getServerSideProps() {
   try {
-    console.log('');
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery(['getApp'], () => fetchApp());
+    return {
+      props: {
+        dehydratedState: dehydrate(queryClient),
+      },
+    };
   } catch (error) {
-    console.error(error);
     return {
       notFound: true,
     };
@@ -40,7 +57,7 @@ export async function getServerSideProps({ req, query }) {
 }
 
 ContactUsPage.getLayout = (page: EmotionJSX.Element) => (
-  <HomeLayout>{page}</HomeLayout>
+  <BlogLayout>{page}</BlogLayout>
 );
 
 export default withAuth(ContactUsPage, true);

@@ -10,6 +10,7 @@ import {
   Result,
 } from 'antd';
 import Image from 'next/image';
+import styled from '@emotion/styled';
 import { Logger } from '@/utils/Logger';
 import { FocusEvent, useState } from 'react';
 import { ContactCreateInput } from '@/utils/types';
@@ -24,6 +25,75 @@ export type PhoneType = {
 };
 
 const { Option } = Select;
+
+const StyledResult = styled(Result)({
+  marginTop: '25vh',
+  '.ant-result-title': {
+    color: '#fff',
+    fontSize: '2.5rem !important',
+  },
+  '.ant-result-subtitle': {
+    color: '#fff',
+  },
+});
+
+const StyledForm = styled(Form)({
+  fontFamily: 'inherit',
+  position: 'absolute',
+  right: '50%',
+  transform: 'translateX(50%) !important',
+  top: '25vh',
+  width: '100%',
+  maxWidth: 650,
+  input: {
+    background: 'transparent',
+    border: '2px solid #fff',
+    color: 'floralwhite !important',
+    fontWeight: 'bold',
+  },
+  textArea: {
+    background: 'transparent',
+    border: '2px solid #fff',
+    color: 'floralwhite !important',
+    fontWeight: 'bold',
+  },
+  '.ant-select-selector': {
+    border: '1px solid #fff !important',
+    background: 'floralwhite !important',
+  },
+  '.ant-picker': {
+    background: 'transparent',
+    border: '2px solid #fff',
+    color: 'floralwhite',
+    fontWeight: 'bold',
+    '& ::placeholder': {
+      color: '#ccc !important',
+    },
+    svg: {
+      color: '#ccc !important',
+    },
+  },
+  '.ant-input-number': {
+    background: 'transparent',
+    border: '2px solid #fff',
+    color: 'floralwhite',
+    fontWeight: 'bold',
+    width: '100%',
+  },
+
+  label: {
+    color: '#fff !important',
+  },
+  button: {
+    width: 300,
+  },
+  h6: {
+    color: '#fff',
+    fontSize: '1.3rem',
+    fontWeight: 'bold',
+    marginBottom: '1.5em',
+  },
+});
 
 const ContactForm = () => {
   const { mutateAsync, isLoading } = useCreateContact();
@@ -86,7 +156,7 @@ const ContactForm = () => {
   };
 
   return !isSubmitForm ? (
-    <Form onFinish={onFinish} layout="vertical" size="middle">
+    <StyledForm onFinish={onFinish} layout="vertical" size="middle">
       <Row gutter={8} justify="center">
         <h6>أحصل على إستشارة مجانية حول قضاء عطلتك في تركيا</h6>
         <Col span={12}>
@@ -182,9 +252,9 @@ const ContactForm = () => {
           أرسل
         </Button>
       </Form.Item>
-    </Form>
+    </StyledForm>
   ) : (
-    <Result
+    <StyledResult
       status="success"
       title="تم إستقبال طلبك بنجاح !"
       subTitle="سيتم التواصل معك خلال الساعات القادمة, سنكون سعداء جداً بخدمتك."

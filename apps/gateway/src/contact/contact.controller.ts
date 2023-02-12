@@ -15,6 +15,7 @@ import { ContactService } from './contact.service';
 import { WhereContactArgs } from '../dto/contact/pagination';
 import { CreateContactDto, CreateContactNoteDto } from '../dto/contact/create';
 import { UpdateContactDto } from '../dto/contact/update';
+import { isPublic } from '../decorators/isPublic.decorator';
 
 @Controller('contact')
 export class ContactController {
@@ -25,6 +26,7 @@ export class ContactController {
     return this.contactService.contact({ id });
   }
 
+  @isPublic()
   @Post()
   async createContact(@Body() body: CreateContactDto) {
     return this.contactService.createContact(body);

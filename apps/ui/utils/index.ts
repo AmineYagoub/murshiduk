@@ -43,7 +43,9 @@ export const readingTime = (article: HTMLDivElement) => {
 };
 
 export const getTitleMeta = (siteTitle: string, pageTitle?: string) =>
-  pageTitle ? `${siteTitle} | ${pageTitle}` : `${siteTitle}`;
+  pageTitle
+    ? `${siteTitle || 'جاري التحميل'} | ${pageTitle}`
+    : `${siteTitle || 'جاري التحميل'}`;
 
 export const getProfileName = (user: User) => {
   return user.profile
