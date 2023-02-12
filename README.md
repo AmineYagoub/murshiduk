@@ -39,10 +39,10 @@ Todo today
 - pagination in all models with base queries -done
 - manage contacts - done
 
-* update profile, avatar and password
+* update profile, avatar and password - done
 * Dashboard analytics - done
 * contact me page
 * RWD and PWA
 * SEO for all pages
-* install minio
+* install minio - done
 * deploy to production

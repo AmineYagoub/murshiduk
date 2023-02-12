@@ -1,13 +1,24 @@
 import { api } from '@/utils/index';
-import { AuthResponse, SigningInput } from '@/utils/types';
+import {
+  AuthResponse,
+  SigningInput,
+  UpdateUserInput,
+  User,
+} from '@/utils/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-export const useAuthState = (data) => {
+export const useAuthState = <T>(init?: T): [T, (value: T) => void] => {
   const key = 'user';
   const client = useQueryClient();
+  const { data } = useQuery([key], (): T => data, {
+    enabled: false,
+    initialData: init,
+  });
   return [
-    useQuery([key], () => data, { enabled: false, initialData: data }).data,
-    (value) => client.setQueryData([key], value),
+    data,
+    (val) => {
+      client.setQueryData([key], val);
+    },
   ];
 };
 
@@ -18,6 +29,26 @@ export const useLogin = () => {
       return api
         .post('auth/signing', {
           body: JSON.stringify({ email, password }),
+        })
+        .json();
+    },
+    onSuccess: () => client.invalidateQueries({ queryKey: ['user'] }),
+  });
+};
+
+export const useUpdateProfile = () => {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: UpdateUserInput;
+    }): Promise<User> => {
+      return api
+        .put(`auth/${id}`, {
+          body: JSON.stringify(data),
         })
         .json();
     },

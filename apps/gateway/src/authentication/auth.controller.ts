@@ -1,15 +1,16 @@
 import {
   Get,
   Body,
+  Put,
   Post,
+  Param,
   Request,
-  UseGuards,
   Controller,
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from '../dto/auth/signin';
-import { JWTAuthGuard } from '../guards/auth.guard';
+import { UpdateUserAvatarDto, UpdateUserDto } from '../dto/auth/update';
 import { isPublic } from '../decorators/isPublic.decorator';
 import { NonceInterceptor } from '../interceptors/nonce.interceptor';
 
@@ -29,9 +30,21 @@ export class AuthController {
     return this.authService.signing(data);
   }
 
-  @UseGuards(JWTAuthGuard)
   @Get('user')
   getAuthUser(@Request() req) {
     return req.user;
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() data: UpdateUserDto) {
+    return this.authService.updateUser(id, data);
+  }
+
+  @Put(':id/avatar')
+  async updateAvatar(
+    @Param('id') id: string,
+    @Body() data: UpdateUserAvatarDto
+  ) {
+    return this.authService.updateUserAvatar(id, data?.avatar);
   }
 }

@@ -30,6 +30,14 @@ export type SigningInput = {
   password: string;
 };
 
+export type UpdateUserInput = {
+  firstName: string;
+  lastName: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+};
+
 export interface AuthResponse {
   accessToken: string;
   refreshToken: string;

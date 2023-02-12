@@ -1,8 +1,6 @@
 import {
   Logger,
-  HttpStatus,
   Injectable,
-  HttpException,
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
@@ -15,6 +13,7 @@ import { PasswordService } from './password.service';
 import { PrismaService } from '../app/prisma.service';
 import { AppConfigType, APP_CONFIG_REGISTER_KEY } from '@travel/config';
 import { SignUpDto } from '../dto/auth/signup';
+import { UpdateUserDto } from '../dto/auth/update';
 
 @Injectable()
 export class AuthService {
@@ -82,6 +81,44 @@ export class AuthService {
       },
     };
     return user;
+  }
+
+  async updateUser(id: string, data: UpdateUserDto) {
+    try {
+      const { firstName, lastName } = data;
+      const user: Prisma.UserUpdateInput = {
+        profile: {
+          update: {
+            firstName,
+            lastName,
+          },
+        },
+      };
+      if (data?.password) {
+        user.password = await this.passwordService.hashPassword(data.password);
+      }
+      if (data?.email) {
+        user.email = data.email;
+      }
+      return this.prisma.user.update({ where: { id }, data: user });
+    } catch (error) {
+      Logger.error(error);
+    }
+  }
+
+  async updateUserAvatar(id: string, avatar: string) {
+    try {
+      const user: Prisma.UserUpdateInput = {
+        profile: {
+          update: {
+            avatar,
+          },
+        },
+      };
+      return this.prisma.user.update({ where: { id }, data: user });
+    } catch (error) {
+      Logger.error(error);
+    }
   }
 
   /**

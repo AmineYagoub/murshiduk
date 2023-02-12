@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import styled from '@emotion/styled';
 import { Logger } from '@/utils/Logger';
 import BlogLayout from '@/layout/BlogLayout';
@@ -7,11 +6,11 @@ import { Button, Form, Input } from 'antd';
 import { withAuth } from '@/components/auth/withAuth';
 import { useAuthState, useLogin } from '@/hooks/auth/mutation.hook';
 import type { FormInstance, Rule } from 'antd/es/form';
-import { NextPageWithLayout, SigningInput } from '@/utils/types';
+import { NextPageWithLayout, SigningInput, User } from '@/utils/types';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { useRouter } from 'next/router';
 import config from '@/config/App';
-import { fetchAuthUser, useAuthUser } from '@/hooks/auth/query.hook';
+import { fetchAuthUser } from '@/hooks/auth/query.hook';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { fetchApp } from '@/hooks/app/query.hook';
 
@@ -57,7 +56,7 @@ const SignInPage: NextPageWithLayout = () => {
   };
 
   const { isLoading, mutateAsync } = useLogin();
-  const [user, setUser] = useAuthState(null);
+  const [, setUser] = useAuthState<User>();
 
   const onFinish = async (values: SigningInput) => {
     try {
@@ -68,7 +67,10 @@ const SignInPage: NextPageWithLayout = () => {
         localStorage.setItem(config.REFRESH_JWT_NAME, refreshToken);
         const data = await fetchAuthUser(accessToken);
         setUser(data);
-        router.push(AppRoutes.AdminManageDashboard);
+        router.push({
+          pathname: AppRoutes.AdminManageDashboard,
+          query: { from: 'login' },
+        });
       }
     } catch (error) {
       Logger.log(error);

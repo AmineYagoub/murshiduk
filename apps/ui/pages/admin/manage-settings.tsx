@@ -10,6 +10,7 @@ import { AppRoutes, getTitleMeta } from '@/utils/index';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import AppSettingsForm from '@/components/settings/AppSettingsForm';
+import UserDetails from '@/components/auth/UserDetails';
 
 const AppPrivacyForm = dynamic(
   () => import('@/components/settings/AppPrivacyForm'),
@@ -31,6 +32,7 @@ const AppAgreementForm = dynamic(
 );
 
 export enum AppTabs {
+  USER_PROFILE = 'user-profile',
   APP_CONFIG = 'app-config',
   AGREEMENT = 'agreement',
   PRIVACY = 'privacy',
@@ -39,9 +41,9 @@ export enum AppTabs {
 
 const items = [
   {
-    label: 'إعدادات عامة',
-    key: AppTabs.APP_CONFIG,
-    children: <AppSettingsForm />,
+    label: 'الملف الشخصي',
+    key: AppTabs.USER_PROFILE,
+    children: <UserDetails />,
   },
   {
     label: 'الشروط و الأحكام',
@@ -57,6 +59,11 @@ const items = [
     label: 'حول الموقع',
     key: AppTabs.ABOUT_US,
     children: <AppAboutUsForm />,
+  },
+  {
+    label: 'إعدادات عامة',
+    key: AppTabs.APP_CONFIG,
+    children: <AppSettingsForm />,
   },
 ];
 
