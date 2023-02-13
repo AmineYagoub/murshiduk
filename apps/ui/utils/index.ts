@@ -7,8 +7,18 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ar';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { User } from './types';
+import facepaint from 'facepaint';
+
 dayjs.extend(relativeTime);
 dayjs.locale('ar');
+
+export const mq = facepaint([
+  '@media(min-width: 420px)',
+  '@media(min-width: 920px)',
+  '@media(min-width: 1120px)',
+  '@media(min-width: 1370px)',
+  '@media(min-width: 1600px)',
+]);
 
 export const authorId = '3d3bc583-d799-4289-88eb-757aecdfcb69';
 

@@ -41,8 +41,10 @@ Todo today
 
 * update profile, avatar and password - done
 * Dashboard analytics - done
-* contact me page
-* RWD and PWA
-* SEO for all pages
+* contact me page - done
 * install minio - done
+*
+* SEO for all pages
+* Set home page images and settings for CV section
+* RWD and PWA
 * deploy to production

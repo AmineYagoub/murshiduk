@@ -158,6 +158,13 @@ html {
   color: rgba(0, 0, 0, 0.24);
 }
 
+img {
+  max-inline-size: 100%;
+  block-size: auto;
+  object-fit: cover;
+  object-position: top center;
+}
+
 @keyframes move {
   25% {
     opacity: 1;

@@ -4,14 +4,14 @@ import styled from '@emotion/styled';
 import Image from 'next/image';
 import Link from 'next/link';
 import { App } from '@/utils/types';
+import { mq } from '@/utils/index';
 
 const { Footer } = Layout;
 
 export const Copyright = () => (
   <>
     <small>
-      &copy; جميع الحقوق محفوظة لمنصة أولمبياد النحو العربي{' '}
-      {new Date().getFullYear()}
+      جميع الحقوق محفوظة لموقع السياحة &copy; {new Date().getFullYear()}
     </small>
     <small>
       أي علامات تجارية أو شعارات مستخدمة في هذا الموقع هي ملك لأصحابها.
@@ -19,18 +19,26 @@ export const Copyright = () => (
   </>
 );
 
-const NewFooter = styled(Footer)({
-  padding: '50px !important',
-  height: 230,
-  '.ant-row': {
-    margin: '1.6em auto',
-  },
-  small: {
-    display: 'inline-block',
-    width: '100%',
-    textAlign: 'center',
-  },
-});
+const NewFooter = styled(Footer)(
+  mq({
+    opacity: '0.5',
+    zIndex: 1,
+    height: [250, 200],
+    '.ant-row': {
+      margin: '1.4em auto',
+      a: {
+        display: 'inline-block',
+        marginBottom: [15, 0],
+      },
+    },
+    small: {
+      display: 'inline-block',
+      width: '100%',
+      margin: 5,
+      textAlign: 'center',
+    },
+  })
+);
 
 const BlogFooter = ({ siteData }: { siteData: App }) => {
   return (

@@ -1,79 +1,82 @@
-const { useToken } = theme;
 import Image from 'next/image';
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
-import { Col, Row, theme } from 'antd';
+import { Col, Row } from 'antd';
 import { ScrollSmootherAnimation } from '@/utils/animation/ScrollSmoother';
+import { mq } from '@/utils/index';
 
 const WhyUsSection = () => {
-  const { token } = useToken();
-  const StyledSection = styled('section')({
-    backgroundColor: token.colorBgBase,
-    backgroundImage:
-      'linear-gradient(to right top, #123524, #0a3a2f, #02403b, #004547, #004953)',
-    position: 'relative',
-    width: '100%',
-    height: '120vh',
-    minHeight: 1100,
-    textAlign: 'center',
-    color: '#fff',
-    padding: '3em',
-    h2: {
-      fontSize: '1.5rem',
-      opacity: 0,
-    },
-    h3: {
-      fontSize: '4.5rem',
-      opacity: 0,
-      transform: 'scale(1.5)',
-    },
-    img: {
-      objectFit: 'cover',
-      filter: 'drop-shadow(2px 5px 5px #000)',
-      ':first-of-type': {
-        transform: 'rotateZ(-10deg)',
-        left: 0,
-      },
-    },
-    '.travel__borderRadius': {
-      borderTopRightRadius: '50%',
-      borderTopLeftRadius: '50%',
-    },
-    '.travel__fatih-img': {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'end',
-      margin: '8em auto 15em',
-    },
-    '.travel__desc': {
-      textAlign: 'left',
-      maxWidth: 1380,
-      margin: '0 auto',
-    },
-    b: {
-      lineHeight: 2,
-    },
-    p: {
-      lineHeight: 1.5,
-      margin: '2em auto',
-    },
-    '.travel__exp': {
+  const StyledSection = styled('section')(
+    mq({
+      backgroundImage:
+        'linear-gradient(to right top, #123524, #0a3a2f, #02403b, #004547, #004953)',
+      position: 'relative',
+      width: '100%',
+      height: ['170vh', '120vh', '130vh', '140vh', '100vh'],
       textAlign: 'center',
-      margin: '0 auto',
-      maxWidth: 280,
-      opacity: 0,
-      h5: {
+      color: '#fff',
+      padding: '3em',
+      h2: {
         fontSize: '1.5rem',
-        margin: 10,
-        fontWeight: 'normal',
+        opacity: 0,
       },
-    },
-    '.travel__exp-free': {
-      position: 'absolute',
-      bottom: 100,
-      left: 0,
-    },
-  });
+      h3: {
+        fontSize: 'clamp(2rem, 10vw, 4.5rem)',
+        opacity: 0,
+        transform: 'scale(1.5)',
+      },
+      img: {
+        filter: 'drop-shadow(2px 5px 5px #000)',
+        maxWidth: 'clamp(150px, 30vw, 320px)',
+        ':first-of-type': {
+          transform: 'rotateZ(-10deg)',
+          left: 0,
+        },
+      },
+      '.travel__borderRadius': {
+        borderTopRightRadius: '50%',
+        borderTopLeftRadius: '50%',
+      },
+      '.travel__fatih-img': {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'end',
+        margin: '6em auto 15em',
+      },
+      '.travel__desc': {
+        textAlign: 'left',
+        maxWidth: 1380,
+        margin: '0 auto',
+      },
+      b: {
+        lineHeight: 2,
+      },
+      p: {
+        lineHeight: 1.5,
+        margin: '2em auto',
+      },
+      '.travel__cards': {
+        display: ['block', 'flex', 'block'],
+      },
+      '.travel__exp': {
+        textAlign: 'center',
+        margin: '0 auto',
+        maxWidth: 280,
+        opacity: 0,
+        h5: {
+          fontSize: '1.5rem',
+          margin: 10,
+          fontWeight: 'normal',
+        },
+      },
+      '.travel__exp-free': {
+        position: ['relative', 'relative', 'absolute'],
+        bottom: [0, 50, 100],
+        left: 0,
+        background: ['green', 'gray', 'hotpink'],
+      },
+    })
+  );
   useEffect(() => {
     ScrollSmootherAnimation.initInWhyUsSection();
   }, []);
@@ -82,7 +85,7 @@ const WhyUsSection = () => {
       <h2 className="travel__fatih-h2">مالذي يميزنا عن غيرنا</h2>
       <h3 className="travel__fatih-h3">لماذا نحن</h3>
       <Row className="travel__desc">
-        <Col span={6}>
+        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
           <b>
             Majed Travel هي شركة سفر ذات طابع عصري تقدمي ومقرها في تركيا ولدت من
             شغف وحب الإستكشاف للقيام بالأشياء بشكل مختلف.
@@ -99,7 +102,14 @@ const WhyUsSection = () => {
             إيجابي بالنسبة لك.
           </p>
         </Col>
-        <Col span={12} className="travel__fatih-img">
+        <Col
+          xs={24}
+          sm={24}
+          md={24}
+          lg={12}
+          xl={12}
+          className="travel__fatih-img"
+        >
           <Image
             src="/img/fatih-1.jpg"
             width={280}
@@ -115,7 +125,7 @@ const WhyUsSection = () => {
             className="travel__borderRadius travel__fatih-img-2"
           />
         </Col>
-        <Col span={6}>
+        <Col xs={24} sm={24} md={24} lg={6} xl={6} className="travel__cards">
           <section className="travel__exp">
             <Image
               src="/icons/exp-favorite.svg"

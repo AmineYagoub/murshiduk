@@ -85,9 +85,10 @@ export class TimeLineAnimation {
           scrollTrigger: {
             trigger: container,
             scrub: true,
-            start: 'top center',
+            start: 'top 75%',
             end: 'top 40%',
             immediateRender: false,
+            markers: true,
           },
         }
       );

@@ -1,7 +1,5 @@
-import { fetchApp } from '@/hooks/app/query.hook';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { Button, Result } from 'antd';
 import Link from 'next/link';
+import { Button, Result } from 'antd';
 
 // pages/404.js
 export default function Custom505() {

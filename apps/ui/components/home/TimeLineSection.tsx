@@ -3,67 +3,69 @@ import { Col, Row } from 'antd';
 import styled from '@emotion/styled';
 import { memo, useEffect, useState } from 'react';
 import { TimeLineAnimation } from '@/utils/animation/TimeLine';
+import { mq } from '@/utils/index';
 
 const sections = [1993, 1995, 2005, 2012, 2023];
 
-const StyledContainer = styled('section')({
-  position: 'relative',
-  section: {
-    height: '100vh',
-    padding: '5em',
-    figure: {
-      position: 'relative',
-      overflow: 'hidden',
-      borderRadius: '100% 0 0 100%',
-    },
-    img: {
-      objectFit: 'cover',
-      maxHeight: '75vh',
-      maxWidth: '25vw',
-    },
-    '.ant-row': {
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100%',
-      '.section__heading': {
-        direction: 'initial',
-        fontSize: '7rem',
-        fontWeight: 'bolder',
-        clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
-        lineHeight: '8rem',
-        textAlign: 'left',
-        width: '100%',
-        color: '#fff',
+const StyledContainer = styled('section')(
+  mq({
+    position: 'relative',
+    section: {
+      height: '100vh',
+      padding: '5em',
+      figure: {
+        position: 'relative',
+        overflow: 'hidden',
+        borderRadius: '100% 0 0 100%',
       },
-      '.section__heading-char': {
-        display: 'inline-block',
-        color: '#f1ebe5',
-        textShadow:
-          '0 1px 0 #dba1a1, 0 2px 0 #d89999, 0 3px 0 #d59292, 0 4px 0 #d28a8a, 0 5px 0 #cf8383, 0 6px 0 #cd7c7c, 0 7px 0 #ca7474, 0 8px 0 #c76d6d, 0 0 5px rgba(230, 139, 139, 0.05), 0 -1px 3px rgba(230, 139, 139, 0.2), 0 9px 9px rgba(230, 139, 139, 0.3), 0 12px 12px rgba(230, 139, 139, 0.3), 0 15px 15px rgba(230, 139, 139, 0.3)',
+      img: {
+        maxHeight: '80vh',
+        maxWidth: 'clamp(250px, 30vw, 550px)',
       },
-      p: {
-        fontSize: '2rem',
-        color: '#fff',
+      '.ant-row': {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
+        '.section__heading': {
+          direction: 'initial',
+          fontSize: 'clamp(3rem, 20vw, 7rem)',
+          fontWeight: 'bolder',
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          lineHeight: '8rem',
+          textAlign: 'left',
+          width: '100%',
+          color: '#fff',
+        },
+        '.section__heading-char': {
+          display: 'inline-block',
+          color: '#f1ebe5',
+          textShadow:
+            '0 1px 0 #dba1a1, 0 2px 0 #d89999, 0 3px 0 #d59292, 0 4px 0 #d28a8a, 0 5px 0 #cf8383, 0 6px 0 #cd7c7c, 0 7px 0 #ca7474, 0 8px 0 #c76d6d, 0 0 5px rgba(230, 139, 139, 0.05), 0 -1px 3px rgba(230, 139, 139, 0.2), 0 9px 9px rgba(230, 139, 139, 0.3), 0 12px 12px rgba(230, 139, 139, 0.3), 0 15px 15px rgba(230, 139, 139, 0.3)',
+        },
+        p: {
+          fontSize: 'clamp(1rem, 5vw, 2rem)',
+          color: '#fff',
+        },
       },
     },
-  },
 
-  '#section_1': {
-    backgroundImage: 'linear-gradient(to right, #232526, #414345)',
-  },
-  '#section_2': {
-    backgroundImage: 'linear-gradient(to top, #09203f 0%, #537895 100%)',
-  },
-  '#section_3': {
-    backgroundImage: 'linear-gradient(to right, #0f2027, #203a43, #2c5364)',
-  },
-  '#section_4': {
-    backgroundImage: 'linear-gradient(to right, #606c88, #3f4c6b)',
-  },
-  '#section_5': {
-    backgroundImage: 'linear-gradient(120deg, #a6c0fe 0%, #f68084 100%)',
-  },
-});
+    '#section_1': {
+      backgroundImage: 'linear-gradient(to right, #232526, #414345)',
+    },
+    '#section_2': {
+      backgroundImage: 'linear-gradient(to top, #09203f 0%, #537895 100%)',
+    },
+    '#section_3': {
+      backgroundImage: 'linear-gradient(to right, #0f2027, #203a43, #2c5364)',
+    },
+    '#section_4': {
+      backgroundImage: 'linear-gradient(to right, #606c88, #3f4c6b)',
+    },
+    '#section_5': {
+      backgroundImage: 'linear-gradient(120deg, #a6c0fe 0%, #f68084 100%)',
+    },
+  })
+);
 
 const StyledNav = styled('header')({
   position: 'sticky',
@@ -205,8 +207,8 @@ const TimeLineSection = () => {
       <main>
         {sections.map((el, i) => (
           <section id={`section_${i + 1}`} data-section key={el}>
-            <Row>
-              <Col span={10}>
+            <Row gutter={20}>
+              <Col md={10} xs={24}>
                 <figure className="section__figure">
                   <Image
                     src="/img/businessman.jpg"
@@ -216,7 +218,7 @@ const TimeLineSection = () => {
                   />
                 </figure>
               </Col>
-              <Col span={14}>
+              <Col md={14} xs={24}>
                 <h2 className="section__heading" data-section-title={el} />
                 <p>صورة أخرى مع وصف قصير لخبراتك في هاذي المرحلة</p>
               </Col>

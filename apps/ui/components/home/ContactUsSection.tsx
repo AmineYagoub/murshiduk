@@ -3,31 +3,33 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import ContactForm from './ContactForm';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { mq } from '@/utils/index';
 
-const StyledSection = styled('section')({
-  position: 'relative',
-  width: '100%',
-  height: '100vh',
-  textAlign: 'center',
-  color: '#fff',
-  padding: '3em',
-  '#scene': {
-    display: 'block',
+const StyledSection = styled('section')(
+  mq({
+    position: 'relative',
     width: '100%',
-    height: '100vh',
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-    zIndex: -20,
-  },
-  '.scrollElement': {
-    position: 'absolute',
-    height: '120vh',
-    width: '100px',
-    top: '0',
-    zIndex: '0',
-  },
-});
+    height: ['110vh', '70vh', '70vh', '110vh', '80vh'],
+    textAlign: 'center',
+    color: '#fff',
+    '#scene': {
+      display: 'block',
+      width: '100%',
+      height: '100vh',
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      zIndex: -20,
+    },
+    '.scrollElement': {
+      position: 'absolute',
+      height: '100vh',
+      width: '100px',
+      top: '0',
+      zIndex: '0',
+    },
+  })
+);
 
 const ContactUsSection = () => {
   useEffect(() => {

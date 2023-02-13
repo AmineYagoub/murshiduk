@@ -14,6 +14,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { ConfigProvider, notification, Spin } from 'antd';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import CreateEmotionCache from '@/config/CreateEmotionCache';
+import Head from 'next/head';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 Spin.setDefaultIndicator(<Spin indicator={antIcon} />);
@@ -39,14 +40,22 @@ export default function CustomApp(props: MyAppProps) {
   }, []);
 
   return (
-    <CacheProvider value={emotionCache}>
-      <ConfigProvider locale={ar} direction="rtl" theme={theme}>
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
-            <Component {...pageProps} />
-          </Hydrate>
-        </QueryClientProvider>
-      </ConfigProvider>
-    </CacheProvider>
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+        />
+      </Head>
+      <CacheProvider value={emotionCache}>
+        <ConfigProvider locale={ar} direction="rtl" theme={theme}>
+          <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
+              <Component {...pageProps} />
+            </Hydrate>
+          </QueryClientProvider>
+        </ConfigProvider>
+      </CacheProvider>
+    </>
   );
 }

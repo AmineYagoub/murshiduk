@@ -15,6 +15,7 @@ import { Logger } from '@/utils/Logger';
 import { FocusEvent, useState } from 'react';
 import { ContactCreateInput } from '@/utils/types';
 import { useCreateContact } from '@/hooks/contact/mutation.hook';
+import { mq } from '@/utils/index';
 
 const { RangePicker } = DatePicker;
 
@@ -37,63 +38,66 @@ const StyledResult = styled(Result)({
   },
 });
 
-const StyledForm = styled(Form)({
-  fontFamily: 'inherit',
-  position: 'absolute',
-  right: '50%',
-  transform: 'translateX(50%) !important',
-  top: '25vh',
-  width: '100%',
-  maxWidth: 650,
-  input: {
-    background: 'transparent',
-    border: '2px solid #fff',
-    color: 'floralwhite !important',
-    fontWeight: 'bold',
-  },
-  textArea: {
-    background: 'transparent',
-    border: '2px solid #fff',
-    color: 'floralwhite !important',
-    fontWeight: 'bold',
-  },
-  '.ant-select-selector': {
-    border: '1px solid #fff !important',
-    background: 'floralwhite !important',
-  },
-  '.ant-picker': {
-    background: 'transparent',
-    border: '2px solid #fff',
-    color: 'floralwhite',
-    fontWeight: 'bold',
-    '& ::placeholder': {
-      color: '#ccc !important',
-    },
-    svg: {
-      color: '#ccc !important',
-    },
-  },
-  '.ant-input-number': {
-    background: 'transparent',
-    border: '2px solid #fff',
-    color: 'floralwhite',
-    fontWeight: 'bold',
+const StyledForm = styled(Form)(
+  mq({
+    top: '75px',
+    right: '50%',
     width: '100%',
-  },
+    maxWidth: 650,
+    position: 'absolute',
+    fontFamily: 'inherit',
+    padding: ['0 5em', 0],
+    transform: 'translateX(50%) !important',
+    input: {
+      background: 'transparent',
+      border: '2px solid #fff',
+      color: 'floralwhite !important',
+      fontWeight: 'bold',
+    },
+    textArea: {
+      background: 'transparent',
+      border: '2px solid #fff',
+      color: 'floralwhite !important',
+      fontWeight: 'bold',
+    },
+    '.ant-select-selector': {
+      border: '1px solid #fff !important',
+      background: 'floralwhite !important',
+    },
+    '.ant-picker': {
+      background: 'transparent',
+      border: '2px solid #fff',
+      color: 'floralwhite',
+      fontWeight: 'bold',
+      '& ::placeholder': {
+        color: '#ccc !important',
+      },
+      svg: {
+        color: '#ccc !important',
+      },
+    },
+    '.ant-input-number': {
+      background: 'transparent',
+      border: '2px solid #fff',
+      color: 'floralwhite',
+      fontWeight: 'bold',
+      width: '100%',
+    },
 
-  label: {
-    color: '#fff !important',
-  },
-  button: {
-    width: 300,
-  },
-  h6: {
-    color: '#fff',
-    fontSize: '1.3rem',
-    fontWeight: 'bold',
-    marginBottom: '1.5em',
-  },
-});
+    label: {
+      color: '#fff !important',
+    },
+    button: {
+      width: 200,
+    },
+    h6: {
+      color: '#fff',
+      fontSize: '1.3rem',
+      fontWeight: 'bold',
+      marginBottom: '1.5em',
+    },
+  })
+);
 
 const ContactForm = () => {
   const { mutateAsync, isLoading } = useCreateContact();
@@ -159,7 +163,7 @@ const ContactForm = () => {
     <StyledForm onFinish={onFinish} layout="vertical" size="middle">
       <Row gutter={8} justify="center">
         <h6>أحصل على إستشارة مجانية حول قضاء عطلتك في تركيا</h6>
-        <Col span={12}>
+        <Col md={12} sm={24}>
           <Form.Item
             name="name"
             label="الإسم الكامل"
@@ -168,7 +172,7 @@ const ContactForm = () => {
             <Input />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col md={12} sm={24}>
           <Form.Item label="رقم الواتس آب" required>
             <Input.Group compact>
               <Form.Item
@@ -227,12 +231,12 @@ const ContactForm = () => {
         />
       </Form.Item>
       <Row justify="center" gutter={8}>
-        <Col span={12}>
+        <Col md={12} sm={24}>
           <Form.Item label="عدد الأشخاص البالغين" name="adults">
             <InputNumber />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col md={12} sm={24}>
           <Form.Item label="عدد الأطفال" name="children">
             <InputNumber />
           </Form.Item>

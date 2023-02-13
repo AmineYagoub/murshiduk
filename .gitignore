@@ -42,3 +42,7 @@ Thumbs.db
 # Next.js
 apps/ui/.next
 apps/ui/.env
+apps/ui/public/workbox-*.js
+apps/ui/public/sw.js
+apps/ui/public/fallback-*.js
+

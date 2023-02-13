@@ -2,6 +2,14 @@
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { withNx } = require('@nrwl/next/plugins/with-nx');
+const runtimeCaching = require('next-pwa/cache');
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  runtimeCaching,
+  disable: process.env.NODE_ENV !== 'production',
+  register: true,
+  dynamicStartUrl: true,
+});
 
 /**
  * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
@@ -32,4 +40,4 @@ const nextConfig = {
   },
 };
 
-module.exports = withNx(nextConfig);
+module.exports = withPWA(withNx(nextConfig));

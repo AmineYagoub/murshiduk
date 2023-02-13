@@ -8,10 +8,10 @@ import { useEffect } from 'react';
 const StyledSection = styled('section')({
   minHeight: '100vh',
   textAlign: 'center',
-  color: '#123524',
-  padding: '7em',
+  color: '#fff',
+
   h4: {
-    fontSize: '4.5rem',
+    fontSize: 'clamp(2rem, 10vw, 4.5rem)',
     marginBottom: '2em auto',
   },
   figure: {
@@ -23,6 +23,8 @@ const StyledSection = styled('section')({
     },
     img: {
       objectFit: 'cover',
+      height: 'clamp(500px, 50vw, 600px)',
+      width: 'clamp(300px, 30vw, 400px)',
     },
   },
   '.ant-col': {
@@ -39,6 +41,14 @@ const StyledSection = styled('section')({
       },
     },
   },
+  '.ant-divider': {
+    ':before': {
+      border: '1px solid #ccc',
+    },
+    a: {
+      color: '#ccc',
+    },
+  },
 });
 
 const LatestBlogsSection = () => {
@@ -47,14 +57,11 @@ const LatestBlogsSection = () => {
       scrollTrigger: {
         trigger: '.travel__blog-img',
         toggleActions: 'restart pause reverse pause',
-        // pin: true,
-        // pinSpacing:false,
         scrub: 1,
         start: 'top bottom',
         end: 'center top',
       },
       y: -100,
-      height: 600,
       ease: 'none',
     });
   }, []);
@@ -63,7 +70,7 @@ const LatestBlogsSection = () => {
       <h3>أحصل على لمحة عما يمكنك تجربته</h3>
       <h4>قصص ملهمة</h4>
       <Row justify="center">
-        <Col span={10}>
+        <Col sm={24} lg={10} md={12} style={{ marginBottom: 50 }}>
           <figure>
             <Image
               src="/img/swimer-man.jpg"
@@ -80,7 +87,7 @@ const LatestBlogsSection = () => {
             </figcaption>
           </figure>
         </Col>
-        <Col span={10}>
+        <Col sm={24} lg={10} md={12}>
           <figure>
             <Image
               src="/img/cappadocia-hotels.jpg"
