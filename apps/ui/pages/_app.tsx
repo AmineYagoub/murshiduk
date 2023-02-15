@@ -48,13 +48,13 @@ export default function CustomApp(props: MyAppProps) {
         />
       </Head>
       <CacheProvider value={emotionCache}>
-        <ConfigProvider locale={ar} direction="rtl" theme={theme}>
-          <QueryClientProvider client={queryClient}>
-            <Hydrate state={pageProps.dehydratedState}>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <ConfigProvider locale={ar} direction="rtl" theme={theme}>
               <Component {...pageProps} />
-            </Hydrate>
-          </QueryClientProvider>
-        </ConfigProvider>
+            </ConfigProvider>
+          </Hydrate>
+        </QueryClientProvider>
       </CacheProvider>
     </>
   );

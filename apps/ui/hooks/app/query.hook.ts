@@ -3,6 +3,7 @@ import { api } from '@/utils/index';
 import { App, Dashboard } from '@/utils/types';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
+import { useAppState } from './mutation.hook';
 
 const fetchApp = async (field?: string): Promise<App> => {
   const uri = field ? `config?field=${field}` : 'config';
@@ -14,16 +15,14 @@ const fetchDashboard = async (): Promise<Dashboard> => {
 };
 
 const useApp = (field?: string) => {
-  const router = useRouter();
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ['getApp', field],
+  const [, setData] = useAppState<App>();
+  const { data, isLoading } = useQuery({
+    queryKey: field ? ['getApp', field] : ['getApp'],
     queryFn: () => fetchApp(field),
   });
-  useEffect(() => {
-    if (isError) {
-      router.push('/505');
-    }
-  }, [isError, router]);
+  if (data) {
+    setData(data);
+  }
   return { data, isLoading };
 };
 

@@ -11,69 +11,81 @@ import {
   formatDate,
   getFirstImageFromContent,
   getProfileName,
+  getTitleMeta,
 } from '@/utils/index';
 import { StyledSection } from '..';
 import { User } from '@/utils/types';
+import { fetchApp, useApp } from '@/hooks/app/query.hook';
+import Head from 'next/head';
 
 const limit = 10;
 const { Search } = Input;
 
 const BlogsInCategoryPage = () => {
-  const { data, methods, isLoading, defaultSearchValue } = useBlogs();
+  const { data, methods, isLoading, defaultSearchValue, tag } = useBlogs();
+  const { data: appData } = useApp();
   return (
-    <StyledSection>
-      <h1>
-        مدونة السياحة في تركيا
-        <Image
-          src="/icons/idea.svg"
-          width={95}
-          height={95}
-          alt="مدونة السياحة في تركيا"
+    <>
+      <Head>
+        <title>{getTitleMeta(appData.title, tag)}</title>
+        <meta name="description" content={appData.description} />
+      </Head>
+
+      <StyledSection>
+        <h1>
+          مدونة السياحة في تركيا
+          <Image
+            src="/icons/idea.svg"
+            width={95}
+            height={95}
+            alt="مدونة السياحة في تركيا"
+          />
+        </h1>
+        <Search
+          placeholder="البحث في المدونة"
+          onSearch={methods.onSearch}
+          enterButton
+          size="large"
+          defaultValue={defaultSearchValue}
         />
-      </h1>
-      <Search
-        placeholder="البحث في المدونة"
-        onSearch={methods.onSearch}
-        enterButton
-        size="large"
-        defaultValue={defaultSearchValue}
-      />
-      <List
-        itemLayout="vertical"
-        size="large"
-        loading={isLoading}
-        pagination={methods.handlePagination}
-        dataSource={data}
-        renderItem={(item) => (
-          <List.Item
-            key={item.title}
-            extra={
-              <Image
-                width={200}
-                height={200}
-                alt={item.title}
-                src={
-                  getFirstImageFromContent(item.content) || '/img/no-image.svg'
-                }
-              />
-            }
-          >
-            <List.Item.Meta
-              avatar={<Avatar src={item.author.profile?.avatar} />}
-              title={
-                <Link href={`/blog/${item.slug}`}>
-                  <h3>{item.title}</h3>
-                </Link>
+        <List
+          itemLayout="vertical"
+          size="large"
+          loading={isLoading}
+          pagination={methods.handlePagination}
+          dataSource={data}
+          renderItem={(item) => (
+            <List.Item
+              key={item.title}
+              extra={
+                <Image
+                  width={200}
+                  height={200}
+                  alt={item.title}
+                  src={
+                    getFirstImageFromContent(item.content) ||
+                    '/img/no-image.svg'
+                  }
+                />
               }
-              description={`${getProfileName(
-                item.author as User
-              )} - ${formatDate(item.created)}`}
-            />
-            {item.descriptionMeta}
-          </List.Item>
-        )}
-      />
-    </StyledSection>
+            >
+              <List.Item.Meta
+                avatar={<Avatar src={item.author.profile?.avatar} />}
+                title={
+                  <Link href={`/blog/${item.slug}`}>
+                    <h3>{item.title}</h3>
+                  </Link>
+                }
+                description={`${getProfileName(
+                  item.author as User
+                )} - ${formatDate(item.created)}`}
+              />
+              {item.descriptionMeta}
+            </List.Item>
+          )}
+        />
+      </StyledSection>
+    </>
   );
 };
 
@@ -106,6 +118,10 @@ export async function getServerSideProps({ req, query }) {
           where: { search, tag },
         })
     );
+    await queryClient.prefetchQuery({
+      queryKey: ['getApp'],
+      queryFn: () => fetchApp(),
+    });
     return {
       props: {
         dehydratedState: dehydrate(queryClient),

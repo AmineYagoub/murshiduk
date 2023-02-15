@@ -68,3 +68,6 @@ export const getFirstImageFromContent = (content: string) => {
     .match(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|webp|svg))/)
     ?.shift();
 };
+
+export const baseUrl = 'https://enjoystickk.com';
+export const baseS3Url = 'https://s3.enjoystickk.com';

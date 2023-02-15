@@ -1,23 +1,82 @@
 import Link from 'next/link';
+import Head from 'next/head';
+import { Blog, User } from '@/utils/types';
 import styled from '@emotion/styled';
-import { formatDate, getProfileName } from '@/utils/index';
 import BlogLayout from '@/layout/BlogLayout';
 import { TagOutlined } from '@ant-design/icons';
-import Loading from '@/components/common/Loading';
 import { withAuth } from '@/components/auth/withAuth';
-import { Avatar, Card, Col, Divider, Row, Tag } from 'antd';
-import { fetchBlog, useBlog } from '@/hooks/blog/query.hook';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import TwitterButton from '@/components/public/TwitterButton';
+import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import RelatedBlogs from '@/components/public/RelatedBlogs';
 import ShareButtons from '@/components/public/ShareButtons';
-import { User } from '@/utils/types';
+import { Avatar, Card, Col, Divider, Row, Tag } from 'antd';
+import { fetchBlog, useBlog } from '@/hooks/blog/query.hook';
+import TwitterButton from '@/components/public/TwitterButton';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import {
+  formatDate,
+  getProfileName,
+  getTitleMeta,
+  mq,
+  getFirstImageFromContent,
+  baseUrl,
+} from '@/utils/index';
+
+export const StyledRow = styled(Row)(
+  mq({
+    '.ant-card-meta-title': {
+      fontSize: ['0.7rem', '0.7rem', '1rem'],
+    },
+    '.ant-card-meta-description': {
+      fontSize: ['0.7rem', '0.7rem', '1rem'],
+    },
+  })
+);
+
+const itemJsonLd = (data: Blog, siteTitle: string) => {
+  return {
+    __html: `
+    {
+      "@context": "https://schema.org/",
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "${baseUrl}/blog/${data.slug}"
+      },
+      "headline": "${data.title}",
+      "description": "${data.descriptionMeta}",
+      "image": {
+        "@type": "ImageObject",
+        "url": "${getFirstImageFromContent(data.content)}",
+        "width": "500",
+        "height": "500"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "${getProfileName(data.author)}",
+        "url": "${baseUrl}/community/about"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "${siteTitle}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://s3.enjoystickk.com/carousel/logo.svg",
+          "width": "150",
+          "height": "60"
+        }
+      },
+      "datePublished": ${data.created},
+      "dateModified": ${data.updated}
+    }
+    `,
+  };
+};
 
 export const StyledArticle = styled('article')({
   color: '#374151 !important',
   h1: {
-    fontSize: '2.5rem',
+    fontSize: 'clamp(1.2rem, 5vw, 2.5rem)',
     fontWeight: 'bold',
     lineHeight: 1.25,
   },
@@ -39,6 +98,7 @@ export const StyledArticle = styled('article')({
   '.travel__blog': {
     margin: '3em auto',
     overflow: 'hidden',
+    lineHeight: 1.8,
     wordBreak: 'break-word',
     p: {
       fontSize: '1.2rem',
@@ -68,10 +128,21 @@ export const StyledCard = styled(Card)({
 const BlogPage = () => {
   const { data } = useBlog();
   const author = data?.author as User;
-  return data ? (
+  const { data: appData } = useApp();
+  return (
     <>
-      <Row justify="space-around">
-        <Col span={14}>
+      <Head>
+        <title>{getTitleMeta(appData.title, data.title)}</title>
+        <meta name="description" content={data.descriptionMeta} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={itemJsonLd(data, appData.title)}
+          key="jsonld"
+        />
+      </Head>
+
+      <StyledRow justify="space-around">
+        <Col xs={24} sm={24} md={14}>
           <Card
             bordered={false}
             style={{ backgroundColor: 'transparent', boxShadow: 'none' }}
@@ -98,7 +169,7 @@ const BlogPage = () => {
           </StyledArticle>
           <RelatedBlogs data={data.recommended} />
         </Col>
-        <Col span={6}>
+        <Col xs={24} sm={24} md={6}>
           <StyledCard>
             <Card.Meta
               avatar={<Avatar src={author.profile?.avatar} size="large" />}
@@ -122,10 +193,8 @@ const BlogPage = () => {
             />
           </StyledCard>
         </Col>
-      </Row>
+      </StyledRow>
     </>
-  ) : (
-    <Loading />
   );
 };
 
@@ -141,6 +210,10 @@ export async function getServerSideProps({ req, query }) {
     await queryClient.prefetchQuery(['getBlog', blogSlug], () =>
       fetchBlog(blogSlug)
     );
+    await queryClient.prefetchQuery({
+      queryKey: ['getApp'],
+      queryFn: () => fetchApp(),
+    });
     return {
       props: {
         dehydratedState: dehydrate(queryClient),

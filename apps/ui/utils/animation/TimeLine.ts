@@ -58,7 +58,7 @@ export class TimeLineAnimation {
       scrub: 0,
     };
     gsap.to('.travel__timeLine-marker', {
-      y: '4em',
+      y: '4.5em',
       opacity: 1,
       scrollTrigger: { ...trigger, start: 'top top', end: '105px top' },
     });
@@ -88,7 +88,6 @@ export class TimeLineAnimation {
             start: 'top 75%',
             end: 'top 40%',
             immediateRender: false,
-            markers: true,
           },
         }
       );

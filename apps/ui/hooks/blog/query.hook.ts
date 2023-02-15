@@ -188,16 +188,18 @@ const useBlogs = () => {
       showSizeChanger: false,
       onShowSizeChange: onPaginationChange,
       onChange: onPaginationChange,
+      responsive: true,
     },
   };
 
   return {
+    tag,
     methods,
-    data: data?.data.map((d) => ({ key: d.id, ...d })) ?? [],
     isLoading,
-    filteredInfo,
     sortedInfo,
+    filteredInfo,
     defaultSearchValue,
+    data: data?.data.map((d) => ({ key: d.id, ...d })) ?? [],
   };
 };
 

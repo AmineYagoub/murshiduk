@@ -1,8 +1,9 @@
 import Link from 'next/link';
 
-import { AppRoutes } from '../utils';
+import { AppRoutes, mq } from '../utils';
 import styled from '@emotion/styled';
-import { Layout, Menu, MenuProps } from 'antd';
+import { MenuFoldOutlined } from '@ant-design/icons';
+import { Layout, Menu, MenuProps, Button, Drawer } from 'antd';
 import { useRouter } from 'next/router';
 import { useApp } from '@/hooks/app/query.hook';
 import { StyledContent } from './DashboardLayout';
@@ -11,6 +12,7 @@ import BlogFooter from '@/components/partials/BlogFooter';
 import Logo from '@/components/common/Logo';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import WhatsAppButton from '@/components/partials/WhatsAppButton';
+import { useState } from 'react';
 
 const { Header } = Layout;
 
@@ -29,18 +31,36 @@ const menu: MenuProps['items'] = [
   },
 ];
 
-export const StyledHeader = styled(Header)({
-  backgroundColor: 'transparent !important',
-  display: 'flex',
-  marginBottom: '2em',
-  nav: {
-    width: '100%',
-  },
-  ul: {
+export const StyledHeader = styled(Header)(
+  mq({
     backgroundColor: 'transparent !important',
-    margin: '0 2em',
-  },
-});
+    position: 'relative',
+    display: 'flex',
+    justifyContent: ['center', 'center', 'normal'],
+    alignItems: 'center',
+    marginBottom: '2em',
+    img: {
+      width: ['210px', '250px', 'inherit'],
+      height: ['55px', '65px', 'inherit'],
+      padding: ['3px', '3px', '5px'],
+    },
+    nav: {
+      width: '100%',
+      display: ['none', 'none', 'block'],
+    },
+    ul: {
+      backgroundColor: 'transparent !important',
+      margin: '0 2em',
+    },
+    button: {
+      background: 'linear-gradient(to right, #29323c, #485563, #29323c)',
+      color: '#fff',
+      position: 'absolute',
+      left: 15,
+      display: ['block', 'block', 'none'],
+    },
+  })
+);
 export const StyledBlogContent = styled(StyledContent)({
   backgroundColor: 'transparent',
 });
@@ -55,10 +75,26 @@ const BlogLayout = ({
   const router = useRouter();
   const { data, isLoading } = useApp();
 
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Layout>
       {showHeader && (
         <StyledHeader>
+          <Button
+            icon={<MenuFoldOutlined />}
+            shape="circle"
+            size="large"
+            onClick={showDrawer}
+          />
           <Logo />
           <nav>
             <Menu
@@ -74,6 +110,23 @@ const BlogLayout = ({
       <StyledBlogContent>{children}</StyledBlogContent>
       <WhatsAppButton data={data} isLoading={isLoading} />
       <BlogFooter siteData={data} />
+      <Drawer
+        title={<Logo />}
+        placement="right"
+        closable={true}
+        onClose={onClose}
+        open={open}
+      >
+        <nav>
+          <Menu
+            theme="light"
+            mode="vertical"
+            defaultSelectedKeys={[AppRoutes.Home]}
+            selectedKeys={[router.pathname]}
+            items={menu}
+          />
+        </nav>
+      </Drawer>
     </Layout>
   );
 };

@@ -5,78 +5,79 @@ import { Col, Row } from 'antd';
 import { ScrollSmootherAnimation } from '@/utils/animation/ScrollSmoother';
 import { mq } from '@/utils/index';
 
-const WhyUsSection = () => {
-  const StyledSection = styled('section')(
-    mq({
-      backgroundImage:
-        'linear-gradient(to right top, #123524, #0a3a2f, #02403b, #004547, #004953)',
-      position: 'relative',
-      width: '100%',
-      height: ['170vh', '120vh', '130vh', '140vh', '100vh'],
-      textAlign: 'center',
-      color: '#fff',
-      padding: '3em',
-      h2: {
-        fontSize: '1.5rem',
-        opacity: 0,
-      },
-      h3: {
-        fontSize: 'clamp(2rem, 10vw, 4.5rem)',
-        opacity: 0,
-        transform: 'scale(1.5)',
-      },
-      img: {
-        filter: 'drop-shadow(2px 5px 5px #000)',
-        maxWidth: 'clamp(150px, 30vw, 320px)',
-        ':first-of-type': {
-          transform: 'rotateZ(-10deg)',
-          left: 0,
-        },
-      },
-      '.travel__borderRadius': {
-        borderTopRightRadius: '50%',
-        borderTopLeftRadius: '50%',
-      },
-      '.travel__fatih-img': {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'end',
-        margin: '6em auto 15em',
-      },
-      '.travel__desc': {
-        textAlign: 'left',
-        maxWidth: 1380,
-        margin: '0 auto',
-      },
-      b: {
-        lineHeight: 2,
-      },
-      p: {
-        lineHeight: 1.5,
-        margin: '2em auto',
-      },
-      '.travel__cards': {
-        display: ['block', 'flex', 'block'],
-      },
-      '.travel__exp': {
-        textAlign: 'center',
-        margin: '0 auto',
-        maxWidth: 280,
-        opacity: 0,
-        h5: {
-          fontSize: '1.5rem',
-          margin: 10,
-          fontWeight: 'normal',
-        },
-      },
-      '.travel__exp-free': {
-        position: ['relative', 'relative', 'absolute'],
-        bottom: [0, 50, 100],
+export const StyledSection = styled('section')(
+  mq({
+    backgroundImage:
+      'linear-gradient(to right top, #123524, #0a3a2f, #02403b, #004547, #004953)',
+    position: 'relative',
+    width: '100%',
+    height: ['170vh', '120vh', '130vh', '140vh', '90vh'],
+    textAlign: 'center',
+    color: '#fff',
+    padding: '3em',
+    h2: {
+      fontSize: '1.5rem',
+      opacity: 0,
+    },
+    h3: {
+      fontSize: 'clamp(2rem, 10vw, 4.5rem)',
+      opacity: 0,
+      transform: 'scale(1.5)',
+    },
+    img: {
+      filter: 'drop-shadow(2px 5px 5px #000)',
+      maxWidth: 'clamp(150px, 30vw, 320px)',
+      ':first-of-type': {
+        transform: 'rotateZ(-10deg)',
         left: 0,
-        background: ['green', 'gray', 'hotpink'],
       },
-    })
-  );
+    },
+    '.travel__borderRadius': {
+      borderTopRightRadius: '50%',
+      borderTopLeftRadius: '50%',
+    },
+    '.travel__fatih-img': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'end',
+      margin: '6em auto 15em',
+    },
+    '.travel__desc': {
+      textAlign: 'left',
+      maxWidth: 1380,
+      margin: '0 auto',
+    },
+    b: {
+      lineHeight: 2,
+    },
+    p: {
+      lineHeight: 1.5,
+      margin: '2em auto',
+    },
+    '.travel__cards': {
+      display: ['block', 'flex', 'block'],
+    },
+    '.travel__exp': {
+      textAlign: 'center',
+      margin: '0 auto',
+      maxWidth: 280,
+      minWidth: 180,
+      opacity: 0,
+      h5: {
+        fontSize: '1.5rem',
+        margin: 10,
+        fontWeight: 'normal',
+      },
+    },
+    '.travel__exp-free': {
+      position: ['relative', 'relative', 'absolute'],
+      bottom: [0, 50, 100],
+      left: 0,
+    },
+  })
+);
+
+const WhyUsSection = () => {
   useEffect(() => {
     ScrollSmootherAnimation.initInWhyUsSection();
   }, []);

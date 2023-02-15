@@ -3,9 +3,8 @@ import { Col, Row } from 'antd';
 import styled from '@emotion/styled';
 import { memo, useEffect, useState } from 'react';
 import { TimeLineAnimation } from '@/utils/animation/TimeLine';
-import { mq } from '@/utils/index';
-
-const sections = [1993, 1995, 2005, 2012, 2023];
+import { baseS3Url, mq } from '@/utils/index';
+import { Bio } from '@/utils/types';
 
 const StyledContainer = styled('section')(
   mq({
@@ -30,7 +29,7 @@ const StyledContainer = styled('section')(
           direction: 'initial',
           fontSize: 'clamp(3rem, 20vw, 7rem)',
           fontWeight: 'bolder',
-          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+          clipPath: 'polygon(0 0, 100% 0, 110% 100%, 0 100%)',
           lineHeight: '8rem',
           textAlign: 'left',
           width: '100%',
@@ -95,7 +94,7 @@ const StyledNav = styled('header')({
     '.nav__track': {
       position: 'relative',
       minWidth: 'max(200rem, 200%)',
-      padding: '1.5rem 0 0 max(118.4rem, 100%)',
+      padding: '1.5rem 0 0 max(111rem, 100%)',
       height: '6rem',
     },
     '.nav__list': {
@@ -103,7 +102,7 @@ const StyledNav = styled('header')({
       margin: 0,
       padding: 0,
       display: 'flex',
-      justifyContent: 'space-between',
+      justifyContent: 'space-around',
 
       '.nav__link': {
         position: 'relative',
@@ -149,7 +148,7 @@ const StyledNav = styled('header')({
       position: 'absolute',
       opacity: 0,
       top: '-2rem',
-      left: '4rem',
+      left: '13.5rem',
       width: '1.5rem',
       height: '1.5rem',
       transform: 'translate3d(50%, 0, 0)',
@@ -168,8 +167,9 @@ const StyledNav = styled('header')({
   },
 });
 
-const TimeLineSection = () => {
+const TimeLineSection = ({ bio }: { bio: Bio[] }) => {
   const [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
     const nav = document.querySelector('.travel__nav');
     if (nav) {
@@ -178,7 +178,6 @@ const TimeLineSection = () => {
     if (loaded) {
       const init = new TimeLineAnimation();
       init.triggerAnimation();
-      console.log('loaded');
     }
   });
   return (
@@ -192,10 +191,10 @@ const TimeLineSection = () => {
           </div>
           <div className="nav__track" data-draggable>
             <ul className="nav__list">
-              {sections.map((el, i) => (
-                <li key={el}>
+              {bio.map((el, i) => (
+                <li key={el.year}>
                   <a href={`#section_${i + 1}`} className="nav__link" data-link>
-                    {el}
+                    {el.year}
                   </a>
                 </li>
               ))}
@@ -205,13 +204,13 @@ const TimeLineSection = () => {
       </StyledNav>
 
       <main>
-        {sections.map((el, i) => (
-          <section id={`section_${i + 1}`} data-section key={el}>
+        {bio.map((el, i) => (
+          <section id={`section_${i + 1}`} data-section key={el.year}>
             <Row gutter={20}>
               <Col md={10} xs={24}>
                 <figure className="section__figure">
                   <Image
-                    src="/img/businessman.jpg"
+                    src={`${baseS3Url}/${el.image}`}
                     width={550}
                     height={700}
                     alt=""
@@ -219,8 +218,8 @@ const TimeLineSection = () => {
                 </figure>
               </Col>
               <Col md={14} xs={24}>
-                <h2 className="section__heading" data-section-title={el} />
-                <p>صورة أخرى مع وصف قصير لخبراتك في هاذي المرحلة</p>
+                <h2 className="section__heading" data-section-title={el.year} />
+                <p>{el.content}</p>
               </Col>
             </Row>
           </section>

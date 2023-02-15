@@ -9,7 +9,7 @@ const StyledSection = styled('section')(
   mq({
     position: 'relative',
     width: '100%',
-    height: ['110vh', '70vh', '70vh', '110vh', '80vh'],
+    height: ['110vh', '100vh', '70vh', '110vh', '80vh'],
     textAlign: 'center',
     color: '#fff',
     '#scene': {

@@ -46,7 +46,7 @@ const StyledForm = styled(Form)(
     maxWidth: 650,
     position: 'absolute',
     fontFamily: 'inherit',
-    padding: ['0 5em', 0],
+    padding: ['0 2em', '0 2em', 0],
     transform: 'translateX(50%) !important',
     input: {
       background: 'transparent',
@@ -163,7 +163,7 @@ const ContactForm = () => {
     <StyledForm onFinish={onFinish} layout="vertical" size="middle">
       <Row gutter={8} justify="center">
         <h6>أحصل على إستشارة مجانية حول قضاء عطلتك في تركيا</h6>
-        <Col md={12} sm={24}>
+        <Col xs={24} sm={24} md={12}>
           <Form.Item
             name="name"
             label="الإسم الكامل"
@@ -172,7 +172,7 @@ const ContactForm = () => {
             <Input />
           </Form.Item>
         </Col>
-        <Col md={12} sm={24}>
+        <Col xs={24} sm={24} md={12}>
           <Form.Item label="رقم الواتس آب" required>
             <Input.Group compact>
               <Form.Item
@@ -231,12 +231,12 @@ const ContactForm = () => {
         />
       </Form.Item>
       <Row justify="center" gutter={8}>
-        <Col md={12} sm={24}>
+        <Col xs={24} sm={24} md={12}>
           <Form.Item label="عدد الأشخاص البالغين" name="adults">
             <InputNumber />
           </Form.Item>
         </Col>
-        <Col md={12} sm={24}>
+        <Col xs={24} sm={24} md={12}>
           <Form.Item label="عدد الأطفال" name="children">
             <InputNumber />
           </Form.Item>

@@ -1,18 +1,18 @@
-import { Blog, Category } from '@/utils/types';
 import { Space, Table, Tag } from 'antd';
-import { formatDate } from '@/utils/index';
+import { Blog, Category } from '@/utils/types';
 import NewBlog from '@/components/blog/NewBlog';
 import type { ColumnsType } from 'antd/es/table';
 import EditBlog from '@/components/blog/EditBlog';
+import { fetchApp } from '@/hooks/app/query.hook';
 import { useBlogs } from '@/hooks/blog/query.hook';
 import DeleteBlog from '@/components/blog/DeleteBlog';
 import { withAuth } from '@/components/auth/withAuth';
 import DashboardLayout from '@/layout/DashboardLayout';
 import PreviewBlog from '@/components/blog/PreviewBlog';
+import { formatDate, getProfileName } from '@/utils/index';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { getMapperLabel, rolesMappedTypes } from '@/utils/Mapper';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { fetchApp } from '@/hooks/app/query.hook';
 
 const AdminManageBlogs = () => {
   const { methods, data, isLoading } = useBlogs();
@@ -29,9 +29,7 @@ const AdminManageBlogs = () => {
       key: 'author',
       render: (_, { author }) => (
         <>
-          <div>
-            {author.profile.firstName} {author.profile.lastName}
-          </div>
+          <div>{getProfileName(author)}</div>
           <Tag color="blue">
             {getMapperLabel(rolesMappedTypes, author.role.title)}
           </Tag>

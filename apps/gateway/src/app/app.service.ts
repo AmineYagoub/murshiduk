@@ -91,12 +91,23 @@ export class AppService {
   async find(field?: string) {
     try {
       const params: Prisma.AppFindUniqueArgs = { where: { id: 1 } };
+      const fields = {
+        title: true,
+        description: true,
+        facebookUrl: true,
+        twitterUrl: true,
+        whatsApp: true,
+        instagramUrl: true,
+        youtubeUrl: true,
+        messengerId: true,
+      };
       if (field) {
-        params.select = { [field]: true, title: true, description: true };
+        params.select = {
+          [field]: true,
+          ...fields,
+        };
       }
-      const data = await this.prisma.app.findUnique(params);
-      const { aboutUs, agreement, privacy, id, ...rest } = data;
-      return rest;
+      return await this.prisma.app.findUnique(params);
     } catch (error) {
       Logger.error(error.message);
     }

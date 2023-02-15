@@ -23,12 +23,12 @@ const NewFooter = styled(Footer)(
   mq({
     opacity: '0.5',
     zIndex: 1,
-    height: [250, 200],
+    height: [300, 300, 200],
     '.ant-row': {
       margin: '1.4em auto',
       a: {
         display: 'inline-block',
-        marginBottom: [15, 0],
+        marginBottom: [15, 15, 0],
       },
     },
     small: {

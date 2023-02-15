@@ -44,7 +44,7 @@ Todo today
 * contact me page - done
 * install minio - done
 *
-* SEO for all pages
-* Set home page images and settings for CV section
-* RWD and PWA
-* deploy to production
+* Set home page images and settings for CV section - done
+* SEO for all pages - done
+* RWD and PWA - done
+* deploy to production -- in progress

@@ -3,7 +3,13 @@ export class UpdateAppConfigDto {
 
   description?: string;
 
-  bio?: string;
+  bio?: {
+    year: number;
+    content: string;
+    image: string;
+  }[];
+
+  carousel: string[];
 
   agreement?: string;
 

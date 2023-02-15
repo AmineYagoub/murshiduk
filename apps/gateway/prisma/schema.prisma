@@ -15,6 +15,7 @@ model App {
   title             String    @db.VarChar(70) @default("موقع السياحة")
   description       String?   @db.VarChar(255) @default("")
   bio               Json?     @db.Json // cv section
+  carousel          Json?     @db.Json // hero section
   agreement         String    @db.Text
   privacy           String    @db.Text
   aboutUs           String    @db.Text

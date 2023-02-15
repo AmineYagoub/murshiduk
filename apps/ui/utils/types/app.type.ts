@@ -1,7 +1,14 @@
+export type Bio = {
+  year: number;
+  image: string;
+  content: string;
+};
+
 export type App = {
   title?: string;
   description?: string;
-  bio?: string;
+  bio?: Bio[];
+  carousel: string[];
   agreement?: string;
   privacy?: string;
   aboutUs?: string;

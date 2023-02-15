@@ -1,9 +1,10 @@
+import { useBlogs } from '@/hooks/blog/query.hook';
 import styled from '@emotion/styled';
 import { Col, Divider, Row } from 'antd';
 import { gsap } from 'gsap';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 
 const StyledSection = styled('section')({
   minHeight: '100vh',
@@ -25,6 +26,9 @@ const StyledSection = styled('section')({
       objectFit: 'cover',
       height: 'clamp(500px, 50vw, 600px)',
       width: 'clamp(300px, 30vw, 400px)',
+    },
+    h6: {
+      fontSize: 'clamp(1rem, 10vw, 1.5rem)',
     },
   },
   '.ant-col': {
@@ -52,6 +56,8 @@ const StyledSection = styled('section')({
 });
 
 const LatestBlogsSection = () => {
+  const { data } = useBlogs();
+  const items = data.slice(0, 2);
   useEffect(() => {
     gsap.to('.travel__blog-img', {
       scrollTrigger: {
@@ -67,47 +73,31 @@ const LatestBlogsSection = () => {
   }, []);
   return (
     <StyledSection>
-      <h3>أحصل على لمحة عما يمكنك تجربته</h3>
+      <h3>قم بزيارة المدونة لتحصل على لمحة عما يمكنك تجربته</h3>
       <h4>قصص ملهمة</h4>
       <Row justify="center">
-        <Col sm={24} lg={10} md={12} style={{ marginBottom: 50 }}>
-          <figure>
-            <Image
-              src="/img/swimer-man.jpg"
-              height={500}
-              width={350}
-              alt="أفضل اماكن الغوص في تركيا"
-              className="travel__blog-img"
-            />
-            <figcaption>
-              أفضل اماكن الغوص في تركيا
-              <Divider orientation="right">
-                <Link href="/">طالع المزيد</Link>
-              </Divider>
-            </figcaption>
-          </figure>
-        </Col>
-        <Col sm={24} lg={10} md={12}>
-          <figure>
-            <Image
-              src="/img/cappadocia-hotels.jpg"
-              height={500}
-              width={350}
-              alt="أفضل اماكن الغوص في تركيا"
-              className="travel__blog-img"
-            />
-
-            <figcaption>
-              تعرف على فنادق كابادوكيا
-              <Divider orientation="right">
-                <Link href="/">طالع المزيد</Link>
-              </Divider>
-            </figcaption>
-          </figure>
-        </Col>
+        {items.map((el) => (
+          <Col sm={24} lg={10} md={12} style={{ marginBottom: 50 }} key={el.id}>
+            <figure>
+              <Image
+                src="/img/swimer-man.jpg"
+                height={500}
+                width={350}
+                alt={el.title}
+                className="travel__blog-img"
+              />
+              <figcaption>
+                <h6>{el.title}</h6>
+                <Divider orientation="right">
+                  <Link href={`/blog/${el.slug}`}>طالع المزيد</Link>
+                </Divider>
+              </figcaption>
+            </figure>
+          </Col>
+        ))}
       </Row>
     </StyledSection>
   );
 };
 
-export default LatestBlogsSection;
+export default memo(LatestBlogsSection);
