@@ -69,5 +69,11 @@ export const getFirstImageFromContent = (content: string) => {
     ?.shift();
 };
 
-export const baseUrl = 'https://enjoystickk.com';
+export const extractTwitterUserName = (url?: string) => {
+  if (!url) return null;
+  const match = url.match(/^https?:\/\/(www\.)?twitter.com\/@?(?<handle>\w+)/);
+  return match?.groups?.handle ? `@${match.groups.handle}` : null;
+};
+
+export const baseUrl = 'https://travel-agency-git-dev-amineyagoub.vercel.app';
 export const baseS3Url = 'https://s3.enjoystickk.com';

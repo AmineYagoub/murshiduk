@@ -1,12 +1,12 @@
-import { Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { Logger } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import { appConfig, AppConfigType } from '@travel/config';
 import { PrismaService } from './app/prisma.service';
+import { appConfig, AppConfigType } from '@travel/config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -15,7 +15,7 @@ async function bootstrap() {
   );
   const config = app.get<AppConfigType>(appConfig.KEY);
   app.enableCors({
-    origin: 'http://localhost:8080',
+    origin: 'https://travel-agency-git-dev-amineyagoub.vercel.app',
     credentials: true,
     allowedHeaders: [
       'Origin',

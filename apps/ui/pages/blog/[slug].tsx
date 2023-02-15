@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Head from 'next/head';
-import { Blog, User } from '@/utils/types';
 import styled from '@emotion/styled';
+import { Blog, User } from '@/utils/types';
 import BlogLayout from '@/layout/BlogLayout';
 import { TagOutlined } from '@ant-design/icons';
 import { withAuth } from '@/components/auth/withAuth';
@@ -20,6 +20,7 @@ import {
   mq,
   getFirstImageFromContent,
   baseUrl,
+  extractTwitterUserName,
 } from '@/utils/index';
 
 export const StyledRow = styled(Row)(
@@ -134,6 +135,27 @@ const BlogPage = () => {
       <Head>
         <title>{getTitleMeta(appData.title, data.title)}</title>
         <meta name="description" content={data.descriptionMeta} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:url" content={baseUrl} />
+        <meta name="twitter:title" content={appData.title} />
+        <meta name="twitter:description" content={appData.description} />
+        <meta name="twitter:domain" content={baseUrl} />
+
+        <meta
+          name="twitter:creator"
+          content={extractTwitterUserName(appData.twitterUrl)}
+        />
+        <meta
+          name="twitter:site"
+          content={extractTwitterUserName(appData.twitterUrl)}
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="ar_SA" />
+        <meta property="og:title" content={appData.title} />
+        <meta property="og:description" content={appData.description} />
+        <meta property="og:site_name" content={appData.title} />
+        <meta property="og:url" content={baseUrl} />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={itemJsonLd(data, appData.title)}
@@ -176,7 +198,9 @@ const BlogPage = () => {
               title={getProfileName(author)}
               description={author.profile?.title}
             />
-            <TwitterButton twitter="@TwitterProfile" />
+            <TwitterButton
+              twitter={extractTwitterUserName(appData.twitterUrl)}
+            />
             <h5>
               هل تريد التعرف على تركيا من الداخل ومعرفة أهم المعلومات حول
               ثقافتها وأساسيات السياحة فيها ؟
@@ -188,7 +212,7 @@ const BlogPage = () => {
             <p>تابعني على تويتر للحصول عليها مباشرة على هاتفك</p>
             <Divider />
             <ShareButtons
-              url={`http://localhost:8080/blog/${data.slug}`}
+              url={`${baseUrl}/blog/${data.slug}`}
               title={data.title}
             />
           </StyledCard>

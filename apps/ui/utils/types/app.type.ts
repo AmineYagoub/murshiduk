@@ -8,7 +8,7 @@ export type App = {
   title?: string;
   description?: string;
   bio?: Bio[];
-  carousel: string[];
+  carousel?: string[];
   agreement?: string;
   privacy?: string;
   aboutUs?: string;

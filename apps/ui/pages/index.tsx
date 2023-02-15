@@ -1,20 +1,21 @@
 import { gsap } from 'gsap';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
+import { App } from '@/utils/types';
 import HomeLayout from '@/layout/HomeLayout';
-import { fetchApp, useApp } from '@/hooks/app/query.hook';
+import { fetchBlogs } from '@/hooks/blog/query.hook';
 import { withAuth } from '@/components/auth/withAuth';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import HeroSection from '@/components/home/HeroSection';
+import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { StyledSection } from '@/components/home/WhyUsSection';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import TimeLineSection from '@/components/home/TimeLineSection';
 import ContactUsSection from '@/components/home/ContactUsSection';
 import LatestBlogsSection from '@/components/home/LatestBlogsSection';
-import { baseUrl, getTitleMeta } from '../utils';
-import HeroSection from '@/components/home/HeroSection';
-import dynamic from 'next/dynamic';
-import { StyledSection } from '@/components/home/WhyUsSection';
-import { App } from '@/utils/types';
-import { fetchBlogs, useBlogs } from '@/hooks/blog/query.hook';
+import { baseUrl, extractTwitterUserName, getTitleMeta } from '../utils';
+
 gsap.registerPlugin(ScrollTrigger);
 const WhyUsSection = dynamic(() => import('@/components/home/WhyUsSection'), {
   loading: () => <StyledSection />,
@@ -78,7 +79,6 @@ const images = [
   '/img/cappadocia.webp',
   '/img/trabzon.webp',
   '/img/antalya.webp',
-  '/img/amasya.webp',
 ];
 
 const Home = () => {
@@ -88,13 +88,33 @@ const Home = () => {
       <Head>
         <title>{getTitleMeta(data.title)}</title>
         <meta name="description" content={data.description} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:url" content={baseUrl} />
+        <meta name="twitter:title" content={data.title} />
+        <meta name="twitter:description" content={data.description} />
+        <meta name="twitter:domain" content={baseUrl} />
+
+        <meta
+          name="twitter:creator"
+          content={extractTwitterUserName(data.twitterUrl)}
+        />
+        <meta
+          name="twitter:site"
+          content={extractTwitterUserName(data.twitterUrl)}
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="ar_SA" />
+        <meta property="og:title" content={data.title} />
+        <meta property="og:description" content={data.description} />
+        <meta property="og:site_name" content={data.title} />
+        <meta property="og:url" content={baseUrl} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={itemJsonLd(data)}
           key="jsonld"
         />
       </Head>
-      {/* <HeroSection images={images} /> */}
+      <HeroSection images={images} />
       <WhyUsSection />
       <TimeLineSection bio={data.bio} />
       <ContactUsSection />
