@@ -1,12 +1,12 @@
-import { FormEvent, useState } from 'react';
-import { Alert, Button, Drawer, Space, Form, Input } from 'antd';
-import { SaveOutlined } from '@ant-design/icons';
-import { useCreateBlog } from '@/hooks/blog/mutation.hook';
-import SelectCategory from '../category/SelectCategory';
 import dynamic from 'next/dynamic';
 import Loading from '../common/Loading';
-import type { Blog } from '@/utils/types';
-import { authorId } from '@/utils/index';
+import { FormEvent, useState } from 'react';
+import type { Blog, User } from '@/utils/types';
+import { SaveOutlined } from '@ant-design/icons';
+import SelectCategory from '../category/SelectCategory';
+import { useAuthState } from '@/hooks/auth/mutation.hook';
+import { useCreateBlog } from '@/hooks/blog/mutation.hook';
+import { Alert, Button, Drawer, Space, Form, Input } from 'antd';
 
 const Editor = dynamic(() => import('../common/Editor'), {
   loading: () => <Loading />,
@@ -24,6 +24,7 @@ const BlogForm: React.FC<CreateFormProps> = ({ open, onClose, record }) => {
   const [form] = Form.useForm();
   const [content, setContent] = useState<string>(record?.content);
   const { isLoading, mutateAsync, isError } = useCreateBlog();
+  const [user] = useAuthState<User>();
 
   if (record) {
     form.setFieldsValue({
@@ -43,7 +44,7 @@ const BlogForm: React.FC<CreateFormProps> = ({ open, onClose, record }) => {
       const { ok } = await mutateAsync({
         ...values,
         id: record?.id,
-        authorId: authorId,
+        authorId: user.id,
         categories: values.categories.map((el) => el.value),
         content,
       });

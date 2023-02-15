@@ -16,8 +16,8 @@ import { BlogService } from './blog.service';
 import { CreateBlogDto } from '../dto/blog/create';
 import { UpdateBlogDto } from '../dto/blog/update';
 import { OrderByType } from '../dto/common/pagination';
-import { OrderBlogArgs, WhereBlogArgs } from '../dto/blog/pagination';
 import { isPublic } from '../decorators/isPublic.decorator';
+import { OrderBlogArgs, WhereBlogArgs } from '../dto/blog/pagination';
 
 @Controller('blog')
 export class BlogController {

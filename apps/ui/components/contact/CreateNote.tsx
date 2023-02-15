@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { authorId } from '@/utils/index';
+import { User } from '@/utils/types';
 import { Button, Form, Input, Modal } from 'antd';
 import { useCreateContactNote } from '@/hooks/contact/mutation.hook';
+import { useAuthState } from '@/hooks/auth/mutation.hook';
 
 const CreateNote = ({
   id,
@@ -12,11 +13,12 @@ const CreateNote = ({
 }) => {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
+  const [user] = useAuthState<User>();
   const { mutateAsync, isLoading } = useCreateContactNote();
   const onCreate = async () => {
     const values = await form.validateFields();
     const { ok } = await mutateAsync({
-      authorId: authorId,
+      authorId: user.id,
       contactId: id,
       ...values,
     });

@@ -20,8 +20,6 @@ export const mq = facepaint([
   '@media(min-width: 1600px)',
 ]);
 
-export const authorId = '3d3bc583-d799-4289-88eb-757aecdfcb69';
-
 export const api = ky.create({
   prefixUrl: config.API_URL,
   credentials: 'include',

@@ -10,15 +10,16 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from '../dto/auth/signin';
-import { UpdateUserAvatarDto, UpdateUserDto } from '../dto/auth/update';
 import { isPublic } from '../decorators/isPublic.decorator';
 import { NonceInterceptor } from '../interceptors/nonce.interceptor';
+import { UpdateUserAvatarDto, UpdateUserDto } from '../dto/auth/update';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('signup')
+  @isPublic()
+  @Post('signup') // TODO Delete this route from production
   async signup() {
     return this.authService.signUp();
   }
