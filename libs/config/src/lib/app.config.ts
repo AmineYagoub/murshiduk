@@ -24,7 +24,7 @@ export const appConfig = registerAs(APP_CONFIG_REGISTER_KEY, () => ({
     aud: 'Olympiad Web App',
     iss: 'Olympiad Web App',
     refreshIn: '7d',
-    nonceName: 'fgp_nonce',
+    nonceName: isProd ? '__Host_Fgp_nonce' : 'fgp_nonce',
     nonceExpiresIn: 24 * 60 * 60,
     nonceEncryptAlg: 'aes-192-cbc',
     nonceEncryptKey: process.env.JWT_SECRET || 'secret',

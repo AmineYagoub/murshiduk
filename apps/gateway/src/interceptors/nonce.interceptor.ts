@@ -58,7 +58,8 @@ export class NonceInterceptor implements NestInterceptor {
       httpOnly: true,
       maxAge: nonceExpiresIn,
       path: '/',
-      sameSite: 'none',
+      sameSite: 'lax',
+      domain: 'enjoystickk.com',
       secure: isProd,
     });
   }

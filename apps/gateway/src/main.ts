@@ -15,7 +15,7 @@ async function bootstrap() {
   );
   const config = app.get<AppConfigType>(appConfig.KEY);
   app.enableCors({
-    origin: 'https://travel-agency-git-dev-amineyagoub.vercel.app',
+    origin: 'https://travel-ui.enjoystickk.com',
     credentials: true,
     allowedHeaders: [
       'Origin',

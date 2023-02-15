@@ -57,7 +57,7 @@ const StyledSection = styled('section')({
 
 const LatestBlogsSection = () => {
   const { data } = useBlogs();
-  const items = data.slice(0, 2);
+  const items = data?.slice(0, 2);
   useEffect(() => {
     gsap.to('.travel__blog-img', {
       scrollTrigger: {
@@ -76,7 +76,7 @@ const LatestBlogsSection = () => {
       <h3>قم بزيارة المدونة لتحصل على لمحة عما يمكنك تجربته</h3>
       <h4>قصص ملهمة</h4>
       <Row justify="center">
-        {items.map((el) => (
+        {items?.map((el) => (
           <Col sm={24} lg={10} md={12} style={{ marginBottom: 50 }} key={el.id}>
             <figure>
               <Image
