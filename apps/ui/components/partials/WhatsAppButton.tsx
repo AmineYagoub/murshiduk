@@ -13,7 +13,7 @@ const WhatsAppButton = ({
   data: App;
   isLoading: boolean;
 }) => {
-  return (
+  return data?.whatsApp ? (
     <FloatButton.Group
       trigger="hover"
       type="primary"
@@ -23,11 +23,11 @@ const WhatsAppButton = ({
         <Button
           icon={<PhoneIcon />}
           type="link"
-          href={`tel:${data?.whatsApp}`}
+          href={`tel:${data.whatsApp}`}
         />
       ) : (
         <Popover
-          content={<b dir="ltr">{data?.whatsApp}</b>}
+          content={<b dir="ltr">{data.whatsApp}</b>}
           title="تواصل مباشرة معنا"
           trigger="hover"
           placement="topLeft"
@@ -37,7 +37,7 @@ const WhatsAppButton = ({
       )}
 
       <Button
-        href={`https://api.whatsapp.com/send/?phone=${data?.whatsApp?.replace(
+        href={`https://api.whatsapp.com/send/?phone=${data.whatsApp.replace(
           /\D/g,
           ''
         )}&text&type=phone_number&app_absent=0`}
@@ -52,7 +52,7 @@ const WhatsAppButton = ({
         />
       )}
     </FloatButton.Group>
-  );
+  ) : null;
 };
 
 export default WhatsAppButton;

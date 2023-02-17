@@ -18,7 +18,7 @@ interface DataProp {
 }
 
 const RelatedBlogs: FC<{ data: DataProp[] }> = ({ data }) => {
-  return data.length > 0 ? (
+  return data?.length > 0 ? (
     <>
       <h2>إقرء أيضا</h2>
       <List
