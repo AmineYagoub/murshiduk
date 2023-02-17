@@ -20,7 +20,7 @@ RUN adduser -S nextjs -u 1001
 
 COPY --from=builder --chown=nextjs:nodejs /app/dist/apps/ui ./
 RUN npm install
-RUN npm install sharp
+RUN npm install sharp ky
 
 USER nextjs
 
