@@ -12,7 +12,9 @@ import { useRouter } from 'next/router';
 import config from '@/config/App';
 import { fetchAuthUser } from '@/hooks/auth/query.hook';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { fetchApp } from '@/hooks/app/query.hook';
+import { fetchApp, useApp } from '@/hooks/app/query.hook';
+import Head from 'next/head';
+import { getTitleMeta } from '@/utils/index';
 
 export const StyledForm = styled(Form)({
   maxWidth: 350,
@@ -86,31 +88,39 @@ const SignInPage: NextPageWithLayout = () => {
       ]);
     }
   };
+  const { data } = useApp();
 
   return (
-    <StyledForm
-      form={form}
-      name="signing"
-      layout="vertical"
-      onSubmitCapture={(e) => e.preventDefault()}
-      onFinish={onFinish}
-      onValuesChange={(field) => clearErrors(field, form)}
-      autoComplete="off"
-      size="large"
-      colon
-    >
-      <Form.Item label="البريد الإلكتروني" name="email" rules={emailRules}>
-        <Input type="email" />
-      </Form.Item>
+    <>
+      <Head>
+        <title>{getTitleMeta(data.title, 'تسجيل الدخول')}</title>
+        <meta name="description" content={data.description} />
+      </Head>
 
-      <Form.Item label="كلمة السر" name="password" rules={passwordRules}>
-        <Input.Password />
-      </Form.Item>
+      <StyledForm
+        form={form}
+        name="signing"
+        layout="vertical"
+        onSubmitCapture={(e) => e.preventDefault()}
+        onFinish={onFinish}
+        onValuesChange={(field) => clearErrors(field, form)}
+        autoComplete="off"
+        size="large"
+        colon
+      >
+        <Form.Item label="البريد الإلكتروني" name="email" rules={emailRules}>
+          <Input type="email" />
+        </Form.Item>
 
-      <Button type="primary" htmlType="submit" block loading={isLoading}>
-        تسجيل الدخول
-      </Button>
-    </StyledForm>
+        <Form.Item label="كلمة السر" name="password" rules={passwordRules}>
+          <Input.Password />
+        </Form.Item>
+
+        <Button type="primary" htmlType="submit" block loading={isLoading}>
+          تسجيل الدخول
+        </Button>
+      </StyledForm>
+    </>
   );
 };
 

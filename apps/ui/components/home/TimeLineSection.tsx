@@ -175,7 +175,7 @@ const TimeLineSection = ({ bio }: { bio: Bio[] }) => {
     if (nav) {
       setLoaded(true);
     }
-    if (loaded) {
+    if (loaded && bio) {
       const init = new TimeLineAnimation();
       init.triggerAnimation();
     }
@@ -191,7 +191,7 @@ const TimeLineSection = ({ bio }: { bio: Bio[] }) => {
           </div>
           <div className="nav__track" data-draggable>
             <ul className="nav__list">
-              {bio.map((el, i) => (
+              {bio?.map((el, i) => (
                 <li key={el.year}>
                   <a href={`#section_${i + 1}`} className="nav__link" data-link>
                     {el.year}
@@ -204,7 +204,7 @@ const TimeLineSection = ({ bio }: { bio: Bio[] }) => {
       </StyledNav>
 
       <main>
-        {bio.map((el, i) => (
+        {bio?.map((el, i) => (
           <section id={`section_${i + 1}`} data-section key={el.year}>
             <Row gutter={20}>
               <Col md={10} xs={24}>

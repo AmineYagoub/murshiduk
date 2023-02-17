@@ -98,6 +98,7 @@ const CustomersChart: FC = (props) => {
       title="تصنيف العملاء"
       style={{
         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+        padding: '0 5px',
       }}
     >
       <ReactEChartsCore

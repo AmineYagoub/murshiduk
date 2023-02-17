@@ -15,7 +15,7 @@ async function bootstrap() {
   );
   const config = app.get<AppConfigType>(appConfig.KEY);
   app.enableCors({
-    origin: 'https://enjoystickk.com',
+    origin: config.origin,
     credentials: true,
     allowedHeaders: [
       'Origin',

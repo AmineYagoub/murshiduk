@@ -1,5 +1,5 @@
 import config from '@/config/App';
-import ky from 'ky';
+import ky from 'ky-universal';
 export * from './AppRoutes';
 export * from './Logger';
 export * from './animation/WebGLCarousel';

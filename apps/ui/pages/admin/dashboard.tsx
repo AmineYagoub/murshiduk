@@ -11,8 +11,6 @@ import dynamic from 'next/dynamic';
 import Loading from '@/components/common/Loading';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { fetchApp, useDashboard } from '@/hooks/app/query.hook';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 
 const CustomerCountriesChart = dynamic(
   () => import('@/components/partials/CustomerCountriesChart'),
@@ -40,20 +38,6 @@ const StyledCard = styled(Statistic)({
 
 const AdminDashboard = () => {
   const { data, isLoading } = useDashboard();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (router.query?.from === 'login') {
-      router.push(
-        {
-          query: {},
-        },
-        undefined,
-        { shallow: true }
-      );
-      router.reload();
-    }
-  }, []);
 
   const items = [
     {

@@ -15,7 +15,7 @@ const HeroSection = ({ images }: { images: string[] }) => {
   return (
     <section id="canvas-wrapper" data-canvas-wrapper>
       <div id="slides">
-        {images.map((el, i) => (
+        {images?.map((el, i) => (
           <div className="slide" data-slide key={i}>
             <span
               className={`${
