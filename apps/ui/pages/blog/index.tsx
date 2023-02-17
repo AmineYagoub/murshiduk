@@ -61,8 +61,8 @@ const BlogPages = () => {
   return (
     <>
       <Head>
-        <title>{getTitleMeta(appData.title, 'المدونة')}</title>
-        <meta name="description" content={appData.description} />
+        <title>{getTitleMeta(appData?.title, 'المدونة')}</title>
+        <meta name="description" content={appData?.description} />
       </Head>
       <StyledSection>
         <h1>

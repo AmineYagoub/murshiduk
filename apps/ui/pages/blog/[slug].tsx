@@ -22,6 +22,7 @@ import {
   baseUrl,
   extractTwitterUserName,
 } from '@/utils/index';
+import Loading from '@/components/common/Loading';
 
 export const StyledRow = styled(Row)(
   mq({
@@ -130,7 +131,7 @@ const BlogPage = () => {
   const { data } = useBlog();
   const author = data?.author as User;
   const { data: appData } = useApp();
-  return (
+  return appData && data ? (
     <>
       <Head>
         <title>{getTitleMeta(appData.title, data.title)}</title>
@@ -219,6 +220,8 @@ const BlogPage = () => {
         </Col>
       </StyledRow>
     </>
+  ) : (
+    <Loading />
   );
 };
 

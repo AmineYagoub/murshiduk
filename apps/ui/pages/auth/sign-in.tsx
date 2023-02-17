@@ -67,12 +67,16 @@ const SignInPage: NextPageWithLayout = () => {
         const { accessToken, refreshToken } = response;
         localStorage.setItem(config.JWT_NAME, accessToken);
         localStorage.setItem(config.REFRESH_JWT_NAME, refreshToken);
-        const data = await fetchAuthUser(accessToken);
-        setUser(data);
-        router.push({
-          pathname: AppRoutes.AdminManageDashboard,
-          query: { from: 'login' },
-        });
+        //const data = await fetchAuthUser(accessToken);
+        //setUser(data);
+        router.push(
+          {
+            query: { redirect: 'true' },
+          },
+          undefined,
+          { shallow: true }
+        );
+        router.reload();
       }
     } catch (error) {
       Logger.log(error);
@@ -93,8 +97,8 @@ const SignInPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>{getTitleMeta(data.title, 'تسجيل الدخول')}</title>
-        <meta name="description" content={data.description} />
+        <title>{getTitleMeta(data?.title, 'تسجيل الدخول')}</title>
+        <meta name="description" content={data?.description} />
       </Head>
 
       <StyledForm
@@ -128,7 +132,16 @@ SignInPage.getLayout = (page: EmotionJSX.Element) => (
   <BlogLayout>{page}</BlogLayout>
 );
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req, query }) {
+  if (query?.redirect) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: AppRoutes.AdminManageDashboard,
+      },
+      props: {},
+    };
+  }
   try {
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery(['getApp'], () => fetchApp());
