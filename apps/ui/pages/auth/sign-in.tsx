@@ -108,7 +108,6 @@ const SignInPage: NextPageWithLayout = () => {
         onSubmitCapture={(e) => e.preventDefault()}
         onFinish={onFinish}
         onValuesChange={(field) => clearErrors(field, form)}
-        autoComplete="off"
         size="large"
         colon
       >

@@ -11,6 +11,7 @@ import { PieChart } from 'echarts/charts';
 import { LabelLayout } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 import { DashboardCountry } from '@/utils/types';
+import Loading from '../common/Loading';
 
 echarts.use([
   ToolboxComponent,
@@ -81,17 +82,21 @@ const CustomerCountriesChart: FC<{
         boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
       }}
     >
-      <ReactEChartsCore
-        echarts={echarts}
-        option={option}
-        notMerge={true}
-        lazyUpdate={true}
-        theme={'theme_name'}
-        style={{
-          height: 400,
-        }}
-        showLoading={loading}
-      />
+      {data ? (
+        <ReactEChartsCore
+          echarts={echarts}
+          option={option}
+          notMerge={true}
+          lazyUpdate={true}
+          theme={'theme_name'}
+          style={{
+            height: 400,
+          }}
+          showLoading={loading}
+        />
+      ) : (
+        <Loading />
+      )}
     </Card>
   );
 };
