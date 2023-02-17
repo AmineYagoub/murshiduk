@@ -1,4 +1,4 @@
-import { serialize } from 'cookie';
+import { CookieSerializeOptions, serialize } from 'cookie';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
@@ -54,12 +54,16 @@ export class NonceInterceptor implements NestInterceptor {
       APP_CONFIG_REGISTER_KEY
     );
     const { nonceName, nonceExpiresIn } = config.jwt;
-    return serialize(nonceName, value, {
+    const options: CookieSerializeOptions = {
       httpOnly: true,
       maxAge: nonceExpiresIn,
       path: '/',
-      sameSite: 'lax',
+      sameSite: isProd ? 'none' : 'strict',
       secure: isProd,
-    });
+    };
+    if (isProd) {
+      options.domain = config.cookieDomain;
+    }
+    return serialize(nonceName, value, options);
   }
 }
