@@ -15,7 +15,7 @@ async function bootstrap() {
   );
   const config = app.get<AppConfigType>(appConfig.KEY);
   app.enableCors({
-    origin: 'https://travel-ui.enjoystickk.com',
+    origin: 'https://enjoystickk.com',
     credentials: true,
     allowedHeaders: [
       'Origin',

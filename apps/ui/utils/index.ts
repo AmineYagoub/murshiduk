@@ -73,5 +73,5 @@ export const extractTwitterUserName = (url?: string) => {
   return match?.groups?.handle ? `@${match.groups.handle}` : null;
 };
 
-export const baseUrl = 'https://travel-ui.enjoystickk.com';
+export const baseUrl = 'https://enjoystickk.com';
 export const baseS3Url = 'https://s3.enjoystickk.com';
