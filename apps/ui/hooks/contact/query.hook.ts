@@ -118,6 +118,7 @@ const useContacts = () => {
       showSizeChanger: true,
       onShowSizeChange: onPaginationChange,
       onChange: onPaginationChange,
+      hideOnSinglePage: true,
     },
   };
 

@@ -146,6 +146,7 @@ const useCategories = () => {
       showSizeChanger: true,
       onShowSizeChange: onPaginationChange,
       onChange: onPaginationChange,
+      hideOnSinglePage: true,
     },
   };
 

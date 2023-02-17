@@ -189,6 +189,7 @@ const useBlogs = () => {
       onShowSizeChange: onPaginationChange,
       onChange: onPaginationChange,
       responsive: true,
+      hideOnSinglePage: true,
     },
   };
 
