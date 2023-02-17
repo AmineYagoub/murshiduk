@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Logger } from '@/utils/Logger';
 import BlogLayout from '@/layout/BlogLayout';
 import { AppRoutes } from '@/utils/AppRoutes';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import { withAuth } from '@/components/auth/withAuth';
 import { useAuthState, useLogin } from '@/hooks/auth/mutation.hook';
 import type { FormInstance, Rule } from 'antd/es/form';
@@ -68,8 +68,12 @@ const SignInPage: NextPageWithLayout = () => {
         localStorage.setItem(config.JWT_NAME, accessToken);
         localStorage.setItem(config.REFRESH_JWT_NAME, refreshToken);
         const data = await fetchAuthUser(accessToken);
-        setUser(data);
-        router.push(AppRoutes.AdminManageDashboard);
+        if (data) {
+          setUser(data);
+          router.push(AppRoutes.AdminManageDashboard);
+        } else {
+          notification.error({ message: 'حدث خطأ يرجى إعادة المحاولة!' });
+        }
       }
     } catch (error) {
       Logger.log(error);

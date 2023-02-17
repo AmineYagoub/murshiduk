@@ -36,6 +36,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     ).jwt;
 
     const nonces = parse(cookies);
+    console.log(nonces);
     if (nonces[nonceName] !== nonce) {
       // TODO You should log the ip of requester,
       throw new UnauthorizedException();

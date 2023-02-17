@@ -58,12 +58,12 @@ export class NonceInterceptor implements NestInterceptor {
       httpOnly: true,
       maxAge: nonceExpiresIn,
       path: '/',
-      sameSite: isProd ? 'none' : 'strict',
+      sameSite: 'strict',
       secure: isProd,
     };
-    if (isProd) {
+    /*     if (isProd) {
       options.domain = config.cookieDomain;
-    }
+    } */
     return serialize(nonceName, value, options);
   }
 }
