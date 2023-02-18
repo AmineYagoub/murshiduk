@@ -1,20 +1,19 @@
+import Head from 'next/head';
+import config from '@/config/App';
 import styled from '@emotion/styled';
 import { Logger } from '@/utils/Logger';
-import BlogLayout from '@/layout/BlogLayout';
-import { AppRoutes } from '@/utils/AppRoutes';
-import { Button, Form, Input, notification } from 'antd';
-import { withAuth } from '@/components/auth/withAuth';
-import { useAuthState, useLogin } from '@/hooks/auth/mutation.hook';
-import type { FormInstance, Rule } from 'antd/es/form';
-import { NextPageWithLayout, SigningInput, User } from '@/utils/types';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { useRouter } from 'next/router';
-import config from '@/config/App';
-import { fetchAuthUser } from '@/hooks/auth/query.hook';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { fetchApp, useApp } from '@/hooks/app/query.hook';
-import Head from 'next/head';
+import { Button, Form, Input } from 'antd';
+import BlogLayout from '@/layout/BlogLayout';
 import { getTitleMeta } from '@/utils/index';
+import { AppRoutes } from '@/utils/AppRoutes';
+import { withAuth } from '@/components/auth/withAuth';
+import { useLogin } from '@/hooks/auth/mutation.hook';
+import type { FormInstance, Rule } from 'antd/es/form';
+import { fetchApp, useApp } from '@/hooks/app/query.hook';
+import { NextPageWithLayout, SigningInput } from '@/utils/types';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
 
 export const StyledForm = styled(Form)({
   maxWidth: 350,
@@ -58,8 +57,6 @@ const SignInPage: NextPageWithLayout = () => {
   };
 
   const { isLoading, mutateAsync } = useLogin();
-  const [, setUser] = useAuthState<User>();
-
   const onFinish = async (values: SigningInput) => {
     try {
       const response = await mutateAsync(values);
@@ -67,13 +64,14 @@ const SignInPage: NextPageWithLayout = () => {
         const { accessToken, refreshToken } = response;
         localStorage.setItem(config.JWT_NAME, accessToken);
         localStorage.setItem(config.REFRESH_JWT_NAME, refreshToken);
-        const data = await fetchAuthUser(accessToken);
-        if (data) {
-          setUser(data);
-          router.push(AppRoutes.AdminManageDashboard);
-        } else {
-          notification.error({ message: 'حدث خطأ يرجى إعادة المحاولة!' });
-        }
+        router.push(
+          {
+            query: { redirect: 'true' },
+          },
+          undefined,
+          { shallow: true }
+        );
+        router.reload();
       }
     } catch (error) {
       Logger.log(error);
@@ -129,6 +127,15 @@ SignInPage.getLayout = (page: EmotionJSX.Element) => (
 );
 
 export async function getServerSideProps({ req, query }) {
+  if (query?.redirect) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: AppRoutes.AdminManageDashboard,
+      },
+      props: {},
+    };
+  }
   try {
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery(['getApp'], () => fetchApp());
