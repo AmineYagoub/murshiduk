@@ -9,6 +9,7 @@ import { Bio } from '@/utils/types';
 const StyledContainer = styled('section')(
   mq({
     position: 'relative',
+    overflowX: 'hidden',
     section: {
       height: '100vh',
       padding: '5em',
@@ -67,8 +68,8 @@ const StyledContainer = styled('section')(
 );
 
 const StyledNav = styled('header')({
-  position: 'sticky',
-  top: 0,
+  position: 'fixed',
+  top: '-6rem',
   left: 0,
   width: '100%',
   background: 'linear-gradient(to right, #29323c, #485563, #29323c)',
@@ -90,7 +91,6 @@ const StyledNav = styled('header')({
     maxWidth: 1366,
     position: 'relative',
     margin: '0 auto',
-
     '.nav__track': {
       position: 'relative',
       minWidth: 'max(200rem, 200%)',
@@ -148,7 +148,7 @@ const StyledNav = styled('header')({
       position: 'absolute',
       opacity: 0,
       top: '-2rem',
-      left: '13.5rem',
+      left: '14.5rem',
       width: '1.5rem',
       height: '1.5rem',
       transform: 'translate3d(50%, 0, 0)',
@@ -175,7 +175,7 @@ const TimeLineSection = ({ bio }: { bio: Bio[] }) => {
     if (nav) {
       setLoaded(true);
     }
-    if (loaded && bio) {
+    if (loaded) {
       const init = new TimeLineAnimation();
       init.triggerAnimation();
     }

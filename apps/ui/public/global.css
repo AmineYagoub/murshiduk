@@ -8,7 +8,6 @@
 
 html {
   --timeLine-opacity: 0;
-  overflow-x: hidden;
 }
 
 * {
@@ -39,12 +38,15 @@ html {
   height: 100vh;
   position: relative;
   width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 #canvas-wrapper canvas {
   height: 100%;
   position: absolute;
   width: 100%;
+  overflow-x: hidden;
 }
 
 #controls {
@@ -186,5 +188,12 @@ img {
 @media (prefers-reduced-motion: no-preference) {
   html {
     scroll-behavior: smooth;
+  }
+}
+
+@media (max-width: 480px) {
+  .ant-picker-panels {
+    flex-wrap: wrap-reverse !important;
+    width: min-content;
   }
 }

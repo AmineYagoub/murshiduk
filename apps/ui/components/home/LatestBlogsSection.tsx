@@ -2,16 +2,17 @@ import { useBlogs } from '@/hooks/blog/query.hook';
 import { getFirstImageFromContent } from '@/utils/index';
 import styled from '@emotion/styled';
 import { Col, Divider, Row } from 'antd';
-import { gsap } from 'gsap';
 import Image from 'next/image';
 import Link from 'next/link';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 
 const StyledSection = styled('section')({
   minHeight: '100vh',
   textAlign: 'center',
   color: '#fff',
-
+  h3: {
+    fontSize: 'clamp(0.8rem, 3vw, 1rem)',
+  },
   h4: {
     fontSize: 'clamp(2rem, 10vw, 4.5rem)',
     marginBottom: '2em auto',
@@ -20,7 +21,7 @@ const StyledSection = styled('section')({
     overflow: 'hidden',
     figcaption: {
       fontSize: '1.8rem',
-      margin: '0 auto',
+      margin: '65px auto',
       maxWidth: 250,
     },
     img: {
@@ -59,7 +60,7 @@ const StyledSection = styled('section')({
 const LatestBlogsSection = () => {
   const { data } = useBlogs();
   const items = data?.slice(0, 2);
-  useEffect(() => {
+  /*   useEffect(() => {
     gsap.to('.travel__blog-img', {
       scrollTrigger: {
         trigger: '.travel__blog-img',
@@ -71,14 +72,14 @@ const LatestBlogsSection = () => {
       y: -100,
       ease: 'none',
     });
-  }, []);
+  }, []); */
   return (
     <StyledSection>
       <h3>قم بزيارة المدونة لتحصل على لمحة عما يمكنك تجربته</h3>
       <h4>قصص ملهمة</h4>
       <Row justify="center">
         {items?.map((el) => (
-          <Col sm={24} lg={10} md={12} style={{ marginBottom: 50 }} key={el.id}>
+          <Col sm={24} lg={10} md={12} key={el.id}>
             <figure>
               <Image
                 src={

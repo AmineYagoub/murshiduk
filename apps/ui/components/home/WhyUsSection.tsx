@@ -11,12 +11,13 @@ export const StyledSection = styled('section')(
       'linear-gradient(to right top, #123524, #0a3a2f, #02403b, #004547, #004953)',
     position: 'relative',
     width: '100%',
-    height: ['170vh', '120vh', '130vh', '140vh', '90vh'],
+    height: ['185vh', '120vh', '130vh', '140vh', '90vh'],
+    maxHeight: 1350,
     textAlign: 'center',
     color: '#fff',
     padding: '3em',
     h2: {
-      fontSize: '1.5rem',
+      fontSize: 'clamp(0.9rem, 4vw, 1.5rem)',
       opacity: 0,
     },
     h3: {

@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { Draggable } from 'gsap/dist/Draggable';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import isMobile from 'is-mobile';
 
 export class TimeLineAnimation {
   private navLinks: HTMLAnchorElement[];
@@ -57,10 +58,30 @@ export class TimeLineAnimation {
       start: '100px top',
       scrub: 0,
     };
-    gsap.to('.travel__timeLine-marker', {
-      y: '4.5em',
-      opacity: 1,
-      scrollTrigger: { ...trigger, start: 'top top', end: '105px top' },
+    if (!isMobile()) {
+      gsap.to('.travel__timeLine-marker', {
+        y: '4.5em',
+        opacity: 1,
+        scrollTrigger: { ...trigger, start: 'top top', end: '105px top' },
+      });
+    }
+    gsap.to('.travel__nav', {
+      y: 95,
+      scrollTrigger: {
+        ...trigger,
+        start: 'top top',
+        end: '105px top',
+        scrub: true,
+      },
+    });
+    gsap.to('.travel__nav', {
+      y: 0,
+      scrollTrigger: {
+        trigger: '.travel__timeLine',
+        start: 'bottom top',
+        end: 'bottom -300px',
+        scrub: true,
+      },
     });
     gsap.to('.travel__timeLine-ring', {
       scale: 1.75,

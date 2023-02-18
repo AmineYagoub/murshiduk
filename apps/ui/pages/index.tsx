@@ -1,26 +1,21 @@
 import { gsap } from 'gsap';
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import { App } from '@/utils/types';
 import HomeLayout from '@/layout/HomeLayout';
 import { fetchBlogs } from '@/hooks/blog/query.hook';
 import { withAuth } from '@/components/auth/withAuth';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import HeroSection from '@/components/home/HeroSection';
 import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { StyledSection } from '@/components/home/WhyUsSection';
+import WhyUsSection from '@/components/home/WhyUsSection';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import TimeLineSection from '@/components/home/TimeLineSection';
 import ContactUsSection from '@/components/home/ContactUsSection';
 import LatestBlogsSection from '@/components/home/LatestBlogsSection';
 import { baseUrl, extractTwitterUserName, getTitleMeta } from '../utils';
+import HeroSection from '@/components/home/HeroSection';
 
 gsap.registerPlugin(ScrollTrigger);
-const WhyUsSection = dynamic(() => import('@/components/home/WhyUsSection'), {
-  loading: () => <StyledSection />,
-  ssr: false,
-});
 
 const itemJsonLd = (data: App) => {
   return {
@@ -74,12 +69,7 @@ const itemJsonLd = (data: App) => {
   };
 };
 
-const images = [
-  '/img/istanbul.webp',
-  '/img/cappadocia.webp',
-  '/img/trabzon.webp',
-  '/img/antalya.webp',
-];
+const images = ['/img/istanbul.webp', '/img/cappadocia.webp'];
 
 const Home = () => {
   const { data } = useApp();

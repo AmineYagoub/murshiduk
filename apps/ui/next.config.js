@@ -29,7 +29,7 @@ const nextConfig = {
   reactStrictMode: true,
   compiler: {
     emotion: true,
-    removeConsole: process.env.NODE_ENV === 'production',
+    // removeConsole: process.env.NODE_ENV === 'production',
   },
   transpilePackages: ['antd', 'echarts', 'zrender'],
   images: {

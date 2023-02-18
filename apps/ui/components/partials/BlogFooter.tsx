@@ -19,9 +19,10 @@ export const Copyright = () => (
   </>
 );
 
-const NewFooter = styled(Footer)(
+const NewFooter = styled(Footer)((props) =>
   mq({
     zIndex: 1,
+    opacity: props.color === 'white' ? 1 : 0.5,
     height: [300, 300, 200],
     '.ant-row': {
       margin: '1.4em auto',
@@ -39,9 +40,15 @@ const NewFooter = styled(Footer)(
   })
 );
 
-const BlogFooter = ({ siteData }: { siteData: App }) => {
+const BlogFooter = ({
+  siteData,
+  color = 'white',
+}: {
+  siteData: App;
+  color?: string;
+}) => {
   return (
-    <NewFooter>
+    <NewFooter color={color}>
       <Row justify="center" align="middle">
         <Link href="/blog">المدونة</Link>
         <Divider type="vertical" />

@@ -3,14 +3,18 @@ import styled from '@emotion/styled';
 import { getTitleMeta, mq } from '@/utils/index';
 import BlogLayout from '@/layout/BlogLayout';
 import { withAuth } from '@/components/auth/withAuth';
-import ContactForm from '@/components/home/ContactForm';
 import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import dynamic from 'next/dynamic';
+
+const ContactForm = dynamic(() => import('@/components/home/ContactForm'), {
+  ssr: false,
+});
 
 const StyledSection = styled('section')(
   mq({
-    height: ['120vh', '120vh', '90vh'],
+    height: ['120vh', '120vh', '100vh'],
     form: {
       top: '15vh',
       backgroundImage: 'linear-gradient(to right, #29323c, #485563, #29323c)',
@@ -37,7 +41,7 @@ export function ContactUsPage() {
         <title>{getTitleMeta(data?.title, 'تواصل معي')}</title>
         <meta name="description" content={data?.description} />
       </Head>
-      <ContactForm />
+      <ContactForm withAnimation={false} />
     </StyledSection>
   );
 }

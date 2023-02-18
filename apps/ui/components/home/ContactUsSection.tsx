@@ -1,15 +1,18 @@
 import { gsap } from 'gsap';
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
-import ContactForm from './ContactForm';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { mq } from '@/utils/index';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import dynamic from 'next/dynamic';
+
+const ContactForm = dynamic(() => import('./ContactForm'), { ssr: false });
 
 const StyledSection = styled('section')(
   mq({
     position: 'relative',
     width: '100%',
-    height: ['110vh', '100vh', '70vh', '110vh', '80vh'],
+    height: ['120vh', '100vh', '70vh', '110vh', '80vh'],
+    maxHeight: 900,
     textAlign: 'center',
     color: '#fff',
     '#scene': {
@@ -68,12 +71,6 @@ const ContactUsSection = () => {
     //gradient value change
     scene3.to('#bg2-grad', { attr: { cy: 600 } }, 0);
     scene3.to('#bg2-grad', { attr: { r: 500 } }, 0);
-    scene3.fromTo(
-      '#form',
-      { opacity: 0, y: 500 },
-      { opacity: 0.7, y: 150 },
-      0.25
-    );
   }, []);
 
   return (

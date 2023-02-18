@@ -16,6 +16,9 @@ import { FocusEvent, useState } from 'react';
 import { ContactCreateInput } from '@/utils/types';
 import { useCreateContact } from '@/hooks/contact/mutation.hook';
 import { mq } from '@/utils/index';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useEffect } from 'react';
 
 const { RangePicker } = DatePicker;
 
@@ -99,7 +102,7 @@ const StyledForm = styled(Form)(
   })
 );
 
-const ContactForm = () => {
+const ContactForm = ({ withAnimation = true }: { withAnimation?: boolean }) => {
   const { mutateAsync, isLoading } = useCreateContact();
   const [isSubmitForm, setSubmitForm] = useState(false);
   const [phones, setPhones] = useState<PhoneType[]>([]);
@@ -159,8 +162,27 @@ const ContactForm = () => {
     }
   };
 
+  useEffect(() => {
+    if (withAnimation) {
+      const scene3 = gsap.timeline();
+      ScrollTrigger.create({
+        animation: scene3,
+        trigger: '.scrollElement',
+        start: 'top 100%',
+        end: 'bottom 100%',
+        scrub: 3,
+      });
+      scene3.fromTo(
+        '#form',
+        { opacity: 0, y: 500 },
+        { opacity: 0.7, y: 150 },
+        0.25
+      );
+    }
+  }, []);
+
   return !isSubmitForm ? (
-    <StyledForm onFinish={onFinish} layout="vertical" size="middle">
+    <StyledForm onFinish={onFinish} layout="vertical" size="middle" id="form">
       <Row gutter={8} justify="center">
         <h6>أحصل على إستشارة مجانية حول قضاء عطلتك في تركيا</h6>
         <Col xs={24} sm={24} md={12}>
