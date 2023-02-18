@@ -1,4 +1,5 @@
 import { useBlogs } from '@/hooks/blog/query.hook';
+import { getFirstImageFromContent } from '@/utils/index';
 import styled from '@emotion/styled';
 import { Col, Divider, Row } from 'antd';
 import { gsap } from 'gsap';
@@ -80,7 +81,9 @@ const LatestBlogsSection = () => {
           <Col sm={24} lg={10} md={12} style={{ marginBottom: 50 }} key={el.id}>
             <figure>
               <Image
-                src="/img/swimer-man.jpg"
+                src={
+                  getFirstImageFromContent(el.content) || '/img/no-image.svg'
+                }
                 height={500}
                 width={350}
                 alt={el.title}

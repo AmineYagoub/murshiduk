@@ -21,7 +21,6 @@ export const Copyright = () => (
 
 const NewFooter = styled(Footer)(
   mq({
-    opacity: '0.5',
     zIndex: 1,
     height: [300, 300, 200],
     '.ant-row': {

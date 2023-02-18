@@ -126,6 +126,7 @@ export async function getServerSideProps({ req, query }) {
   const page = Number(query?.page || 1);
   const pageSize = Number(query?.pageSize || limit);
   const search = String(query?.search || '');
+  const orderBy = {};
 
   try {
     // FETCH APP CONFIG
@@ -137,6 +138,7 @@ export async function getServerSideProps({ req, query }) {
           take: pageSize,
           skip: (page - 1) * pageSize,
           where: { search },
+          orderBy,
         },
       ],
       () =>
@@ -144,6 +146,7 @@ export async function getServerSideProps({ req, query }) {
           take: pageSize,
           skip: (page - 1) * pageSize,
           where: { search },
+          orderBy,
         })
     );
     await queryClient.prefetchQuery({

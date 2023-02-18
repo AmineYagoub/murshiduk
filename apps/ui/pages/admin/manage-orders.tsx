@@ -50,13 +50,17 @@ const AdminManageOrders = () => {
       title: 'تاريخ بداية الرحلة',
       dataIndex: 'flightTimeStart',
       key: 'flightTimeStart',
-      render: (date) => <span>{formatDate(date)}</span>,
+      render: (date) => (
+        <span>{date ? formatDate(date) : 'لم يحدد التاريخ'}</span>
+      ),
     },
     {
       title: 'تاريخ نهاية الرحلة',
       dataIndex: 'flightTimeEnd',
       key: 'flightTimeEnd',
-      render: (date) => <span>{formatDate(date)}</span>,
+      render: (date) => (
+        <span>{date ? formatDate(date) : 'لم يحدد التاريخ'}</span>
+      ),
     },
     {
       title: 'الحالة',

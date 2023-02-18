@@ -137,10 +137,14 @@ const PreviewContact = ({ id }: { id: string }) => {
                   {formatDate(data?.created, true)}
                 </Descriptions.Item>
                 <Descriptions.Item label="بداية الرحلة">
-                  {formatDate(data?.flightTimeStart)}
+                  {data?.flightTimeStart
+                    ? formatDate(data?.flightTimeStart)
+                    : 'لم يحدد التاريخ'}
                 </Descriptions.Item>
                 <Descriptions.Item label="نهاية الرحلة">
-                  {formatDate(data?.flightTimeEnd)}
+                  {data?.flightTimeEnd
+                    ? formatDate(data?.flightTimeEnd)
+                    : 'لم يحدد التاريخ'}
                 </Descriptions.Item>
                 <Descriptions.Item label="عدد البالغين">
                   {data?.adults}
