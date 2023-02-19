@@ -216,7 +216,7 @@ const BlogPage = () => {
             <p>تابعني على تويتر للحصول عليها مباشرة على هاتفك</p>
             <Divider />
             <ShareButtons
-              url={`${encodeURIComponent(baseUrl + '/blog/' + data.slug)}`}
+              url={`${baseUrl}/blog/${encodeURIComponent(data.slug)}`}
               title={data.title}
             />
           </StyledCard>
