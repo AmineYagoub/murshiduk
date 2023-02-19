@@ -36,6 +36,14 @@ export const api = ky.create({
         }
       },
     ],
+    beforeError: [
+      async (error) => {
+        const { response } = error;
+        if (response && response.body) {
+          return await response.json();
+        }
+      },
+    ],
   },
 });
 
