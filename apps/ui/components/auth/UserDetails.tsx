@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Rule } from 'antd/es/form';
 import UserAvatar from './UserAvatar';
-import { Button, Divider, Form, Input, notification } from 'antd';
+import { Button, Form, Input, notification } from 'antd';
 import { useAuthState, useUpdateProfile } from '@/hooks/auth/mutation.hook';
 import { UpdateUserInput, User } from '@/utils/types';
 import { Logger } from '@/utils/Logger';
@@ -10,8 +10,9 @@ const StyledForm = styled(Form)({
   maxWidth: 680,
   padding: '20px 5px !important',
   margin: '0 !important',
-  h1: {
-    margin: '1.5em 0',
+  h2: {
+    padding: '1em',
+    textDecoration: 'underline',
   },
   button: {
     marginTop: 20,
@@ -83,6 +84,7 @@ const UserDetails = () => {
       initialValues={{
         firstName: user.profile.firstName,
         lastName: user.profile.lastName,
+        title: user.profile.title,
         email: user.email,
       }}
     >
@@ -107,16 +109,18 @@ const UserDetails = () => {
           <Input placeholder="الإسم الثاني" />
         </Form.Item>
       </Form.Item>
+      <Form.Item label="الوصف الوظيفي" name="title">
+        <Input />
+      </Form.Item>
+      <h2>بيانات تسجيل الدخول</h2>
       <Form.Item label="البريد الإلكتروني" name="email" rules={emailRules}>
         <Input type="email" />
       </Form.Item>
-
-      <Divider />
-      <h1>إعادة ضبط كلمة سر جديدة</h1>
       <Form.Item
         label="كلمة السر الجديدة"
         name="password"
         rules={passwordRules}
+        help="أتركه فارغا إذا لم ترغب في تغيير كلمة السر"
       >
         <Input.Password />
       </Form.Item>

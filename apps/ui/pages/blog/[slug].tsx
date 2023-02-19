@@ -68,8 +68,8 @@ const itemJsonLd = (data: Blog, siteTitle: string) => {
           "height": "60"
         }
       },
-      "datePublished": ${data.created},
-      "dateModified": ${data.updated}
+      "datePublished": "${data.created}",
+      "dateModified": "${data.updated}"
     }
     `,
   };
@@ -83,17 +83,17 @@ export const StyledArticle = styled('article')({
     lineHeight: 1.25,
   },
   h2: {
-    fontSize: '2.1rem',
+    fontSize: 'clamp(1rem, 4vw, 2rem)',
     marginTop: '1.5em',
     fontWeight: 'bold',
   },
   h3: {
-    fontSize: '1.9rem',
+    fontSize: 'clamp(0.8rem, 3vw, 1.8rem)',
     marginTop: '1.5em',
     fontWeight: 'bold',
   },
   h4: {
-    fontSize: '1.6rem',
+    fontSize: 'clamp(0.6rem, 3vw, 1.4rem)',
     marginTop: '1.5em',
     fontWeight: 'bold',
   },
@@ -103,7 +103,7 @@ export const StyledArticle = styled('article')({
     lineHeight: 1.8,
     wordBreak: 'break-word',
     p: {
-      fontSize: '1.2rem',
+      fontSize: 'clamp(0.9rem, 4vw, 1.2rem)',
       lineHeight: 1.8,
     },
   },
@@ -124,6 +124,9 @@ export const StyledCard = styled(Card)({
     fontWeight: 'bold',
     textAlign: 'center',
     margin: '2em auto',
+  },
+  '.ant-card-meta-description': {
+    fontSize: 12,
   },
 });
 

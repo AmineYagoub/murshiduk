@@ -47,4 +47,5 @@ Todo today
 * Set home page images and settings for CV section - done
 * SEO for all pages - done
 * RWD and PWA - done
+* Add title to profile update page - done
 * deploy to production -- in progress

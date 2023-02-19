@@ -64,13 +64,9 @@ const SignInPage: NextPageWithLayout = () => {
         const { accessToken, refreshToken } = response;
         localStorage.setItem(config.JWT_NAME, accessToken);
         localStorage.setItem(config.REFRESH_JWT_NAME, refreshToken);
-        router.push(
-          {
-            query: { redirect: 'true' },
-          },
-          undefined,
-          { shallow: true }
-        );
+        router.push({
+          query: { redirect: 'true' },
+        });
         router.reload();
       }
     } catch (error) {

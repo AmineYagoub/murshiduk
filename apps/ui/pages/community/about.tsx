@@ -7,7 +7,7 @@ import { withAuth } from '@/components/auth/withAuth';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import Loading from '@/components/common/Loading';
-import { StyledArticle } from '../blog/[slug]';
+import { StyledArticle } from './terms';
 
 const field = 'aboutUs';
 

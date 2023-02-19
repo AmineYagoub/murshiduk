@@ -30,13 +30,7 @@ export function withAuth<P>(
     const getLayout = WrappedComponent.getLayout;
 
     useEffect(() => {
-      if (isPublic || user) {
-        setLoading(false);
-        return;
-      }
-      setLoading(true);
-
-      if (!config.JWT_TOKEN) {
+      if (!config.JWT_TOKEN && !isPublic) {
         deleteAllCookies();
         notification.error({
           message: 'لا يمكنك الوصول لهذه الصفحة!',
@@ -45,7 +39,31 @@ export function withAuth<P>(
 
         router.push(AppRoutes.SignIn);
         return;
+      } else {
+        if (router.asPath === AppRoutes.SignIn) {
+          if (user) {
+            router.push(AppRoutes.AdminManageDashboard);
+          } else {
+            refetch().then(({ isError, data }) => {
+              if (isError) {
+                localStorage.clear();
+                deleteAllCookies();
+              }
+              if (data) {
+                setUser(data);
+                router.push(AppRoutes.AdminManageDashboard);
+              }
+            });
+          }
+        }
       }
+
+      if (isPublic || user) {
+        setLoading(false);
+        return;
+      }
+      setLoading(true);
+
       if (!user) {
         refetch().then(({ isError, data }) => {
           if (isError) {

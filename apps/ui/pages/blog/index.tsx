@@ -37,7 +37,7 @@ export const StyledSection = styled('section')(
     '.ant-list': {
       textAlign: 'left',
       marginTop: '3em',
-      img: {
+      '.travel__blog-img': {
         display: ['none', 'none', 'block'],
       },
       h3: {
@@ -92,6 +92,7 @@ const BlogPages = () => {
               key={item.title}
               extra={
                 <Image
+                  className="travel__blog-img"
                   width={200}
                   height={200}
                   alt={item.title}

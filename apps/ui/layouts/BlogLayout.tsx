@@ -31,6 +31,22 @@ const menu: MenuProps['items'] = [
   },
 ];
 
+const sideMenu = [
+  ...menu,
+  {
+    key: AppRoutes.About,
+    label: <Link href={AppRoutes.About}>حول الموقع</Link>,
+  },
+  {
+    key: AppRoutes.Privacy,
+    label: <Link href={AppRoutes.Privacy}>سياسة الخصوصية</Link>,
+  },
+  {
+    key: AppRoutes.Terms,
+    label: <Link href={AppRoutes.Terms}>الشروط و الأحكام</Link>,
+  },
+];
+
 export const StyledHeader = styled(Header)(
   mq({
     backgroundColor: 'transparent !important',
@@ -123,7 +139,7 @@ const BlogLayout = ({
             mode="vertical"
             defaultSelectedKeys={[AppRoutes.Home]}
             selectedKeys={[router.pathname]}
-            items={menu}
+            items={sideMenu}
           />
         </nav>
       </Drawer>

@@ -2,32 +2,35 @@ import Head from 'next/head';
 import styled from '@emotion/styled';
 import BlogLayout from '@/layout/BlogLayout';
 
-import { getTitleMeta } from '@/utils/index';
+import { getTitleMeta, mq } from '@/utils/index';
 import Loading from '@/components/common/Loading';
 import { withAuth } from '@/components/auth/withAuth';
 import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 
-export const StyledArticle = styled('article')({
-  padding: '1em 5em',
-  h1: {
-    fontSize: '3rem',
-    textDecoration: 'underline',
-  },
-  h2: {
-    textDecoration: 'underline',
-    fontWeight: 'bold',
-  },
-  p: {
-    whiteSpace: 'normal',
-    fontSize: '1.1rem',
-    lineHeight: 1.8,
-  },
-  li: {
-    lineHeight: 1.8,
-  },
-});
+export const StyledArticle = styled('article')(
+  mq({
+    padding: ['0.5em', '0.5em', '1em 5em'],
+    h1: {
+      fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
+      fontWeight: 'bold',
+      textDecoration: 'underline',
+    },
+    h2: {
+      textDecoration: 'underline',
+      fontWeight: 'bold',
+    },
+    p: {
+      whiteSpace: 'normal',
+      fontSize: 'clamp(0.9rem, 3vw, 1.1rem)',
+      lineHeight: 1.8,
+    },
+    li: {
+      lineHeight: 1.8,
+    },
+  })
+);
 
 const field = 'agreement';
 

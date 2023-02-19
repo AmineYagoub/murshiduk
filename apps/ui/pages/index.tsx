@@ -24,7 +24,7 @@ const itemJsonLd = (data: App) => {
       "@context": "https://schema.org/",
       "@type": "TravelAgency",
       "name": "${data.title}",
-      "image": ${data.carousel},
+      "image": "${data.carousel}",
       "geo": {
         "@type": "GeoCoordinates",
         "latitude": 41.0082,

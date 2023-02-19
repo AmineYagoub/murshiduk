@@ -213,7 +213,7 @@ const TimeLineSection = ({ bio }: { bio: Bio[] }) => {
                     src={`${baseS3Url}/${el.image}`}
                     width={550}
                     height={700}
-                    alt=""
+                    alt={String(el.year)}
                   />
                 </figure>
               </Col>
