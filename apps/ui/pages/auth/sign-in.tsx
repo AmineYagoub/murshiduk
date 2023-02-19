@@ -64,9 +64,7 @@ const SignInPage: NextPageWithLayout = () => {
         const { accessToken, refreshToken } = response;
         localStorage.setItem(config.JWT_NAME, accessToken);
         localStorage.setItem(config.REFRESH_JWT_NAME, refreshToken);
-        router.push({
-          query: { redirect: 'true' },
-        });
+
         router.reload();
       }
     } catch (error) {
@@ -123,15 +121,6 @@ SignInPage.getLayout = (page: EmotionJSX.Element) => (
 );
 
 export async function getServerSideProps({ req, query }) {
-  if (query?.redirect) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: AppRoutes.AdminManageDashboard,
-      },
-      props: {},
-    };
-  }
   try {
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery(['getApp'], () => fetchApp());

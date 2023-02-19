@@ -10,7 +10,6 @@ import { useAuthUser } from '@/hooks/auth/query.hook';
 
 export const deleteAllCookies = () => {
   const cookies = document.cookie.split(';');
-  console.log(cookies);
   cookies.forEach(function (c) {
     document.cookie = c
       .replace(/^ +/, '')
@@ -30,6 +29,7 @@ export function withAuth<P>(
     const getLayout = WrappedComponent.getLayout;
 
     useEffect(() => {
+      setLoading(true);
       if (!config.JWT_TOKEN && !isPublic) {
         deleteAllCookies();
         notification.error({
@@ -39,22 +39,22 @@ export function withAuth<P>(
 
         router.push(AppRoutes.SignIn);
         return;
-      } else {
-        if (router.asPath === AppRoutes.SignIn) {
-          if (user) {
-            router.push(AppRoutes.AdminManageDashboard);
-          } else {
-            refetch().then(({ isError, data }) => {
-              if (isError) {
-                localStorage.clear();
-                deleteAllCookies();
-              }
-              if (data) {
-                setUser(data);
-                router.push(AppRoutes.AdminManageDashboard);
-              }
-            });
-          }
+      }
+
+      if (router.asPath === AppRoutes.SignIn && config.JWT_TOKEN) {
+        if (user) {
+          router.push(AppRoutes.AdminManageDashboard);
+        } else {
+          refetch().then(({ isError, data }) => {
+            if (isError) {
+              localStorage.clear();
+              deleteAllCookies();
+            }
+            if (data) {
+              setUser(data);
+              router.push(AppRoutes.AdminManageDashboard);
+            }
+          });
         }
       }
 
@@ -62,7 +62,6 @@ export function withAuth<P>(
         setLoading(false);
         return;
       }
-      setLoading(true);
 
       if (!user) {
         refetch().then(({ isError, data }) => {
@@ -74,9 +73,9 @@ export function withAuth<P>(
           if (data) {
             setUser(data);
           }
+          setLoading(false);
         });
       }
-      setLoading(false);
     }, []);
     return loading || isFetching ? (
       <HomeLayout>
