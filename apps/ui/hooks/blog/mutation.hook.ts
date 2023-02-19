@@ -12,9 +12,11 @@ const useCreateBlog = () => {
           body: JSON.stringify(rest),
         });
       }
-      return api.post('blog', {
-        body: JSON.stringify(rest),
-      });
+      return api
+        .post('blog', {
+          body: JSON.stringify(rest),
+        })
+        .json();
     },
     onSuccess: () => client.invalidateQueries(['blogs']),
   });

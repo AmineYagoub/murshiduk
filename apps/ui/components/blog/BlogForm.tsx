@@ -7,6 +7,7 @@ import SelectCategory from '../category/SelectCategory';
 import { useAuthState } from '@/hooks/auth/mutation.hook';
 import { useCreateBlog } from '@/hooks/blog/mutation.hook';
 import { Alert, Button, Drawer, Space, Form, Input } from 'antd';
+import { Logger } from '@/utils/Logger';
 
 const Editor = dynamic(() => import('../common/Editor'), {
   loading: () => <Loading />,
@@ -39,20 +40,42 @@ const BlogForm: React.FC<CreateFormProps> = ({ open, onClose, record }) => {
   }
 
   const handleOk = async () => {
-    const values = await form.validateFields();
-    if (content) {
-      const { ok } = await mutateAsync({
-        ...values,
-        id: record?.id,
-        authorId: user.id,
-        categories: values.categories.map((el) => el.value),
-        content,
-      });
-      if (ok) {
-        onClose();
-        setContent('');
-        form.resetFields();
+    try {
+      const values = await form.validateFields();
+      if (content) {
+        const data = await mutateAsync({
+          ...values,
+          id: record?.id,
+          authorId: user.id,
+          categories: values.categories.map((el) => el.value),
+          content,
+        });
+
+        if (data) {
+          onClose();
+          setContent('');
+          form.resetFields();
+        }
       }
+    } catch (err) {
+      if (err.message.includes('Blog_slug_key')) {
+        form.setFields([
+          {
+            name: 'title',
+            errors: ['هذا العنوان موجود مسبقا يرجى عدم تكرار نفس العناوين'],
+          },
+        ]);
+      }
+      if (err.message.includes('Blog_descriptionMeta_key')) {
+        form.setFields([
+          {
+            name: 'descriptionMeta',
+            errors: ['هذا الوصف موجود مسبقا يرجى عدم تكرار نفس وصف التدوينات'],
+          },
+        ]);
+      }
+
+      Logger.log(err.message);
     }
   };
 
