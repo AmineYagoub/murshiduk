@@ -5,7 +5,7 @@ import type { ColumnsType } from 'antd/es/table';
 import { useContacts } from '@/hooks/contact/query.hook';
 import { Contact } from '@/utils/types';
 import { Space, Table, Tag } from 'antd';
-import { formatDate } from '@/utils/index';
+import { formatDate, getTitleMeta } from '@/utils/index';
 import {
   contactStatusMappedColors,
   contactStatusMappedTypes,
@@ -15,6 +15,7 @@ import PreviewContact from '@/components/contact/PreviewContact';
 import DeleteContact from '@/components/contact/DeleteContact';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { fetchApp } from '@/hooks/app/query.hook';
+import Head from 'next/head';
 
 const AdminManageOrders = () => {
   const { methods, data, isLoading } = useContacts();
@@ -87,13 +88,18 @@ const AdminManageOrders = () => {
     },
   ];
   return (
-    <Table
-      columns={columns}
-      dataSource={data}
-      size="large"
-      pagination={methods.handlePagination}
-      loading={isLoading}
-    />
+    <>
+      <Head>
+        <title>{getTitleMeta('لوحة التحكم', 'إدارة العملاء')}</title>
+      </Head>
+      <Table
+        columns={columns}
+        dataSource={data}
+        size="large"
+        pagination={methods.handlePagination}
+        loading={isLoading}
+      />
+    </>
   );
 };
 

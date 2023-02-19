@@ -9,10 +9,11 @@ import DeleteBlog from '@/components/blog/DeleteBlog';
 import { withAuth } from '@/components/auth/withAuth';
 import DashboardLayout from '@/layout/DashboardLayout';
 import PreviewBlog from '@/components/blog/PreviewBlog';
-import { formatDate, getProfileName } from '@/utils/index';
+import { formatDate, getProfileName, getTitleMeta } from '@/utils/index';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { getMapperLabel, rolesMappedTypes } from '@/utils/Mapper';
+import Head from 'next/head';
 
 const AdminManageBlogs = () => {
   const { methods, data, isLoading } = useBlogs();
@@ -79,6 +80,9 @@ const AdminManageBlogs = () => {
   ];
   return (
     <>
+      <Head>
+        <title>{getTitleMeta('لوحة التحكم', 'إدارة التدوينات')}</title>
+      </Head>
       <NewBlog />
       <Table
         columns={columns}

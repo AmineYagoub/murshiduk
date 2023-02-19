@@ -3,9 +3,18 @@ import { withAuth } from '@/components/auth/withAuth';
 import DashboardLayout from '@/layout/DashboardLayout';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { fetchApp } from '@/hooks/app/query.hook';
+import Head from 'next/head';
+import { getTitleMeta } from '@/utils/index';
 
 const AdminManageComments = () => {
-  return <div className="page">في المستقبل ... </div>;
+  return (
+    <>
+      <Head>
+        <title>{getTitleMeta('لوحة التحكم', 'إدارة التغليقات')}</title>
+      </Head>
+      <div className="page">في المستقبل ... </div>;
+    </>
+  );
 };
 
 AdminManageComments.getLayout = (page: EmotionJSX.Element) => (

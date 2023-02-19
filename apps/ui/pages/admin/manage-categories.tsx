@@ -8,13 +8,13 @@ import EditCategory from '@/components/category/EditCategory';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import DeleteCategory from '@/components/category/DeleteCategory';
 import { useCategories } from '@/hooks/category/query.hook';
-import { formatDate } from '@/utils/index';
+import { formatDate, getTitleMeta } from '@/utils/index';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { fetchApp } from '@/hooks/app/query.hook';
+import Head from 'next/head';
 
 const AdminManageCategories = () => {
-  const { methods, data, isLoading, filteredInfo, sortedInfo } =
-    useCategories();
+  const { methods, data, isLoading } = useCategories();
 
   const columns: ColumnsType<Category> = [
     {
@@ -61,6 +61,9 @@ const AdminManageCategories = () => {
   ];
   return (
     <>
+      <Head>
+        <title>{getTitleMeta('لوحة التحكم', 'إدارة الأقسام')}</title>
+      </Head>
       <NewCategory />
       <Table
         columns={columns}
