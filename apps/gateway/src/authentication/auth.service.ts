@@ -100,6 +100,9 @@ export class AuthService {
       if (data?.email) {
         user.email = data.email;
       }
+      if (data?.title) {
+        user.profile.update.title = data.title;
+      }
       return this.prisma.user.update({ where: { id }, data: user });
     } catch (error) {
       Logger.error(error);
