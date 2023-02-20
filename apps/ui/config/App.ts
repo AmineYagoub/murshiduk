@@ -2,7 +2,7 @@ const isProd = process.env.NODE_ENV !== 'development';
 const jwtName = 'aoc_jwt';
 
 const config = {
-  API_URL: isProd ? 'https://travel.enjoystickk.com' : 'http://localhost:3000',
+  API_URL: !isProd ? 'https://travel.enjoystickk.com' : 'http://localhost:3000',
   JWT_TOKEN:
     typeof window === 'undefined' ? null : localStorage.getItem(jwtName),
   JWT_NAME: jwtName,
