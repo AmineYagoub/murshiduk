@@ -12,7 +12,7 @@ export const StyledSection = styled('section')(
       'linear-gradient(to right top, #123524, #0a3a2f, #02403b, #004547, #004953)',
     position: 'relative',
     width: '100%',
-    height: ['195vh', '120vh', '150vh', '150vh', '100vh'],
+    height: ['210vh', '120vh', '150vh', '150vh', '100vh'],
     maxHeight: 1500,
     textAlign: 'center',
     color: '#fff',

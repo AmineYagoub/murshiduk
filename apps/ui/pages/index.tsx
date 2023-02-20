@@ -12,7 +12,12 @@ import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import TimeLineSection from '@/components/home/TimeLineSection';
 import ContactUsSection from '@/components/home/ContactUsSection';
 import LatestBlogsSection from '@/components/home/LatestBlogsSection';
-import { baseUrl, extractTwitterUserName, getTitleMeta } from '../utils';
+import {
+  baseS3Url,
+  baseUrl,
+  extractTwitterUserName,
+  getTitleMeta,
+} from '../utils';
 import HeroSection from '@/components/home/HeroSection';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -73,6 +78,10 @@ const images = ['/img/istanbul.webp', '/img/cappadocia.webp'];
 
 const Home = () => {
   const { data } = useApp();
+  const carouselImages =
+    data.carousel.length > 0
+      ? data.carousel.map((el) => `${baseS3Url}/${el}`)
+      : images;
   return (
     <>
       <Head>
@@ -104,7 +113,7 @@ const Home = () => {
           key="jsonld"
         />
       </Head>
-      <HeroSection images={images} />
+      <HeroSection images={carouselImages} />
       <WhyUsSection />
       <TimeLineSection bio={data.bio} />
       <ContactUsSection />
