@@ -1,51 +1,20 @@
-import Link from 'next/link';
-
-import { AppRoutes, mq } from '../utils';
+import { mq } from '../utils';
+import { useState } from 'react';
 import styled from '@emotion/styled';
-import { MenuFoldOutlined } from '@ant-design/icons';
-import { Layout, Menu, MenuProps, Button, Drawer } from 'antd';
-import { useRouter } from 'next/router';
+import Logo from '@/components/common/Logo';
+import { Layout, Button, Drawer } from 'antd';
 import { useApp } from '@/hooks/app/query.hook';
 import { StyledContent } from './DashboardLayout';
+import { MenuFoldOutlined } from '@ant-design/icons';
 import BlogFooter from '@/components/partials/BlogFooter';
-
-import Logo from '@/components/common/Logo';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import WhatsAppButton from '@/components/partials/WhatsAppButton';
-import { useState } from 'react';
+import Navigation, {
+  menuItems,
+  sideMenuItems,
+} from '@/components/common/Navigation';
 
 const { Header } = Layout;
-
-const menu: MenuProps['items'] = [
-  {
-    key: AppRoutes.Home,
-    label: <Link href={AppRoutes.Home}>الرئيسية</Link>,
-  },
-  {
-    key: AppRoutes.Blog,
-    label: <Link href={AppRoutes.Blog}>المدونة</Link>,
-  },
-  {
-    key: AppRoutes.Contact,
-    label: <Link href={AppRoutes.Contact}>تواصل معي</Link>,
-  },
-];
-
-const sideMenu = [
-  ...menu,
-  {
-    key: AppRoutes.About,
-    label: <Link href={AppRoutes.About}>حول الموقع</Link>,
-  },
-  {
-    key: AppRoutes.Privacy,
-    label: <Link href={AppRoutes.Privacy}>سياسة الخصوصية</Link>,
-  },
-  {
-    key: AppRoutes.Terms,
-    label: <Link href={AppRoutes.Terms}>الشروط و الأحكام</Link>,
-  },
-];
 
 export const StyledHeader = styled(Header)(
   mq({
@@ -88,7 +57,6 @@ const BlogLayout = ({
   children: EmotionJSX.Element;
   showHeader?: boolean;
 }) => {
-  const router = useRouter();
   const { data, isLoading } = useApp();
 
   const [open, setOpen] = useState(false);
@@ -112,15 +80,7 @@ const BlogLayout = ({
             onClick={showDrawer}
           />
           <Logo />
-          <nav>
-            <Menu
-              theme="light"
-              mode="horizontal"
-              defaultSelectedKeys={[AppRoutes.Home]}
-              selectedKeys={[router.pathname]}
-              items={menu}
-            />
-          </nav>
+          <Navigation mode="horizontal" items={menuItems} />
         </StyledHeader>
       )}
       <StyledBlogContent>{children}</StyledBlogContent>
@@ -133,15 +93,7 @@ const BlogLayout = ({
         onClose={onClose}
         open={open}
       >
-        <nav>
-          <Menu
-            theme="light"
-            mode="vertical"
-            defaultSelectedKeys={[AppRoutes.Home]}
-            selectedKeys={[router.pathname]}
-            items={sideMenu}
-          />
-        </nav>
+        <Navigation mode="vertical" items={sideMenuItems} />
       </Drawer>
     </Layout>
   );

@@ -20,10 +20,6 @@ const nextConfig = {
       poll: 1000,
       aggregateTimeout: 300,
     };
-    config.module.rules.push({
-      test: /\.glsl$/,
-      loader: 'webpack-glsl-loader',
-    });
     return config;
   },
   reactStrictMode: true,

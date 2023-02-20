@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { Col, Row } from 'antd';
 import { ScrollSmootherAnimation } from '@/utils/animation/ScrollSmoother';
 import { mq } from '@/utils/index';
+import Navigation, { menuItems } from '../common/Navigation';
 
 export const StyledSection = styled('section')(
   mq({
@@ -11,11 +12,23 @@ export const StyledSection = styled('section')(
       'linear-gradient(to right top, #123524, #0a3a2f, #02403b, #004547, #004953)',
     position: 'relative',
     width: '100%',
-    height: ['185vh', '120vh', '130vh', '140vh', '90vh'],
-    maxHeight: 1350,
+    height: ['195vh', '120vh', '150vh', '150vh', '100vh'],
+    maxHeight: 1500,
     textAlign: 'center',
     color: '#fff',
-    padding: '3em',
+    padding: '10em 3em 3em',
+    nav: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      backgroundColor: '#fff',
+      width: '100%',
+      '.ant-menu': {
+        maxWidth: 1360,
+        margin: '0 auto',
+        padding: 20,
+      },
+    },
     h2: {
       fontSize: 'clamp(0.9rem, 4vw, 1.5rem)',
       opacity: 0,
@@ -84,6 +97,7 @@ const WhyUsSection = () => {
   }, []);
   return (
     <StyledSection className="travel__whyUs">
+      <Navigation mode="horizontal" items={menuItems} />
       <h2 className="travel__fatih-h2">مالذي يميزنا عن غيرنا</h2>
       <h3 className="travel__fatih-h3">لماذا نحن</h3>
       <Row className="travel__desc">

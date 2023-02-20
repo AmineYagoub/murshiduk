@@ -2,7 +2,6 @@ import config from '@/config/App';
 import ky from 'ky-universal';
 export * from './AppRoutes';
 export * from './Logger';
-export * from './animation/WebGLCarousel';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ar';
 import relativeTime from 'dayjs/plugin/relativeTime';
