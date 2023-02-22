@@ -11,7 +11,7 @@ export default class MyDocument extends Document {
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta name="theme-color" content="#6f31a0" />
           <meta name="robots" content="index, nofollow" />
-          <link rel="canonical" href="https://enjoystickk.com/" />
+          <link rel="canonical" href="https://murshiduk.com/" />
           <link rel="manifest" href="/site.webmanifest" />
           <meta
             name="apple-mobile-web-app-status-bar-style"

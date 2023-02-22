@@ -21,6 +21,7 @@ import {
   getFirstImageFromContent,
   baseUrl,
   extractTwitterUserName,
+  baseS3Url,
 } from '@/utils/index';
 import Loading from '@/components/common/Loading';
 
@@ -63,7 +64,7 @@ const itemJsonLd = (data: Blog, siteTitle: string) => {
         "name": "${siteTitle}",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://s3.enjoystickk.com/carousel/logo.svg",
+          "url": "${baseS3Url}/carousel/logo.svg",
           "width": "150",
           "height": "60"
         }

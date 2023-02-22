@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 
 module.exports = {
-  siteUrl: 'https://enjoystickk.com',
+  siteUrl: 'https://murshiduk.com',
   generateRobotsTxt: true, // (optional)
   exclude: ['/admin/*', '/auth/*'],
   sourceDir: 'dist/apps/ui/.next',
