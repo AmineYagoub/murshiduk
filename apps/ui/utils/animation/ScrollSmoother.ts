@@ -1,5 +1,4 @@
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 
 export class ScrollSmootherAnimation {
   public static initInHeroSection() {
@@ -58,7 +57,7 @@ export class ScrollSmootherAnimation {
       scrollTrigger: imgTrigger,
     });
     gsap.to('.travel__fatih-img-2', {
-      y: -150,
+      y: -90,
       duration: 3,
       rotateZ: 10,
       scrollTrigger: { ...fatihTrigger, scrub: true },
@@ -67,7 +66,6 @@ export class ScrollSmootherAnimation {
     gsap.to('.travel__exp', {
       y: -250,
       duration: 9,
-      opacity: 1,
       scrollTrigger: { ...fatihTrigger, scrub: true },
     });
   }

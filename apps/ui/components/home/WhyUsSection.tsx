@@ -12,12 +12,13 @@ export const StyledSection = styled('section')(
       'linear-gradient(to right top, #123524, #0a3a2f, #02403b, #004547, #004953)',
     position: 'relative',
     width: '100%',
-    height: ['210vh', '120vh', '150vh', '150vh', '100vh'],
+    height: ['200vh', '180vh', '150vh', '155vh', '100vh'],
     maxHeight: 1500,
     textAlign: 'center',
     color: '#fff',
-    padding: '10em 3em 3em',
+    padding: ['3em', '3em', '10em 3em 3em'],
     nav: {
+      display: ['none', 'none', 'block'],
       position: 'absolute',
       top: 0,
       right: 0,
@@ -27,17 +28,26 @@ export const StyledSection = styled('section')(
         maxWidth: 1360,
         margin: '0 auto',
         padding: 20,
+        li: {
+          minWidth: 150,
+          fontSize: 18,
+          fontWeight: 600,
+          color: '#374151',
+          borderLeft: 'solid 1px #374151',
+          '&:first-of-type': {
+            borderLeft: 'none',
+          },
+        },
       },
     },
     h2: {
-      fontSize: 'clamp(0.9rem, 4vw, 1.5rem)',
-      opacity: 0,
-    },
-    h3: {
-      fontSize: 'clamp(2rem, 10vw, 4.5rem)',
+      fontSize: 'clamp(1.3rem, 5vw, 3rem)',
+      lineHeight: 1.6,
+      fontWeight: 'bold',
       opacity: 0,
       transform: 'scale(1.5)',
     },
+
     img: {
       filter: 'drop-shadow(2px 5px 5px #000)',
       maxWidth: 'clamp(150px, 30vw, 320px)',
@@ -60,13 +70,18 @@ export const StyledSection = styled('section')(
       textAlign: 'left',
       maxWidth: 1380,
       margin: '0 auto',
+      '.travel__desc-main': {
+        marginTop: 20,
+      },
     },
     b: {
       lineHeight: 2,
+      marginTop: 20,
     },
     p: {
       lineHeight: 1.5,
       margin: '2em auto',
+      fontSize: 'clamp(0.9rem, 4vw, 1rem)',
     },
     '.travel__cards': {
       display: ['block', 'flex', 'block'],
@@ -74,9 +89,8 @@ export const StyledSection = styled('section')(
     '.travel__exp': {
       textAlign: 'center',
       margin: '0 auto',
-      maxWidth: 280,
+      maxWidth: 300,
       minWidth: 180,
-      opacity: 0,
       h5: {
         fontSize: '1.5rem',
         margin: 10,
@@ -98,24 +112,31 @@ const WhyUsSection = () => {
   return (
     <StyledSection className="travel__whyUs">
       <Navigation mode="horizontal" items={menuItems} />
-      <h2 className="travel__fatih-h2">مالذي يميزنا عن غيرنا</h2>
-      <h3 className="travel__fatih-h3">لماذا نحن</h3>
+      <h2 className="travel__fatih-h3">
+        لماذا تحتاج منظم ومرشد سياحي لرحلتك ؟
+      </h2>
       <Row className="travel__desc">
-        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+        <Col
+          xs={24}
+          sm={24}
+          md={24}
+          lg={6}
+          xl={6}
+          className="travel__desc-main"
+        >
           <b>
-            Majed Travel هي شركة سفر ذات طابع عصري تقدمي ومقرها في تركيا ولدت من
-            شغف وحب الإستكشاف للقيام بالأشياء بشكل مختلف.
+            إسمي مجد الصباغ منظم رحلات سياحية إلى تركيا بخبرة تزيد عن 8 سنوات
+            وعليك ان تعلم قبل كل شيء بأن هدفي الأول هو أن أضع جميع خبراتي و أجعل
+            من رحلتك السياحية رحلة ناجحة سعيدة وممتعة وهذا هو هدف العطل.
           </b>
           <p>
-            نتكفل بإعداد الرحلات للعائلات أو الطلاب أو الأجانب ووضع برنامج مدروس
-            للرحلات. تقديم خدمات الترجمة والدليل السياحي عبر موظفي مكاتب السياحة
-            والسفر. تسهيل حجوزات الفنادق والطيران والحافلات للمجموعات السياحية.
-            التنسيق مع المطاعم والمقاهي والمشافي والمراكز الصحية وغيرها التي
-            يريد السائح زيارتها.
+            سأظمن لك الإستفادة القصوى من وقتك الثمين في رحلتك بأفضل شكل ممكن
+            وترتيب الرحلة بشكل مدروس ووافي, حيث أتكفل بإعداد الرحلة كاملة من وقت
+            قدومك إلى بوابة المطار وحتى عودتك منها وثق تماما أنك بأيدي أمينة.
           </p>
           <p>
-            خبراتنا في السياحة و السفر تحت تصرفك لإنشاء رحلات مذهلة ذات تأثير
-            إيجابي بالنسبة لك.
+            كما يمكنني مساعدتك بإختيار و التنسيق مع المطاعم والمقاهي والمشافي
+            والمراكز الصحية إذا احتجت لها عزيزي السائح.
           </p>
         </Col>
         <Col
@@ -142,7 +163,7 @@ const WhyUsSection = () => {
           />
         </Col>
         <Col xs={24} sm={24} md={24} lg={6} xl={6} className="travel__cards">
-          <section className="travel__exp">
+          <section className="travel__exp travel__exp-free">
             <Image
               src="/icons/exp-favorite.svg"
               width={32}
@@ -151,23 +172,26 @@ const WhyUsSection = () => {
             />
             <h5>تجارب لا تُنسى</h5>
             <p>
-              يعد إنشاء رحلتك أمرًا تخطيطيا تمامًا ونحن متواجدون هنا في كل خطوة.
+              نعم صديقي سوف أجعل من رحلتك رحلة لاتنسى وتجربتك معي تجربة حقيقية
+              وجميلة وأنا أتكلم عن ذلك بكل ثقة لأني مع تعاملي الكبير مع العملاء
+              والسائحين لم يخرج سائح واحد لدي إلا وتشكرنا وكان سعيداً جداً
+              برحلته معنا , لذلك تواصل معي وانت مرتاح البال بنجاح رحلتك معي .
             </p>
           </section>
 
-          <section className="travel__exp travel__exp-free">
+          {/*           <section className='travel__exp travel__exp-free'>
             <Image
-              src="/icons/map-favorite.svg"
+              src='/icons/map-favorite.svg'
               width={32}
               height={32}
-              alt="تأثير إيجابي"
+              alt='تأثير إيجابي'
             />
             <h5>تأثير إيجابي</h5>
             <p>
               تجارب وأماكن إقامة مستدامة و منظمة تعظم الفوائد للسكان المحليين كي
               يصبح بمقدورهم تقديم خدمات جيدة للسياح.
             </p>
-          </section>
+          </section> */}
         </Col>
       </Row>
       <section className="travel__exp">
@@ -179,9 +203,10 @@ const WhyUsSection = () => {
         />
         <h5>الشفافية والوضوح</h5>
         <p>
-          اختيار الأفضل كقاعدة أساسية لتبني سياسة الشفافية والوضوح للحفاظ على
-          ميزانيتك من الهدر والضياع وتفعيلاً للقيم الأخلاقية والإنسانية
-          والاجتماعية.
+          إختيار الأفضل لك والأنسب بحسب الخبرة المكتسبة على مر السنين بشكل واضح
+          وصريح , فعندما أفيدك وأعطيك حقك سوف آخذ حقي بكل تأكيد وتكون رحلتك
+          ناجحة وجميلة وأعلم عزيزي السائح من المستحيل تقديم أي خدمة أو سكن غير
+          المتفق عليه بكامل التفاصيل.
         </p>
       </section>
     </StyledSection>

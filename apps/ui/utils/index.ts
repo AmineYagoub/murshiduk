@@ -80,5 +80,5 @@ export const extractTwitterUserName = (url?: string) => {
   return match?.groups?.handle ? `@${match.groups.handle}` : null;
 };
 
-export const baseUrl = 'https://enjoystickk.com';
-export const baseS3Url = 'https://s3.enjoystickk.com';
+export const baseUrl = 'https://murshiduk.com';
+export const baseS3Url = 'https://s3.murshiduk.com';

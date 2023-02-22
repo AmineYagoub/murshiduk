@@ -19,6 +19,11 @@ import {
   getTitleMeta,
 } from '../utils';
 import HeroSection from '@/components/home/HeroSection';
+import dynamic from 'next/dynamic';
+const TestimonialsSlider = dynamic(
+  () => import('@/components/home/TestimonialsSlider'),
+  { ssr: false }
+);
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -118,6 +123,7 @@ const Home = () => {
       <TimeLineSection bio={data.bio} />
       <ContactUsSection />
       <LatestBlogsSection />
+      <TestimonialsSlider images={carouselImages} />
     </>
   );
 };

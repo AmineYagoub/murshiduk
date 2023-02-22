@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Carousel } from 'antd';
 import Image from 'next/image';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 const StyledCarousel = styled(Carousel)({
   width: '100%',
   height: '100vh',
@@ -20,7 +20,7 @@ const HeroSection = ({ images }: { images: string[] }) => {
           width={1600}
           height={1100}
           sizes="100vw"
-          alt=""
+          alt="رحلة إلى إسطنبول"
         />
       ))}
     </StyledCarousel>

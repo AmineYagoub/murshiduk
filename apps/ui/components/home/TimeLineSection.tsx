@@ -79,6 +79,7 @@ const StyledNav = styled('header')({
   color: 'rgb(202 202 202)',
   height: '6rem',
   zIndex: 5,
+
   ':after': {
     content: '" "',
     position: 'absolute',

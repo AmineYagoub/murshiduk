@@ -1,6 +1,6 @@
 import { api } from '@/utils/index';
-import { App, Dashboard } from '@/utils/types';
 import { useQuery } from '@tanstack/react-query';
+import { App, Dashboard } from '@/utils/types';
 
 const fetchApp = async (field?: string): Promise<App> => {
   const uri = field ? `config?field=${field}` : 'config';

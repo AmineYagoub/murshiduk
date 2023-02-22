@@ -1,3 +1,6 @@
+import { Blog } from './blog.type';
+import { Category } from './category.type';
+
 export type Bio = {
   year: number;
   image: string;
@@ -34,4 +37,9 @@ export type Dashboard = {
   tags: number;
   comments: number;
   countries: DashboardCountry[];
+};
+
+export type HomePageData = {
+  blogs: Blog[];
+  categories: Category[];
 };
