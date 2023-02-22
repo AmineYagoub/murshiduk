@@ -1,7 +1,7 @@
 {
-  "short_name": "Travel",
-  "name": "Travel",
-  "description": "موقع السفر و السيحة في تركيا",
+  "short_name": "مرشدك إلى تركيا",
+  "name": "مرشدك إلى تركيا",
+  "description": "موقع السفر و السياحة الى تركيا",
   "icons": [
     {
       "src": "pwa/manifest-icon-192.maskable.png",
