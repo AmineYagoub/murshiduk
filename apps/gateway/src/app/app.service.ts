@@ -50,6 +50,15 @@ export class AppService {
     }
   }
 
+  async getDataForHomePage() {
+    const blogs = await this.prisma.blog.findMany({
+      take: 2,
+      orderBy: { created: 'desc' },
+    });
+    const categories = await this.prisma.category.findMany();
+    return [blogs, categories];
+  }
+
   /**
    * Create a App
    *

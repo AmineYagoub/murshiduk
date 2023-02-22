@@ -14,11 +14,6 @@ export const appConfig = registerAs(APP_CONFIG_REGISTER_KEY, () => ({
     return `${this.protocol}://${this.host}:${this.port}`;
   },
   origin: process.env.ORIGIN_HOST || 'http://localhost:8080',
-  cookieDomain: process.env.COOKIE_DOMAIN || 'localhost',
-  google: {
-    id: process.env.GOOGLE_ID,
-    secret: process.env.GOOGLE_SECRET,
-  },
   jwt: {
     key: process.env.JWT_SECRET || 'secret',
     expiresIn: '7d',

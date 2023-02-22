@@ -26,6 +26,11 @@ export class AppController {
     return this.appService.dashboard();
   }
 
+  @Get('home')
+  async homePage() {
+    return this.appService.getDataForHomePage();
+  }
+
   @Put()
   async updateAppConfig(@Body() data: UpdateAppConfigDto) {
     return this.appService.update(data);

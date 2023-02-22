@@ -61,9 +61,6 @@ export class NonceInterceptor implements NestInterceptor {
       sameSite: 'lax',
       secure: isProd,
     };
-    /*     if (isProd) {
-      options.domain = config.cookieDomain;
-    } */
     return serialize(nonceName, value, options);
   }
 }
