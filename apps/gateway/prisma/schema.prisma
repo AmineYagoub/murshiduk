@@ -66,6 +66,7 @@ model User {
   role                  Role      @relation(fields: [roleId], references: [id], onDelete: NoAction)
   profile               Profile?
   blogs                 Blog[]
+  services              Service[]
   notes                 ContactNotes[]
 }
 
@@ -147,4 +148,23 @@ enum ContactStatus {
   OPEN_DEAL // Positive and redy to recieve the deal
   CONNECTED // Accept the deal and become a custommer
   NEGATIVE // Not intersted
+}
+
+enum ServiceType {
+  TRAVEL
+  SERVICE
+}
+
+model Service {
+  id                    String          @id @default(uuid())
+  author                User            @relation(fields: [authorId], references: [id], onDelete: NoAction)
+  authorId              String
+  type                  ServiceType     @default(SERVICE)
+  title                 String          @db.VarChar(100)
+  image                 String          @db.VarChar(500)
+  slug                  String          @db.VarChar(100) @unique
+  description           String          @db.VarChar(500) @unique
+  content               String          @db.Text
+  created               DateTime        @default(now())
+  updated               DateTime        @updatedAt
 }

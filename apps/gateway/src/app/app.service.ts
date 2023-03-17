@@ -109,6 +109,7 @@ export class AppService {
         instagramUrl: true,
         youtubeUrl: true,
         messengerId: true,
+        aboutUs: true,
       };
       if (field) {
         params.select = {

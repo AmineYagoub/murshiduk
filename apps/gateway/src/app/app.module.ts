@@ -10,15 +10,17 @@ import { PrismaService } from './prisma.service';
 import { ContactModule } from '../contact/contact.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JWTAuthGuard } from '../guards/auth.guard';
+import { OurServiceModule } from '../ourService/ourService.module';
 
 @Module({
   imports: [
-    AppConfigModule,
     BlogModule,
     AuthModule,
     RoleModule,
     ContactModule,
     CategoryModule,
+    AppConfigModule,
+    OurServiceModule,
   ],
   controllers: [AppController],
   providers: [
