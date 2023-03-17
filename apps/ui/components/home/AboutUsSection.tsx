@@ -6,10 +6,11 @@ import { AppRoutes, getFirstImageFromContent, mq } from '@/utils/index';
 
 export const StyledSection = styled('section')(
   mq({
-    backgroundImage:
-      'linear-gradient(to bottom, #123524,#1b3e2d, #255e43, #259b7d)',
+    backgroundImage: 'linear-gradient(to top, #123524, #004953)',
     position: 'relative',
     width: '100%',
+
+    maxHeight: 1500,
     textAlign: 'center',
     color: '#fff',
     padding: '3em',
@@ -59,11 +60,11 @@ export const StyledSection = styled('section')(
   })
 );
 
-const WhyUsSection = ({ content }: { content: string }) => {
+const AboutUsSection = ({ content }: { content: string }) => {
   const img = getFirstImageFromContent(content);
   return (
-    <StyledSection>
-      <Row className="travel__desc" align="middle">
+    <StyledSection className="travel__whyUs">
+      <Row className="travel__desc">
         <Col
           xs={24}
           sm={24}
@@ -72,7 +73,9 @@ const WhyUsSection = ({ content }: { content: string }) => {
           xl={10}
           className="travel__desc-main"
         >
-          <h1 className="travel__fatih-h3">لماذا تختارنا ؟</h1>
+          <h1 className="travel__fatih-h3">من نحن ؟</h1>
+          <article dangerouslySetInnerHTML={{ __html: content }} />
+          <Link href={AppRoutes.About}>قراءة المزيد ... </Link>
         </Col>
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <Image
@@ -88,4 +91,4 @@ const WhyUsSection = ({ content }: { content: string }) => {
   );
 };
 
-export default WhyUsSection;
+export default AboutUsSection;

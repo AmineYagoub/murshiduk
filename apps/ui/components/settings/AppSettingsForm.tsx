@@ -12,6 +12,7 @@ import {
   Divider,
   Row,
   Col,
+  Space,
 } from 'antd';
 import { useUpdateApp } from '@/hooks/app/mutation.hook';
 import { CloseCircleOutlined, PlusOutlined } from '@ant-design/icons';
@@ -84,22 +85,47 @@ const AppSettingsForm = () => {
           </Form.Item>
 
           <StyledH2>بيانات التواصل</StyledH2>
-          {/*           <Form.Item
-            label='البريد الإلكتروني المستخدم في صفحة تواصل معنا'
-            name='contactEmail'
-          >
-            <Input type='email' />
-          </Form.Item> */}
 
-          <Form.Item label="رقم الواتس آب" name="whatsApp">
-            <Input />
+          <Space size={15}>
+            <Form.Item label="رقم الواتس آب" name="whatsApp">
+              <Input
+                style={{ direction: 'ltr', textAlign: 'right', minWidth: 230 }}
+              />
+            </Form.Item>
+            <Form.Item label="معرف صفحة الفايسبوك" name="messengerId">
+              <Input style={{ minWidth: 230 }} />
+            </Form.Item>
+            <Form.Item
+              label="البريد الإلكتروني المستخدم في صفحة تواصل معنا"
+              name="contactEmail"
+            >
+              <Input type="email" style={{ minWidth: 230 }} />
+            </Form.Item>
+          </Space>
+
+          <Form.Item label="عنوان الشارع" name="streetAddress">
+            <Input style={{ maxWidth: 730 }} />
           </Form.Item>
-          <Form.Item
-            label="معرف صفحة الفايسبوك (Facebook Page ID)"
-            name="messengerId"
-          >
-            <Input />
-          </Form.Item>
+          <Space size={15}>
+            <Form.Item label="البلدية" name="addressLocality">
+              <Input style={{ minWidth: 230 }} />
+            </Form.Item>
+            <Form.Item label="المحافظة" name="addressRegion">
+              <Input style={{ minWidth: 230 }} />
+            </Form.Item>
+            <Form.Item label="رمز بريدي" name="postalCode">
+              <Input style={{ minWidth: 230 }} />
+            </Form.Item>
+          </Space>
+
+          <Space size={15}>
+            <Form.Item label="خط العرض" name="latitude">
+              <Input style={{ minWidth: 230 }} placeholder="latitude" />
+            </Form.Item>
+            <Form.Item label="خط الطول" name="longitude">
+              <Input style={{ minWidth: 230 }} placeholder="longitude" />
+            </Form.Item>
+          </Space>
 
           <StyledH2>صفحات التواصل الإجتماعي</StyledH2>
           <Form.Item label="رابط صفحة الموقع على تويتر" name="twitterUrl">

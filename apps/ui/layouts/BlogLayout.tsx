@@ -71,18 +71,7 @@ const BlogLayout = ({
 
   return (
     <Layout>
-      {showHeader && (
-        <StyledHeader>
-          <Button
-            icon={<MenuFoldOutlined />}
-            shape="circle"
-            size="large"
-            onClick={showDrawer}
-          />
-          <Logo />
-          <Navigation mode="horizontal" items={menuItems} />
-        </StyledHeader>
-      )}
+      {showHeader && <Navigation mode="horizontal" items={menuItems} />}
       <StyledBlogContent>{children}</StyledBlogContent>
       <WhatsAppButton data={data} isLoading={isLoading} />
       <BlogFooter siteData={data} />

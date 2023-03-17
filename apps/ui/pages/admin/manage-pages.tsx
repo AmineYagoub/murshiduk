@@ -9,9 +9,6 @@ import DashboardLayout from '@/layout/DashboardLayout';
 import { AppRoutes, getTitleMeta } from '@/utils/index';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import AppSettingsForm from '@/components/settings/AppSettingsForm';
-import UserDetails from '@/components/auth/UserDetails';
-import AppHomeSectionsForm from '@/components/settings/AppHomeSectionsForm';
 
 const AppPrivacyForm = dynamic(
   () => import('@/components/settings/AppPrivacyForm'),
@@ -33,8 +30,6 @@ const AppAgreementForm = dynamic(
 );
 
 export enum AppTabs {
-  APP_CONFIG = 'app-config',
-  HOME_SECTIONS = 'home-sections',
   AGREEMENT = 'agreement',
   PRIVACY = 'privacy',
   ABOUT_US = 'about-us',
@@ -42,43 +37,48 @@ export enum AppTabs {
 
 const items = [
   {
-    label: 'إعدادات عامة',
-    key: AppTabs.APP_CONFIG,
-    children: <AppSettingsForm />,
+    label: 'من نحن',
+    key: AppTabs.ABOUT_US,
+    children: <AppAboutUsForm />,
   },
   {
-    label: 'أقسام الصفحة الرئيسية',
-    key: AppTabs.HOME_SECTIONS,
-    children: <AppHomeSectionsForm />,
+    label: 'الشروط و الأحكام',
+    key: AppTabs.AGREEMENT,
+    children: <AppAgreementForm />,
+  },
+  {
+    label: 'سياسة الخصوصية',
+    key: AppTabs.PRIVACY,
+    children: <AppPrivacyForm />,
   },
 ];
 
-const AdminManageSettings = () => {
+const AdminManagePages = () => {
   const router = useRouter();
-  const [activeKey, setActiveKey] = useState<string>(AppTabs.APP_CONFIG);
+  const [activeKey, setActiveKey] = useState<string>(AppTabs.ABOUT_US);
 
   useEffect(() => {
     const tab = String(router.query?.tab);
     const active = Object.values(AppTabs).includes(tab as AppTabs)
       ? tab
-      : AppTabs.APP_CONFIG;
+      : AppTabs.ABOUT_US;
     setActiveKey(active);
   }, [router.query]);
 
   return (
     <>
       <Head>
-        <title>{getTitleMeta('لوحة التحكم', 'الإعدادت')}</title>
+        <title>{getTitleMeta('لوحة التحكم', 'صفحات الموقع')}</title>
       </Head>
 
       <Tabs
         type="card"
-        defaultActiveKey={AppTabs.APP_CONFIG}
+        defaultActiveKey={AppTabs.ABOUT_US}
         activeKey={activeKey}
         onTabClick={(key, _) => {
           router.push(
             {
-              pathname: AppRoutes.AdminManageSettings,
+              pathname: AppRoutes.AdminManagePages,
               query: { tab: key },
             },
             undefined,
@@ -93,7 +93,7 @@ const AdminManageSettings = () => {
   );
 };
 
-AdminManageSettings.getLayout = (page: EmotionJSX.Element) => (
+AdminManagePages.getLayout = (page: EmotionJSX.Element) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
 
@@ -113,4 +113,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default withAuth(AdminManageSettings);
+export default withAuth(AdminManagePages);

@@ -1,5 +1,7 @@
 export enum AppRoutes {
   Home = '/',
+  Services = '/products/our-service',
+  Programs = '/products/our-programs',
   About = '/community/about',
   Contact = '/community/contact',
   Terms = '/community/terms',
@@ -11,9 +13,13 @@ export enum AppRoutes {
   ForgotPassword = '/auth/forgot/password',
 
   AdminManageDashboard = '/admin/dashboard',
+  AdminManageServices = '/admin/manage-services',
+  AdminManageTravels = '/admin/manage-travels',
   AdminManageOrders = '/admin/manage-orders',
   AdminManageCategories = '/admin/manage-categories',
   AdminManageBlogs = '/admin/manage-blogs',
   AdminManageComments = '/admin/manage-comments',
   AdminManageSettings = '/admin/manage-settings',
+  AdminManagePages = '/admin/manage-pages',
+  AdminManageProfile = '/admin/manage-profile',
 }

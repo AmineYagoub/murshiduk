@@ -1,19 +1,18 @@
-import styled from '@emotion/styled';
-import { Layout, Menu, theme } from 'antd';
-import { createElement, useState } from 'react';
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   SettingFilled,
-  HomeFilled,
   LogoutOutlined,
   AppstoreFilled,
-  EnterOutlined,
+  MenuFoldOutlined,
+  DashboardOutlined,
+  MenuUnfoldOutlined,
 } from '@ant-design/icons';
+import styled from '@emotion/styled';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AppRoutes } from '../utils/index';
-import Link from 'next/link';
 import Logo from '@/components/common/Logo';
+import { createElement, useState } from 'react';
+import { Layout, Menu, MenuProps, theme } from 'antd';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -37,6 +36,81 @@ export const StyledHeader = styled(Header)({
   },
 });
 
+type MenuItem = Required<MenuProps>['items'][number];
+
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group'
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
+}
+
+const items: MenuProps['items'] = [
+  getItem(
+    <Link href={AppRoutes.AdminManageDashboard}>لوحة التحكم</Link>,
+    AppRoutes.AdminManageDashboard,
+    <DashboardOutlined className="blue" />,
+    [
+      getItem(
+        <Link href={AppRoutes.AdminManageOrders}>العملاء</Link>,
+        AppRoutes.AdminManageOrders
+      ),
+      getItem(
+        <Link href={AppRoutes.AdminManageServices}>الخدمات</Link>,
+        AppRoutes.AdminManageServices
+      ),
+      getItem(
+        <Link href={AppRoutes.AdminManageTravels}>الرحلات</Link>,
+        AppRoutes.AdminManageTravels
+      ),
+    ]
+  ),
+  getItem(
+    <Link href={AppRoutes.AdminManageCategories}>الأقسام</Link>,
+    AppRoutes.AdminManageCategories,
+    <AppstoreFilled className="blue" />,
+    [
+      getItem(
+        <Link href={AppRoutes.AdminManageBlogs}>التدوينات</Link>,
+        AppRoutes.AdminManageBlogs
+      ),
+      getItem(
+        <Link href={AppRoutes.AdminManageComments}>التعليقات</Link>,
+        AppRoutes.AdminManageComments
+      ),
+    ]
+  ),
+  getItem(
+    <Link href={AppRoutes.AdminManageSettings}>الإعدادات</Link>,
+    AppRoutes.AdminManageSettings,
+    <SettingFilled className="blue" />,
+    [
+      getItem(
+        <Link href={AppRoutes.AdminManagePages}>صفحات الموقع</Link>,
+        AppRoutes.AdminManagePages
+      ),
+      getItem(
+        <Link href={AppRoutes.AdminManageProfile}>البيانات الشخصية</Link>,
+        AppRoutes.AdminManageProfile
+      ),
+    ]
+  ),
+  getItem(
+    <Link href={AppRoutes.SignOut}>تسجيل الخروج</Link>,
+    AppRoutes.SignOut,
+    <LogoutOutlined className="blue" />
+  ),
+];
+
 const DashboardLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
@@ -47,7 +121,7 @@ const DashboardLayout = ({ children }) => {
     <Layout>
       <StyledHeader style={{ background: colorPrimaryBg }}>
         <Logo />
-        {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+        {createElement(collapsed ? MenuFoldOutlined : MenuUnfoldOutlined, {
           className: 'trigger',
           onClick: () => setCollapsed(!collapsed),
         })}
@@ -59,58 +133,12 @@ const DashboardLayout = ({ children }) => {
             mode="inline"
             defaultSelectedKeys={[AppRoutes.AdminManageDashboard]}
             selectedKeys={[router.pathname]}
-            items={[
-              {
-                key: AppRoutes.AdminManageDashboard,
-                icon: <HomeFilled className="blue" />,
-                label: (
-                  <Link href={AppRoutes.AdminManageDashboard}>لوحة التحكم</Link>
-                ),
-              },
-              {
-                key: AppRoutes.AdminManageOrders,
-                icon: (
-                  <EnterOutlined className="blue" style={{ marginRight: 20 }} />
-                ),
-                label: <Link href={AppRoutes.AdminManageOrders}>العملاء</Link>,
-              },
-              {
-                key: AppRoutes.AdminManageCategories,
-                icon: <AppstoreFilled className="blue" />,
-                label: (
-                  <Link href={AppRoutes.AdminManageCategories}>الأقسام</Link>
-                ),
-              },
-              {
-                key: AppRoutes.AdminManageBlogs,
-                icon: (
-                  <EnterOutlined className="blue" style={{ marginRight: 20 }} />
-                ),
-                label: <Link href={AppRoutes.AdminManageBlogs}>التدوينات</Link>,
-              },
-              {
-                key: AppRoutes.AdminManageComments,
-                icon: (
-                  <EnterOutlined className="blue" style={{ marginRight: 20 }} />
-                ),
-                label: (
-                  <Link href={AppRoutes.AdminManageComments}>التعليقات</Link>
-                ),
-              },
-              {
-                key: AppRoutes.AdminManageSettings,
-                icon: <SettingFilled className="blue" />,
-                label: (
-                  <Link href={AppRoutes.AdminManageSettings}>الإعدادات</Link>
-                ),
-              },
-              {
-                key: AppRoutes.SignOut,
-                icon: <LogoutOutlined className="blue" />,
-
-                label: <Link href={AppRoutes.SignOut}>تسجيل الخروج</Link>,
-              },
+            openKeys={[
+              AppRoutes.AdminManageDashboard,
+              AppRoutes.AdminManageCategories,
+              AppRoutes.AdminManageSettings,
             ]}
+            items={items}
           />
         </Sider>
         <StyledContent>{children}</StyledContent>

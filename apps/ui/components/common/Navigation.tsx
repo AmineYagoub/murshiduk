@@ -1,7 +1,8 @@
 import { AppRoutes } from '@/utils/AppRoutes';
-import { Menu, MenuProps } from 'antd';
+import { Layout, Menu, MenuProps } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Logo from './Logo';
 
 export const menuItems: MenuProps['items'] = [
   {
@@ -9,16 +10,24 @@ export const menuItems: MenuProps['items'] = [
     label: <Link href={AppRoutes.Home}>الرئيسية</Link>,
   },
   {
+    key: AppRoutes.About,
+    label: <Link href={AppRoutes.About}>من نحن</Link>,
+  },
+  {
+    key: AppRoutes.Services,
+    label: <Link href={AppRoutes.Services}>خدماتنا</Link>,
+  },
+  {
+    key: AppRoutes.Programs,
+    label: <Link href={AppRoutes.Programs}>رحلاتنا</Link>,
+  },
+  {
     key: AppRoutes.Blog,
     label: <Link href={AppRoutes.Blog}>المدونة</Link>,
   },
   {
-    key: AppRoutes.About,
-    label: <Link href={AppRoutes.About}>حول الموقع</Link>,
-  },
-  {
     key: AppRoutes.Contact,
-    label: <Link href={AppRoutes.Contact}>تواصل معي</Link>,
+    label: <Link href={AppRoutes.Contact}>تواصل معنا</Link>,
   },
 ];
 
@@ -35,6 +44,8 @@ export const sideMenuItems: MenuProps['items'] = [
   },
 ];
 
+const { Header } = Layout;
+
 const Navigation = ({
   mode,
   items,
@@ -44,15 +55,17 @@ const Navigation = ({
 }) => {
   const router = useRouter();
   return (
-    <nav>
+    <Header style={{ zIndex: 100, display: 'flex' }}>
+      <Logo />
       <Menu
-        theme="light"
+        style={{ marginRight: 10 }}
+        theme="dark"
         mode={mode}
         defaultSelectedKeys={[AppRoutes.Home]}
         selectedKeys={[router.pathname]}
         items={items}
       />
-    </nav>
+    </Header>
   );
 };
 

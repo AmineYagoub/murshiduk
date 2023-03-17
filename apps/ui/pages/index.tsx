@@ -7,7 +7,7 @@ import { withAuth } from '@/components/auth/withAuth';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
-import WhyUsSection from '@/components/home/WhyUsSection';
+import AboutUsSection from '@/components/home/AboutUsSection';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import TimeLineSection from '@/components/home/TimeLineSection';
 import ContactUsSection from '@/components/home/ContactUsSection';
@@ -20,6 +20,9 @@ import {
 } from '../utils';
 import HeroSection from '@/components/home/HeroSection';
 import dynamic from 'next/dynamic';
+import WhyUsSection from '@/components/home/WhyUsSection';
+import OurServices from '@/components/home/OurServices';
+import { fetchService, fetchServices } from '@/hooks/ourService/query.hook';
 const TestimonialsSlider = dynamic(
   () => import('@/components/home/TestimonialsSlider'),
   { ssr: false }
@@ -119,11 +122,14 @@ const Home = () => {
         />
       </Head>
       <HeroSection images={carouselImages} />
-      <WhyUsSection />
-      <TimeLineSection bio={data.bio} />
+
+      <AboutUsSection content={data.aboutUs} />
+      <WhyUsSection content={data.aboutUs} />
+      <OurServices />
+      {/*       <TimeLineSection bio={data.bio} />
       <ContactUsSection />
       <LatestBlogsSection />
-      <TestimonialsSlider images={carouselImages} />
+      <TestimonialsSlider images={carouselImages} /> */}
     </>
   );
 };
@@ -141,15 +147,15 @@ export async function getServerSideProps() {
     });
     await queryClient.prefetchQuery({
       queryKey: [
-        'blogs',
+        'services',
         {
-          take: 5,
+          take: 20,
           skip: 0,
         },
       ],
       queryFn: () =>
-        fetchBlogs({
-          take: 5,
+        fetchServices({
+          take: 20,
           skip: 0,
         }),
     });

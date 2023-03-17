@@ -36,7 +36,7 @@ const AppAboutUsForm = () => {
 
   return (
     <>
-      <h2 style={{ padding: '1em' }}>تعديل محتوى صفحة حول الموقع</h2>
+      <h2 style={{ padding: '1em' }}>تعديل محتوى صفحة من نحن</h2>
       {isLoading ? (
         <Loading />
       ) : (

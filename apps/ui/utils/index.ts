@@ -70,7 +70,7 @@ export const getProfileName = (user: User) => {
 
 export const getFirstImageFromContent = (content: string) => {
   return content
-    .match(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|webp|svg))/)
+    ?.match(/(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|webp|svg))/)
     ?.shift();
 };
 
