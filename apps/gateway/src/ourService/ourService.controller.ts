@@ -66,12 +66,11 @@ export class OurServiceController {
   }
 
   @isPublic()
-  @Get('filter')
-  async getFilteredServices(
+  @Get('filter-travel')
+  async getFilteredTravels(
     @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip: number,
     @Query('take', new DefaultValuePipe(10), ParseIntPipe) take: number,
     @Query('search', new DefaultValuePipe(undefined)) search: string,
-    @Query('tag', new DefaultValuePipe(undefined)) tag: string,
     @Query('created', new DefaultValuePipe(Prisma.SortOrder.desc))
     created: OrderByType
   ): Promise<{
@@ -81,7 +80,27 @@ export class OurServiceController {
     return this.ourService.services({
       skip,
       take,
-      where: this.buildWhere({ search, tag }),
+      where: { ...this.buildWhere({ search }), type: 'TRAVEL' },
+      orderBy: this.buildSorter({ created }),
+    });
+  }
+
+  @isPublic()
+  @Get('filter-service')
+  async getFilteredServices(
+    @Query('skip', new DefaultValuePipe(0), ParseIntPipe) skip: number,
+    @Query('take', new DefaultValuePipe(10), ParseIntPipe) take: number,
+    @Query('search', new DefaultValuePipe(undefined)) search: string,
+    @Query('created', new DefaultValuePipe(Prisma.SortOrder.desc))
+    created: OrderByType
+  ): Promise<{
+    total: number;
+    data: Service[];
+  }> {
+    return this.ourService.services({
+      skip,
+      take,
+      where: { ...this.buildWhere({ search }), type: 'SERVICE' },
       orderBy: this.buildSorter({ created }),
     });
   }
