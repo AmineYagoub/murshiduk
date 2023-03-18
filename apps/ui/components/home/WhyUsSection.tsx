@@ -14,6 +14,7 @@ export const StyledSection = styled('section')(
     textAlign: 'center',
     color: '#fff',
     padding: '3em',
+    maxHeight: 700,
     h1: {
       fontSize: 'clamp(1.3rem, 5vw, 3rem)',
       lineHeight: 1.6,

@@ -22,9 +22,8 @@ export const StyledSection = styled('section')(
       },
       article: {
         height: 300,
-        maxWidth: 400,
         margin: '0 auto',
-        overflow: 'clip',
+        overflow: 'hidden',
       },
       a: {
         textAlign: 'right',
