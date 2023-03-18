@@ -1,6 +1,5 @@
 import { Tabs } from 'antd';
 import Head from 'next/head';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchApp } from '@/hooks/app/query.hook';
@@ -10,27 +9,7 @@ import { AppRoutes, getTitleMeta } from '@/utils/index';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import AppSettingsForm from '@/components/settings/AppSettingsForm';
-import UserDetails from '@/components/auth/UserDetails';
 import AppHomeSectionsForm from '@/components/settings/AppHomeSectionsForm';
-
-const AppPrivacyForm = dynamic(
-  () => import('@/components/settings/AppPrivacyForm'),
-  {
-    ssr: false,
-  }
-);
-const AppAboutUsForm = dynamic(
-  () => import('@/components/settings/AppAboutUsForm'),
-  {
-    ssr: false,
-  }
-);
-const AppAgreementForm = dynamic(
-  () => import('@/components/settings/AppAgreementForm'),
-  {
-    ssr: false,
-  }
-);
 
 export enum AppTabs {
   APP_CONFIG = 'app-config',

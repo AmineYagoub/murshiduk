@@ -1,19 +1,19 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import { Space, Table } from 'antd';
 import { Service } from '@/utils/types';
 import type { ColumnsType } from 'antd/es/table';
 import { fetchApp } from '@/hooks/app/query.hook';
 import { withAuth } from '@/components/auth/withAuth';
 import DashboardLayout from '@/layout/DashboardLayout';
-import { baseS3Url, formatDate, getTitleMeta } from '@/utils/index';
 import { useServices } from '@/hooks/ourService/query.hook';
 import NewService from '@/components/ourServices/NewService';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import EditService from '@/components/ourServices/EditService';
 import DeleteService from '@/components/ourServices/DeleteService';
+import { baseS3Url, formatDate, getTitleMeta } from '@/utils/index';
 import PreviewOurService from '@/components/ourServices/PreviewOurService';
-import Image from 'next/image';
 
 const AdminManageServices = () => {
   const { methods, data, isLoading } = useServices();
@@ -66,7 +66,7 @@ const AdminManageServices = () => {
       <Head>
         <title>{getTitleMeta('لوحة التحكم', 'إدارة الخدمات')}</title>
       </Head>
-      <NewService />
+      <NewService type="SERVICE" />
       <Table
         columns={columns}
         dataSource={data}

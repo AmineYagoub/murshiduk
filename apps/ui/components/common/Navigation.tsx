@@ -1,8 +1,16 @@
+import { StyledHeader } from '@/layout/DashboardLayout';
 import { AppRoutes } from '@/utils/AppRoutes';
-import { Layout, Menu, MenuProps } from 'antd';
+import { Menu, MenuProps, theme } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Logo from './Logo';
+
+const scrollToSection = (e) => {
+  const el = document.querySelector(e.target.hash) as HTMLDivElement;
+  if (el) {
+    window.scrollTo({ top: 500, behavior: 'smooth' });
+  }
+};
 
 export const menuItems: MenuProps['items'] = [
   {
@@ -11,15 +19,27 @@ export const menuItems: MenuProps['items'] = [
   },
   {
     key: AppRoutes.About,
-    label: <Link href={AppRoutes.About}>من نحن</Link>,
+    label: (
+      <Link href="#about-us" onClick={scrollToSection} scroll={false}>
+        من نحن
+      </Link>
+    ),
   },
   {
     key: AppRoutes.Services,
-    label: <Link href={AppRoutes.Services}>خدماتنا</Link>,
+    label: (
+      <Link href="#our-services" onClick={scrollToSection} scroll={false}>
+        خدماتنا
+      </Link>
+    ),
   },
   {
     key: AppRoutes.Programs,
-    label: <Link href={AppRoutes.Programs}>رحلاتنا</Link>,
+    label: (
+      <Link href="#our-travels" onClick={scrollToSection} scroll={false}>
+        رحلاتنا
+      </Link>
+    ),
   },
   {
     key: AppRoutes.Blog,
@@ -44,8 +64,6 @@ export const sideMenuItems: MenuProps['items'] = [
   },
 ];
 
-const { Header } = Layout;
-
 const Navigation = ({
   mode,
   items,
@@ -54,18 +72,22 @@ const Navigation = ({
   items: MenuProps['items'];
 }) => {
   const router = useRouter();
+  const {
+    token: { colorPrimaryBg },
+  } = theme.useToken();
   return (
-    <Header style={{ zIndex: 100, display: 'flex' }}>
+    <StyledHeader
+      style={{ background: colorPrimaryBg, zIndex: 100, display: 'flex' }}
+    >
       <Logo />
       <Menu
-        style={{ marginRight: 10 }}
-        theme="dark"
+        style={{ marginRight: 10, backgroundColor: 'transparent' }}
         mode={mode}
         defaultSelectedKeys={[AppRoutes.Home]}
         selectedKeys={[router.pathname]}
         items={items}
       />
-    </Header>
+    </StyledHeader>
   );
 };
 

@@ -5,7 +5,7 @@ import type { Service } from '@/utils/types';
 import { useDeleteService } from '@/hooks/ourService/mutation.hook';
 
 const DeleteService = ({ record }: { record: Service }) => {
-  const { mutateAsync, isLoading } = useDeleteService();
+  const { mutateAsync, isLoading } = useDeleteService(record.type);
   const confirmDelete = async () => {
     try {
       await mutateAsync(record.id);
@@ -15,7 +15,7 @@ const DeleteService = ({ record }: { record: Service }) => {
   };
   return (
     <Popconfirm
-      title="سيتم حذف الخدمة و جميع المدخلات المرتبطة بها"
+      title="سيتم حذف العنصر و جميع المدخلات المرتبطة بها"
       onConfirm={confirmDelete}
     >
       <Button

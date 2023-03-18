@@ -1,87 +1,53 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { Col, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
+import { AppRoutes, mq } from '@/utils/index';
 import styled from '@emotion/styled';
-import { AppRoutes, getFirstImageFromContent, mq } from '@/utils/index';
+import Link from 'next/link';
 
 export const StyledSection = styled('section')(
   mq({
-    backgroundImage:
-      'linear-gradient(to bottom, #123524,#1b3e2d, #255e43, #259b7d)',
+    backgroundColor: '#c9e8e0',
+    backgroundImage: "url('/img/layered-bg.svg')",
+    backgroundSize: 'contain',
     position: 'relative',
     width: '100%',
+    height: '100vh',
     textAlign: 'center',
     color: '#fff',
     padding: '3em',
-    '.travel__desc-main': {
-      h1: {
-        fontSize: 'clamp(1.3rem, 5vw, 3rem)',
-        lineHeight: 1.6,
-        fontWeight: 'bold',
-      },
-      article: {
-        height: 300,
-        maxWidth: 400,
-        margin: '0 auto',
-        overflow: 'clip',
-      },
-      a: {
-        textAlign: 'right',
-        display: 'inherit',
-        color: 'greenyellow',
-      },
-      img: {
-        ':first-of-type': {
-          display: 'none',
-        },
-      },
-
-      b: {
-        lineHeight: 2,
-        marginTop: 20,
-      },
-      p: {
-        ':nth-child(2)': {
-          display: 'none',
-          margin: 0,
-        },
-        lineHeight: 1.8,
-        margin: '2em auto',
-        fontSize: 'clamp(0.9rem, 4vw, 1rem)',
-      },
+    h1: {
+      fontSize: 'clamp(1.3rem, 5vw, 3rem)',
+      lineHeight: 1.6,
+      fontWeight: 'bold',
     },
 
-    '.travel__about-img': {
-      filter: 'drop-shadow(2px 5px 5px #000)',
-      maxWidth: 'clamp(150px, 30vw, 420px)',
-      borderRadius: '25% 0',
+    p: {
+      lineHeight: 1.9,
+      margin: '2em auto',
+      fontSize: 'clamp(0.9rem, 4vw, 1rem)',
+    },
+    button: {
+      padding: '0 4em !important',
+      backgroundImage: 'linear-gradient(to top, #0baa7d 0%, #c9e8e0 100%)',
+      border: 'none',
+      color: '#232526',
     },
   })
 );
 
 const WhyUsSection = ({ content }: { content: string }) => {
-  const img = getFirstImageFromContent(content);
   return (
-    <StyledSection>
-      <Row className="travel__desc" align="middle">
-        <Col
-          xs={24}
-          sm={24}
-          md={24}
-          lg={10}
-          xl={10}
-          className="travel__desc-main"
-        >
-          <h1 className="travel__fatih-h3">لماذا تختارنا ؟</h1>
+    <StyledSection id="why-us">
+      <Row align="middle">
+        <Col xs={24} sm={24} md={24} lg={10} xl={10}>
+          <h1>لماذا تختارنا ؟</h1>
         </Col>
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-          <Image
-            src={img}
-            width={420}
-            height={780}
-            alt="مرشد سياحي في تركيا"
-            className="travel__about-img"
-          />
+          <p>{content}</p>
+          <Link href={AppRoutes.Contact}>
+            <Button type="ghost" size="large">
+              تواصل معنا
+            </Button>
+          </Link>
         </Col>
       </Row>
     </StyledSection>

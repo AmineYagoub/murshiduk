@@ -8,6 +8,7 @@ import { baseS3Url } from '@/utils/index';
 const { Meta } = Card;
 
 const ShowServiceCard: FC<{ service: Service }> = ({ service }) => {
+  const path = service.type === 'SERVICE' ? 'our-services' : 'our-travels';
   return (
     <Card
       style={{ width: 350, height: 550 }}
@@ -24,10 +25,16 @@ const ShowServiceCard: FC<{ service: Service }> = ({ service }) => {
         title={service.title}
         description={`${service.description.slice(0, 100)} ... `}
       />
-      <Link href={`our-services/${service.slug}`}>
+      <Link href={`${path}/${service.slug}`}>
         <Button
           type="primary"
-          style={{ padding: '0 1.5em', marginTop: '1.5em' }}
+          style={{
+            padding: '0 1.5em',
+            position: 'absolute',
+            bottom: 20,
+            left: '50%',
+            transform: 'translate(-50%, 0)',
+          }}
         >
           التفاصيل
         </Button>

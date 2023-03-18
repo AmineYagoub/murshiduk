@@ -56,7 +56,7 @@ const UserAvatar = () => {
     </div>
   );
   return (
-    <ImgCrop rotate modalTitle="ضبط الصورة الشخصية" beforeCrop={beforeCrop}>
+    <ImgCrop modalTitle="ضبط الصورة الشخصية" beforeCrop={beforeCrop}>
       <Upload
         name={UPLOAD_FIELD_NAME}
         accept={UPLOAD_EXT_MIME.join()}

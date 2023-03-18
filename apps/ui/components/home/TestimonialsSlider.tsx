@@ -53,9 +53,7 @@ const TestimonialsSlider = ({ images }: { images: string[] }) => {
   return (
     <>
       <StyledSection className="testimonial">
-        <h1 className="testimonial__title">
-          💖💘💞 أراء عملائي السابقين 💞💘💖
-        </h1>
+        <h1 className="testimonial__title">💖💘💞 أراء العملاء 💞💘💖</h1>
         <div className="cardList">
           <Button
             shape="circle"

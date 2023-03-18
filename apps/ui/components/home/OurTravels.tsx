@@ -44,11 +44,7 @@ export const StyledSection = styled('section')(
     maxHeight: 1500,
     textAlign: 'center',
     padding: '3em',
-    h1: {
-      fontSize: 'clamp(1rem, 5vw, 1.3rem)',
-      lineHeight: 1.6,
-      fontWeight: 'bold',
-    },
+
     h2: {
       fontSize: 'clamp(1.3rem, 5vw, 2.5rem)',
       lineHeight: 1.6,
@@ -66,12 +62,11 @@ export const StyledSection = styled('section')(
   })
 );
 
-const OurServices = () => {
-  const { data } = useServices();
+const OurTravels = () => {
+  const { data } = useServices('TRAVEL');
   return (
-    <StyledSection id="our-services">
-      <h1>خدماتنا</h1>
-      <h2>خدمات سياحية و مميزات متكاملة</h2>
+    <StyledSection id="our-travels">
+      <h2>رحلاتنا السياحية</h2>
 
       <Carousel
         ssr
@@ -88,4 +83,4 @@ const OurServices = () => {
   );
 };
 
-export default OurServices;
+export default OurTravels;

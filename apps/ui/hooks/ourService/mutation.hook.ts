@@ -1,11 +1,12 @@
 import { api } from '@/utils/index';
-import type { ServiceCreateInput } from '@/utils/types';
+import type { ServiceCreateInput, ServiceType } from '@/utils/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const useCreateService = () => {
+const useCreateService = (type: ServiceType) => {
   const client = useQueryClient();
   return useMutation({
     mutationFn: (values: ServiceCreateInput) => {
+      values.type = type;
       const { id, ...rest } = values;
       if (id) {
         return api.put(`our-services/${id}`, {
@@ -18,16 +19,16 @@ const useCreateService = () => {
         })
         .json();
     },
-    onSuccess: () => client.invalidateQueries(['services']),
+    onSuccess: () => client.invalidateQueries([type]),
   });
 };
-const useDeleteService = () => {
+const useDeleteService = (type: ServiceType) => {
   const client = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => {
       return api.delete(`our-services/${id}`);
     },
-    onSuccess: () => client.invalidateQueries(['services']),
+    onSuccess: () => client.invalidateQueries([type]),
   });
 };
 

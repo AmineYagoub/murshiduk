@@ -8,6 +8,7 @@
 
 html {
   --timeLine-opacity: 0;
+  scroll-behavior: smooth;
 }
 :root {
   --card-width: 300px;

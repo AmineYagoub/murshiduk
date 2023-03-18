@@ -4,6 +4,7 @@ import { User } from './user.type';
 export type Service = {
   id: string;
   title: string;
+  type: ServiceType;
   slug: string;
   image: string;
   description?: string;
@@ -18,6 +19,7 @@ export type ServiceDataIndex = keyof Service;
 export const ServiceFields: { [P in ServiceDataIndex]: P } = {
   id: 'id',
   title: 'title',
+  type: 'type',
   slug: 'slug',
   description: 'description',
   image: 'image',
@@ -27,7 +29,10 @@ export const ServiceFields: { [P in ServiceDataIndex]: P } = {
   updated: 'updated',
 };
 
+export type ServiceType = 'SERVICE' | 'TRAVEL';
+
 export type WhereServiceParams = {
+  type: ServiceType;
   search?: string;
 };
 export type OrderServiceByParams = {
@@ -49,6 +54,7 @@ export interface ServiceResponse {
 
 export type ServiceCreateInput = {
   id?: string;
+  type: ServiceType;
   title: string;
   image: string;
   description?: string;

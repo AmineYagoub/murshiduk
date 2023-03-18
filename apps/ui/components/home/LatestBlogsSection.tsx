@@ -9,12 +9,13 @@ import { memo } from 'react';
 const StyledSection = styled('section')({
   minHeight: '100vh',
   textAlign: 'center',
-  color: '#fff',
+  color: '#123524',
+  padding: 50,
   h3: {
     fontSize: 'clamp(0.8rem, 3vw, 1rem)',
   },
   h4: {
-    fontSize: 'clamp(2rem, 10vw, 4.5rem)',
+    fontSize: 'clamp(2rem, 10vw, 4rem)',
     marginBottom: '2em auto',
   },
   figure: {
@@ -52,7 +53,7 @@ const StyledSection = styled('section')({
       border: '1px solid #ccc',
     },
     a: {
-      color: '#ccc',
+      color: 'inherit',
     },
   },
 });
@@ -60,23 +61,10 @@ const StyledSection = styled('section')({
 const LatestBlogsSection = () => {
   const { data } = useBlogs();
   const items = data?.slice(0, 2);
-  /*   useEffect(() => {
-    gsap.to('.travel__blog-img', {
-      scrollTrigger: {
-        trigger: '.travel__blog-img',
-        toggleActions: 'restart pause reverse pause',
-        scrub: 1,
-        start: 'top bottom',
-        end: 'center top',
-      },
-      y: -100,
-      ease: 'none',
-    });
-  }, []); */
   return (
     <StyledSection>
       <h3>قم بزيارة المدونة لتحصل على لمحة عما يمكنك تجربته</h3>
-      <h4>قصص ملهمة</h4>
+      <h4>آخر التدوينات</h4>
       <Row justify="center">
         {items?.map((el) => (
           <Col sm={24} lg={10} md={12} key={el.id}>
@@ -91,7 +79,10 @@ const LatestBlogsSection = () => {
                 className="travel__blog-img"
               />
               <figcaption>
-                <h6>{el.title}</h6>
+                <Link href={`/blog/${el.slug}`}>
+                  <h6>{el.title}</h6>
+                </Link>
+
                 <Divider orientation="right">
                   <Link href={`/blog/${el.slug}`}>طالع المزيد</Link>
                 </Divider>

@@ -1,30 +1,18 @@
 import { App } from '@/utils/types';
+import styled from '@emotion/styled';
 import { Logger } from '@/utils/Logger';
 import Loading from '../common/Loading';
+import { baseS3Url } from '@/utils/index';
 import { FormEvent, useEffect } from 'react';
 import { useApp } from '@/hooks/app/query.hook';
-import {
-  Form,
-  Input,
-  Button,
-  notification,
-  InputNumber,
-  Divider,
-  Row,
-  Col,
-  Space,
-} from 'antd';
 import { useUpdateApp } from '@/hooks/app/mutation.hook';
+import { Form, Input, Button, notification, Space } from 'antd';
 import { CloseCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import styled from '@emotion/styled';
-import { baseS3Url } from '@/utils/index';
 
 const StyledH2 = styled('h2')({
   padding: '1em',
   textDecoration: 'underline',
 });
-
-const { TextArea } = Input;
 
 const AppSettingsForm = () => {
   const [form] = Form.useForm();
@@ -216,80 +204,6 @@ const AppSettingsForm = () => {
               </>
             )}
           </Form.List>
-          <StyledH2>الخبرات الشخصية</StyledH2>
-
-          <Row gutter={10}>
-            <Col>
-              <Form.Item label="السنة" name={['bio', '0', 'year']}>
-                <InputNumber />
-              </Form.Item>
-            </Col>
-            <Col span={21}>
-              <Form.Item label="صورة شخصية" name={['bio', '0', 'image']}>
-                <Input
-                  addonAfter={`/${baseS3Url}`}
-                  style={{
-                    textAlign: 'left',
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item label="وصف قصير" name={['bio', '0', 'content']}>
-                <TextArea rows={4} />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Divider />
-
-          <Row gutter={10}>
-            <Col>
-              <Form.Item label="السنة" name={['bio', '1', 'year']}>
-                <InputNumber />
-              </Form.Item>
-            </Col>
-            <Col span={21}>
-              <Form.Item label="صورة شخصية" name={['bio', '1', 'image']}>
-                <Input
-                  addonAfter={`/${baseS3Url}`}
-                  style={{
-                    textAlign: 'left',
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item label="وصف قصير" name={['bio', '1', 'content']}>
-                <TextArea rows={4} />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Divider />
-
-          <Row gutter={10}>
-            <Col>
-              <Form.Item label="السنة" name={['bio', '2', 'year']}>
-                <InputNumber />
-              </Form.Item>
-            </Col>
-            <Col span={21}>
-              <Form.Item label="صورة شخصية" name={['bio', '2', 'image']}>
-                <Input
-                  addonAfter={`/${baseS3Url}`}
-                  style={{
-                    textAlign: 'left',
-                  }}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={24}>
-              <Form.Item label="وصف قصير" name={['bio', '2', 'content']}>
-                <TextArea rows={4} />
-              </Form.Item>
-            </Col>
-          </Row>
 
           <Button
             type="primary"

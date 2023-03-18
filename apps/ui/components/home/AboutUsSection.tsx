@@ -63,7 +63,7 @@ export const StyledSection = styled('section')(
 const AboutUsSection = ({ content }: { content: string }) => {
   const img = getFirstImageFromContent(content);
   return (
-    <StyledSection className="travel__whyUs">
+    <StyledSection className="travel__whyUs" id="about-us">
       <Row className="travel__desc">
         <Col
           xs={24}

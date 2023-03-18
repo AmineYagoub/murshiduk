@@ -4,7 +4,7 @@ import { Logger } from '@/utils/Logger';
 import UrlInput from '../common/UrlInput';
 import { FormEvent, useState } from 'react';
 import { SaveOutlined } from '@ant-design/icons';
-import type { Service, User } from '@/utils/types';
+import type { Service, ServiceType, User } from '@/utils/types';
 import { useAuthState } from '@/hooks/auth/mutation.hook';
 import { Alert, Button, Drawer, Space, Form, Input } from 'antd';
 import { useCreateService } from '@/hooks/ourService/mutation.hook';
@@ -17,6 +17,7 @@ const Editor = dynamic(() => import('../common/Editor'), {
 const { TextArea } = Input;
 interface CreateFormProps {
   open: boolean;
+  type: ServiceType;
   onClose: () => void;
   record?: Service;
 }
@@ -25,10 +26,11 @@ const OurServiceForm: React.FC<CreateFormProps> = ({
   open,
   onClose,
   record,
+  type,
 }) => {
   const [form] = Form.useForm();
   const [content, setContent] = useState<string>(record?.content);
-  const { isLoading, mutateAsync, isError } = useCreateService();
+  const { isLoading, mutateAsync, isError } = useCreateService(type);
   const [user] = useAuthState<User>();
 
   if (record) {
@@ -70,7 +72,7 @@ const OurServiceForm: React.FC<CreateFormProps> = ({
         form.setFields([
           {
             name: 'description',
-            errors: ['هذا الوصف موجود مسبقا يرجى عدم تكرار نفس وصف الخدمات'],
+            errors: ['هذا الوصف موجود مسبقا يرجى عدم تكرار نفس الوصف'],
           },
         ]);
       }
@@ -83,9 +85,11 @@ const OurServiceForm: React.FC<CreateFormProps> = ({
     e.preventDefault();
   };
 
+  const drawerTitle = type === 'SERVICE' ? 'إنشاء خدمة جديدة' : 'إنشاء رحلة';
+
   return (
     <Drawer
-      title={record ? 'التعديل على الخدمة' : 'إنشاء خدمة جديدة'}
+      title={record ? 'التعديل على المحتوى' : drawerTitle}
       placement="right"
       closable={false}
       onClose={onClose}
@@ -124,7 +128,7 @@ const OurServiceForm: React.FC<CreateFormProps> = ({
           rules={[
             {
               required: true,
-              message: 'يرجى كتابة عنوان للخدمة!',
+              message: 'يرجى كتابة العنوان!',
             },
           ]}
         >
@@ -138,7 +142,7 @@ const OurServiceForm: React.FC<CreateFormProps> = ({
           rules={[
             {
               required: true,
-              message: 'يرجى توفير الصورة الرئيسية للخدمة!',
+              message: 'يرجى توفير الصورة الرئيسية للمحتوى!',
             },
           ]}
         >
@@ -152,7 +156,7 @@ const OurServiceForm: React.FC<CreateFormProps> = ({
           rules={[
             {
               required: true,
-              message: 'يرجى كتابة الوصف للخدمة!',
+              message: 'يرجى كتابة الوصف للعنصر!',
             },
           ]}
         >
@@ -167,7 +171,7 @@ const OurServiceForm: React.FC<CreateFormProps> = ({
       {isError && (
         <Alert
           message="خطأ"
-          description="حدث خطأ أثناء حفظ الخدمة ، يرجى المحاولة مرة أخرى"
+          description="حدث خطأ أثناء عملية الحفظ ، يرجى المحاولة مرة أخرى"
           banner
           closable
           type="error"

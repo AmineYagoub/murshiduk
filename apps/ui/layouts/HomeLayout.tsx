@@ -48,7 +48,7 @@ const HomeLayout = ({ children }) => {
       <Navigation mode="horizontal" items={menuItems} />
       <Content style={{ zIndex: 0, overflow: 'hidden' }}>{children}</Content>
       <WhatsAppButton data={data} isLoading={isLoading} />
-      <BlogFooter siteData={data} color="opa" />
+      <BlogFooter siteData={data} />
       <Drawer
         title={<Logo />}
         placement="right"

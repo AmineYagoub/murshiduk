@@ -1,9 +1,10 @@
+import { ServiceType } from '@/utils/types';
 import { PlusOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { TableCreateBtn } from '../common/CreateBtn';
 import OurServiceForm from './OurServiceForm';
 
-const NewService = () => {
+const NewService: FC<{ type: ServiceType }> = ({ type }) => {
   const [visible, setVisible] = useState(false);
   const showDrawer = () => {
     setVisible(true);
@@ -22,10 +23,10 @@ const NewService = () => {
         onClick={showDrawer}
         ghost
       >
-        إضافة خدمة
+        إضافة جديد
       </TableCreateBtn>
 
-      <OurServiceForm onClose={onClose} open={visible} />
+      <OurServiceForm onClose={onClose} open={visible} type={type} />
     </>
   );
 };

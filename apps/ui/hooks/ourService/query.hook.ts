@@ -19,26 +19,28 @@ import {
   OrderByType,
   Pagination,
   WhereServiceParams,
+  ServiceType,
 } from '@/utils/types';
 
 const fetchServices = async (
   params: ServicePaginationDto
 ): Promise<ServiceResponse> => {
   const { take, skip, orderBy, where } = params;
+  const path = where.type === 'SERVICE' ? 'filter-service' : 'filter-travel';
   const query = new URLSearchParams({ take: String(take), skip: String(skip) });
   for (const [key, val] of Object.entries({ ...where, ...orderBy })) {
     if (val) {
       query.append(key, val);
     }
   }
-  return await api.get(`our-services/filter?${query.toString()}`).json();
+  return await api.get(`our-services/${path}?${query.toString()}`).json();
 };
 
 const fetchService = async (slug: string): Promise<Service> => {
   return await api.get(`our-services/slug/${slug}`).json();
 };
 
-const useServices = () => {
+const useServices = (type: ServiceType = 'SERVICE') => {
   const router = useRouter();
   const { query } = router;
   const [pagination, setPagination] = useState<Pagination>({
@@ -51,7 +53,7 @@ const useServices = () => {
 
   const search = decodeURIComponent(String(query?.search || ''));
   const [defaultSearchValue] = useState(search);
-  const [where, setWhere] = useState<WhereServiceParams>({ search });
+  const [where, setWhere] = useState<WhereServiceParams>({ search, type });
   const [orderBy, setOrderBy] = useState<OrderServiceByParams>({});
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
@@ -75,7 +77,7 @@ const useServices = () => {
       offset: 0,
       limit: 10,
     });
-    setWhere({});
+    setWhere({ type });
     setOrderBy({});
   };
 
@@ -119,7 +121,7 @@ const useServices = () => {
       }
     }
 
-    const w: WhereServiceParams = {};
+    const w: WhereServiceParams = { type };
 
     for (const [key, value] of Object.entries(filters)) {
       if (value) {
@@ -149,7 +151,7 @@ const useServices = () => {
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: [
-      'services',
+      type,
       {
         take: pagination.limit,
         skip: pagination.offset,

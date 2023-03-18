@@ -22,7 +22,8 @@ export const Copyright = () => (
 const NewFooter = styled(Footer)((props) =>
   mq({
     zIndex: 1,
-    opacity: props.color === 'white' ? 1 : 0.5,
+    backgroundImage: 'linear-gradient(to top, #123524, #004953)',
+    color: '#fff',
     height: [300, 300, 200],
     '.ant-row': {
       margin: '1.4em auto',
@@ -36,6 +37,9 @@ const NewFooter = styled(Footer)((props) =>
       width: '100%',
       margin: 5,
       textAlign: 'center',
+    },
+    a: {
+      color: '#c9e8e0',
     },
   })
 );

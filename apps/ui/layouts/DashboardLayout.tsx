@@ -16,6 +16,21 @@ import { Layout, Menu, MenuProps, theme } from 'antd';
 
 const { Header, Footer, Sider, Content } = Layout;
 
+const getOpenKeys = (route: AppRoutes) => {
+  let current = [AppRoutes.AdminManageDashboard];
+  if (
+    [AppRoutes.AdminManageBlogs, AppRoutes.AdminManageComments].includes(route)
+  ) {
+    current = [AppRoutes.AdminManageCategories];
+  }
+  if (
+    [AppRoutes.AdminManagePages, AppRoutes.AdminManageProfile].includes(route)
+  ) {
+    current = [AppRoutes.AdminManageSettings];
+  }
+  return current;
+};
+
 export const StyledContent = styled(Content)({
   width: '95% !important',
   backgroundColor: 'rgba(255, 255, 255, 0.3)',
@@ -131,7 +146,6 @@ const DashboardLayout = ({ children }) => {
           <Menu
             theme="light"
             mode="inline"
-            defaultSelectedKeys={[AppRoutes.AdminManageDashboard]}
             selectedKeys={[router.pathname]}
             openKeys={[
               AppRoutes.AdminManageDashboard,

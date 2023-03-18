@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import Head from 'next/head';
-import { App } from '@/utils/types';
+import { App, ServiceType } from '@/utils/types';
 import HomeLayout from '@/layout/HomeLayout';
 import { fetchBlogs } from '@/hooks/blog/query.hook';
 import { withAuth } from '@/components/auth/withAuth';
@@ -23,12 +23,21 @@ import dynamic from 'next/dynamic';
 import WhyUsSection from '@/components/home/WhyUsSection';
 import OurServices from '@/components/home/OurServices';
 import { fetchService, fetchServices } from '@/hooks/ourService/query.hook';
+import OurTravels from '@/components/home/OurTravels';
 const TestimonialsSlider = dynamic(
   () => import('@/components/home/TestimonialsSlider'),
   { ssr: false }
 );
 
 gsap.registerPlugin(ScrollTrigger);
+
+const getPaginationParams = (type: ServiceType) => {
+  return {
+    take: 20,
+    skip: 0,
+    where: { type },
+  };
+};
 
 const itemJsonLd = (data: App) => {
   return {
@@ -124,8 +133,11 @@ const Home = () => {
       <HeroSection images={carouselImages} />
 
       <AboutUsSection content={data.aboutUs} />
-      <WhyUsSection content={data.aboutUs} />
+      <WhyUsSection content={data.whyUsContent} />
       <OurServices />
+      <OurTravels />
+      <LatestBlogsSection />
+      <TestimonialsSlider images={carouselImages} />
       {/*       <TimeLineSection bio={data.bio} />
       <ContactUsSection />
       <LatestBlogsSection />
@@ -139,6 +151,8 @@ Home.getLayout = (page: EmotionJSX.Element) => <HomeLayout>{page}</HomeLayout>;
 export default withAuth(Home, true);
 
 export async function getServerSideProps() {
+  const serviceType: ServiceType = 'SERVICE';
+  const travelType: ServiceType = 'TRAVEL';
   try {
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery({
@@ -146,18 +160,12 @@ export async function getServerSideProps() {
       queryFn: () => fetchApp(),
     });
     await queryClient.prefetchQuery({
-      queryKey: [
-        'services',
-        {
-          take: 20,
-          skip: 0,
-        },
-      ],
-      queryFn: () =>
-        fetchServices({
-          take: 20,
-          skip: 0,
-        }),
+      queryKey: [serviceType, getPaginationParams(serviceType)],
+      queryFn: () => fetchServices(getPaginationParams(serviceType)),
+    });
+    await queryClient.prefetchQuery({
+      queryKey: [travelType, getPaginationParams(travelType)],
+      queryFn: () => fetchServices(getPaginationParams(travelType)),
     });
     return {
       props: {

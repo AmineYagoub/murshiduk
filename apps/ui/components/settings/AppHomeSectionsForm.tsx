@@ -3,27 +3,8 @@ import { Logger } from '@/utils/Logger';
 import Loading from '../common/Loading';
 import { FormEvent, useEffect } from 'react';
 import { useApp } from '@/hooks/app/query.hook';
-import {
-  Form,
-  Input,
-  Button,
-  notification,
-  InputNumber,
-  Divider,
-  Row,
-  Col,
-  Space,
-} from 'antd';
+import { Form, Input, Button, notification } from 'antd';
 import { useUpdateApp } from '@/hooks/app/mutation.hook';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import styled from '@emotion/styled';
-import { baseS3Url } from '@/utils/index';
-import UrlInput from '../common/UrlInput';
-
-const StyledH2 = styled('h2')({
-  padding: '1em',
-  textDecoration: 'underline',
-});
 
 const { TextArea } = Input;
 
@@ -44,14 +25,11 @@ const AppHomeSectionsForm = () => {
 
   const onFinish = async (inputs: App) => {
     try {
-      const { ok } = await mutateAsync({
-        ...inputs,
-        bio: Object.values(inputs.bio),
-      });
+      const { ok } = await mutateAsync(inputs);
       if (ok) {
         notification.success({
           message: `تم الحفظ بنجاح`,
-          description: `تم تحديث الإعدادات العامة للموقع بنجاح`,
+          description: `تم تحديث المحتوى للموقع بنجاح`,
         });
       }
     } catch (error) {
@@ -74,55 +52,9 @@ const AppHomeSectionsForm = () => {
       onFinish={onFinish}
       onSubmitCapture={onSubmit}
     >
-      <Form.Item
-        label="النص الخاص بقسم لماذا تختارنا"
-        name={['bio', '1', 'content']}
-      >
+      <Form.Item label="النص الخاص بقسم لماذا تختارنا" name="whyUsContent">
         <TextArea rows={10} />
       </Form.Item>
-
-      <StyledH2>خدماتنا</StyledH2>
-      <Form.List name="services">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map(({ key, name, ...restField }) => (
-              <Space key={key} align="center">
-                <Form.Item
-                  {...restField}
-                  name={[name, 'image']}
-                  rules={[{ required: true, message: 'هذا الحقل مطلوب' }]}
-                >
-                  <UrlInput
-                    placeholder="رابط الصورة"
-                    style={{ minWidth: 500 }}
-                  />
-                </Form.Item>
-                <Form.Item
-                  {...restField}
-                  name={[name, 'title']}
-                  rules={[{ required: true, message: 'هذا الحقل مطلوب' }]}
-                >
-                  <Input placeholder="إسم الخدمة" style={{ minWidth: 300 }} />
-                </Form.Item>
-                <MinusCircleOutlined
-                  onClick={() => remove(name)}
-                  style={{ marginTop: 13, color: 'red' }}
-                />
-              </Space>
-            ))}
-            <Form.Item>
-              <Button
-                type="dashed"
-                onClick={() => add()}
-                block
-                icon={<PlusOutlined />}
-              >
-                أضف خدمة
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
 
       <Button
         type="primary"
