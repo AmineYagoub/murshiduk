@@ -20,7 +20,7 @@ export const menuItems: MenuProps['items'] = [
   {
     key: AppRoutes.About,
     label: (
-      <Link href="#about-us" onClick={scrollToSection} scroll={false}>
+      <Link href="/#about-us" onClick={scrollToSection} scroll={false}>
         من نحن
       </Link>
     ),
@@ -28,7 +28,7 @@ export const menuItems: MenuProps['items'] = [
   {
     key: AppRoutes.Services,
     label: (
-      <Link href="#our-services" onClick={scrollToSection} scroll={false}>
+      <Link href="/#our-services" onClick={scrollToSection} scroll={false}>
         خدماتنا
       </Link>
     ),
@@ -36,7 +36,7 @@ export const menuItems: MenuProps['items'] = [
   {
     key: AppRoutes.Programs,
     label: (
-      <Link href="#our-travels" onClick={scrollToSection} scroll={false}>
+      <Link href="/#our-travels" onClick={scrollToSection} scroll={false}>
         رحلاتنا
       </Link>
     ),
