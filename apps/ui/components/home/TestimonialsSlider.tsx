@@ -95,15 +95,16 @@ const TestimonialsSlider = ({ images }: { images: string[] }) => {
               <p className="text description">رحلة إلى الشمال التركي</p>
             </div>
 
-            <div className="info next--info">
-              <h1 className="text name">علي الدوسري</h1>
-              <h4 className="text location">السعودية</h4>
-              <p className="text description">رحلة إلى إسطنبول</p>
-            </div>
             <div className="info previous--info">
               <h1 className="text name">أ . خالد</h1>
               <h4 className="text location">الإمارات</h4>
               <p className="text description">رحلة إلى الشمال التركي</p>
+            </div>
+
+            <div className="info next--info">
+              <h1 className="text name">علي الدوسري</h1>
+              <h4 className="text location">السعودية</h4>
+              <p className="text description">رحلة إلى إسطنبول</p>
             </div>
           </div>
         </div>

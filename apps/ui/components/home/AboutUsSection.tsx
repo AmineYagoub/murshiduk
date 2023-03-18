@@ -42,7 +42,7 @@ export const StyledSection = styled('section')(
         marginTop: 20,
       },
       p: {
-        ':nth-child(2)': {
+        ':nth-child(1)': {
           display: 'none',
           margin: 0,
         },
