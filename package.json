@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "pwa": "pwa-asset-generator https://img.logoipsum.com/264.svg ./apps/ui/public/pwa -i ./apps/ui/public/index.html -m ./apps/ui/public/site.webmanifest --xhtml --favicon",
+    "pwa": "pwa-asset-generator apps/ui/public/img/logo.svg ./apps/ui/public/pwa -i ./apps/ui/public/index.html -m ./apps/ui/public/site.webmanifest -b 'linear-gradient(to right, #122639 0%, #122639 100%)' --xhtml --favicon",
     "ui": "rimraf apps/ui/.next && nx run ui:serve --port 8080",
     "ui:build": "rimraf apps/ui/.next && nx run ui:build",
     "api": "nx run gateway:serve",

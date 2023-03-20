@@ -1,9 +1,10 @@
-import { StyledHeader } from '@/layout/DashboardLayout';
-import { AppRoutes } from '@/utils/AppRoutes';
-import { Menu, MenuProps, theme } from 'antd';
+import Logo from './Logo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Logo from './Logo';
+import { AppRoutes } from '@/utils/AppRoutes';
+import { Menu, MenuProps, theme } from 'antd';
+import { StyledHeader } from '@/layout/DashboardLayout';
+import isMobile from 'is-mobile';
 
 const scrollToSection = (e) => {
   const el = document.querySelector(e.target.hash) as HTMLDivElement;
@@ -20,7 +21,7 @@ export const menuItems: MenuProps['items'] = [
   {
     key: AppRoutes.About,
     label: (
-      <Link href="/#about-us" onClick={scrollToSection} scroll={false}>
+      <Link href={AppRoutes.About} onClick={scrollToSection} scroll={false}>
         من نحن
       </Link>
     ),
@@ -67,26 +68,46 @@ export const sideMenuItems: MenuProps['items'] = [
 const Navigation = ({
   mode,
   items,
+  onSelect,
 }: {
   mode?: 'horizontal' | 'inline' | 'vertical';
   items: MenuProps['items'];
+  onSelect?: () => void;
 }) => {
   const router = useRouter();
-  const {
-    token: { colorPrimaryBg },
-  } = theme.useToken();
-  return (
+
+  return mode === 'vertical' ? (
+    <Menu
+      style={{ marginRight: 10, backgroundColor: 'transparent' }}
+      mode={mode}
+      defaultSelectedKeys={[AppRoutes.Home]}
+      selectedKeys={[router.pathname]}
+      items={items}
+      onSelect={onSelect}
+    />
+  ) : (
     <StyledHeader
-      style={{ background: colorPrimaryBg, zIndex: 100, display: 'flex' }}
+      style={{
+        backgroundImage: 'linear-gradient(to right, #29323c, #122639, #29323c)',
+        zIndex: 100,
+        display: 'flex',
+        justifyContent: isMobile() ? 'center' : 'normal',
+      }}
     >
       <Logo />
-      <Menu
-        style={{ marginRight: 10, backgroundColor: 'transparent' }}
-        mode={mode}
-        defaultSelectedKeys={[AppRoutes.Home]}
-        selectedKeys={[router.pathname]}
-        items={items}
-      />
+      {!isMobile() && (
+        <Menu
+          style={{
+            marginRight: 10,
+            backgroundColor: 'transparent',
+            color: '#fff',
+          }}
+          mode={mode}
+          defaultSelectedKeys={[AppRoutes.Home]}
+          selectedKeys={[router.pathname]}
+          items={items}
+        />
+      )}
     </StyledHeader>
   );
 };

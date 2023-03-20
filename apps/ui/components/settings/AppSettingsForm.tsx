@@ -31,10 +31,7 @@ const AppSettingsForm = () => {
 
   const onFinish = async (inputs: App) => {
     try {
-      const { ok } = await mutateAsync({
-        ...inputs,
-        bio: Object.values(inputs.bio),
-      });
+      const { ok } = await mutateAsync(inputs);
       if (ok) {
         notification.success({
           message: `تم الحفظ بنجاح`,
@@ -91,26 +88,26 @@ const AppSettingsForm = () => {
             </Form.Item>
           </Space>
 
-          <Form.Item label="عنوان الشارع" name="streetAddress">
+          <Form.Item label="عنوان الشارع" name={['address', 'streetAddress']}>
             <Input style={{ maxWidth: 730 }} />
           </Form.Item>
           <Space size={15}>
-            <Form.Item label="البلدية" name="addressLocality">
+            <Form.Item label="البلدية" name={['address', 'addressLocality']}>
               <Input style={{ minWidth: 230 }} />
             </Form.Item>
-            <Form.Item label="المحافظة" name="addressRegion">
+            <Form.Item label="المحافظة" name={['address', 'addressRegion']}>
               <Input style={{ minWidth: 230 }} />
             </Form.Item>
-            <Form.Item label="رمز بريدي" name="postalCode">
+            <Form.Item label="رمز بريدي" name={['address', 'postalCode']}>
               <Input style={{ minWidth: 230 }} />
             </Form.Item>
           </Space>
 
           <Space size={15}>
-            <Form.Item label="خط العرض" name="latitude">
+            <Form.Item label="خط العرض" name={['address', 'latitude']}>
               <Input style={{ minWidth: 230 }} placeholder="latitude" />
             </Form.Item>
-            <Form.Item label="خط الطول" name="longitude">
+            <Form.Item label="خط الطول" name={['address', 'longitude']}>
               <Input style={{ minWidth: 230 }} placeholder="longitude" />
             </Form.Item>
           </Space>

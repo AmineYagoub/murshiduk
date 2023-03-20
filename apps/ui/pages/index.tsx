@@ -1,35 +1,29 @@
-import { gsap } from 'gsap';
-import Head from 'next/head';
-import { App, ServiceType } from '@/utils/types';
-import HomeLayout from '@/layout/HomeLayout';
-import { fetchBlogs } from '@/hooks/blog/query.hook';
-import { withAuth } from '@/components/auth/withAuth';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { fetchApp, useApp } from '@/hooks/app/query.hook';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import AboutUsSection from '@/components/home/AboutUsSection';
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import TimeLineSection from '@/components/home/TimeLineSection';
-import ContactUsSection from '@/components/home/ContactUsSection';
-import LatestBlogsSection from '@/components/home/LatestBlogsSection';
 import {
-  baseS3Url,
   baseUrl,
-  extractTwitterUserName,
+  baseS3Url,
   getTitleMeta,
+  extractTwitterUserName,
 } from '../utils';
-import HeroSection from '@/components/home/HeroSection';
+import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import WhyUsSection from '@/components/home/WhyUsSection';
-import OurServices from '@/components/home/OurServices';
-import { fetchService, fetchServices } from '@/hooks/ourService/query.hook';
+import HomeLayout from '@/layout/HomeLayout';
+import { App, ServiceType } from '@/utils/types';
+import { withAuth } from '@/components/auth/withAuth';
 import OurTravels from '@/components/home/OurTravels';
+import HeroSection from '@/components/home/HeroSection';
+import OurServices from '@/components/home/OurServices';
+import WhyUsSection from '@/components/home/WhyUsSection';
+import { fetchApp, useApp } from '@/hooks/app/query.hook';
+import { fetchServices } from '@/hooks/ourService/query.hook';
+import AboutUsSection from '@/components/home/AboutUsSection';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import LatestBlogsSection from '@/components/home/LatestBlogsSection';
+
 const TestimonialsSlider = dynamic(
   () => import('@/components/home/TestimonialsSlider'),
   { ssr: false }
 );
-
-gsap.registerPlugin(ScrollTrigger);
 
 const getPaginationParams = (type: ServiceType) => {
   return {
@@ -47,11 +41,6 @@ const itemJsonLd = (data: App) => {
       "@type": "TravelAgency",
       "name": "${data.title}",
       "image": "${data.carousel}",
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 41.0082,
-        "longitude": 28.9784
-      },
       "url": "${baseUrl}",
       "priceRange": "$$$",
       "telephone": "${data.whatsApp}",
@@ -79,12 +68,17 @@ const itemJsonLd = (data: App) => {
           "closes": "23:00"
         }
       ],
-       "address": {
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "${data.address?.latitude}",
+        "longitude": "${data.address?.longitude}"
+      },
+      "address": {
          "@type": "PostalAddress",
-         "streetAddress": "Libadiye Caddesi No: 82F",
-         "addressLocality": "Üsküdar",
-         "addressRegion": "İstanbul,",
-         "postalCode": "34700",
+         "streetAddress": "${data.address?.streetAddress}",
+         "addressLocality": "${data.address?.addressLocality}",
+         "addressRegion": "${data.address?.addressRegion}",
+         "postalCode": "${data.address?.postalCode}",
          "addressCountry": "Türkiye"
        }
     }`,
@@ -132,16 +126,12 @@ const Home = () => {
       </Head>
       <HeroSection images={carouselImages} />
 
-      <AboutUsSection content={data.aboutUs} />
+      <AboutUsSection bio={data.bio} />
       <WhyUsSection content={data.whyUsContent} />
       <OurServices />
       <OurTravels />
       <LatestBlogsSection />
       <TestimonialsSlider images={carouselImages} />
-      {/*       <TimeLineSection bio={data.bio} />
-      <ContactUsSection />
-      <LatestBlogsSection />
-      <TestimonialsSlider images={carouselImages} /> */}
     </>
   );
 };

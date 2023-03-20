@@ -4,49 +4,38 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { useServices } from '@/hooks/ourService/query.hook';
 import ShowServiceCard from '../ourServices/ShowServiceCard';
+import isMobile from 'is-mobile';
 
 const responsive = {
   desktop: {
-    breakpoint: {
-      max: 3000,
-      min: 1024,
-    },
+    breakpoint: { max: 3000, min: 1024 },
     items: 3,
-    slidesToSlide: 2,
-    partialVisibilityGutter: 40,
-  },
-  mobile: {
-    breakpoint: {
-      max: 464,
-      min: 0,
-    },
-    items: 2,
-    slidesToSlide: 2,
-    partialVisibilityGutter: 30,
+    slidesToSlide: 3,
   },
   tablet: {
-    breakpoint: {
-      max: 1024,
-      min: 200,
-    },
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+    slidesToSlide: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
     items: 1,
     slidesToSlide: 1,
-    partialVisibilityGutter: 30,
   },
 };
 
 export const StyledSection = styled('section')(
   mq({
-    backgroundColor: '#c9e8e0',
+    backgroundColor: '#1cafbf',
     position: 'relative',
     width: '100%',
-    color: '#00b96b',
+    color: '#122639',
     maxHeight: 1500,
     textAlign: 'center',
     padding: '3em',
 
     h2: {
-      fontSize: 'clamp(1.3rem, 5vw, 2.5rem)',
+      fontSize: 'clamp(1.3rem, 6vw, 2.5rem)',
       lineHeight: 1.6,
       fontWeight: 'bold',
       marginBottom: 50,
@@ -57,7 +46,7 @@ export const StyledSection = styled('section')(
     },
 
     '.ant-card-meta-title': {
-      color: '#00b96b',
+      color: '#122639',
     },
   })
 );
@@ -69,11 +58,17 @@ const OurTravels = () => {
       <h2>رحلاتنا السياحية</h2>
 
       <Carousel
-        ssr
         infinite
         responsive={responsive}
         partialVisible
         slidesToSlide={1}
+        deviceType={
+          isMobile()
+            ? 'mobile'
+            : isMobile({ tablet: true })
+            ? 'tablet'
+            : 'desktop'
+        }
       >
         {data.map((el) => (
           <ShowServiceCard key={el.id} service={el} />

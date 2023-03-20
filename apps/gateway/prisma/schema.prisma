@@ -14,7 +14,9 @@ model App {
   id                Int       @id @default(1)
   title             String    @db.VarChar(70) @default("موقع السياحة")
   description       String?   @db.VarChar(255) @default("")
+  bio               Json?     @db.Json // cv section
   carousel          Json?     @db.Json // hero section
+  address           Json?     @db.Json // hero section
   whyUsContent      String?   @db.Text
   agreement         String    @db.Text
   privacy           String    @db.Text

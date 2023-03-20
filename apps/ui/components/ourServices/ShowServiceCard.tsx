@@ -11,7 +11,7 @@ const ShowServiceCard: FC<{ service: Service }> = ({ service }) => {
   const path = service.type === 'SERVICE' ? 'our-services' : 'our-travels';
   return (
     <Card
-      style={{ width: 350, height: 550 }}
+      style={{ maxWidth: 350, height: 550 }}
       cover={
         <Image
           alt={service.title}

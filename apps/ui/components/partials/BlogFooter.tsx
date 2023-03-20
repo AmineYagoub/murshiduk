@@ -22,8 +22,8 @@ export const Copyright = () => (
 const NewFooter = styled(Footer)((props) =>
   mq({
     zIndex: 1,
-    backgroundImage: 'linear-gradient(to top, #123524, #004953)',
-    color: '#fff',
+    backgroundImage: 'linear-gradient(to right, #29323c, #122639, #29323c)',
+    color: '#f3b91d',
     height: [300, 300, 200],
     '.ant-row': {
       margin: '1.4em auto',
@@ -39,7 +39,7 @@ const NewFooter = styled(Footer)((props) =>
       textAlign: 'center',
     },
     a: {
-      color: '#c9e8e0',
+      color: 'inherit',
     },
   })
 );

@@ -16,9 +16,6 @@ import { FocusEvent, useState } from 'react';
 import { ContactCreateInput } from '@/utils/types';
 import { useCreateContact } from '@/hooks/contact/mutation.hook';
 import { mq } from '@/utils/index';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { useEffect } from 'react';
 
 const { RangePicker } = DatePicker;
 
@@ -43,14 +40,14 @@ const StyledResult = styled(Result)({
 
 const StyledForm = styled(Form)(
   mq({
-    top: '75px',
-    right: '50%',
-    width: '100%',
-    maxWidth: 650,
-    position: 'absolute',
+    backgroundImage: 'linear-gradient(to right, #29323c, #122639, #29323c)',
+    padding: ['75px 10px', '75px 20px', '75px 75px 25px'],
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: [10, 10, 0],
+    borderTopLeftRadius: [10, 10, 0],
+    textAlign: 'center',
     fontFamily: 'inherit',
-    padding: ['0 2em', '0 2em', 0],
-    transform: 'translateX(50%) !important',
     input: {
       background: 'transparent',
       border: '2px solid #fff',
@@ -92,10 +89,12 @@ const StyledForm = styled(Form)(
     },
     button: {
       width: 200,
+      backgroundColor: '#f3b91d',
+      color: '#122639',
     },
     h6: {
-      color: '#fff',
-      fontSize: '1.3rem',
+      color: '#f3b91d',
+      fontSize: 'clamp(1rem, 5vw, 1.3rem)',
       fontWeight: 'bold',
       marginBottom: '1.5em',
     },
@@ -162,25 +161,6 @@ const ContactForm = ({ withAnimation = true }: { withAnimation?: boolean }) => {
     }
   };
 
-  useEffect(() => {
-    if (withAnimation) {
-      const scene3 = gsap.timeline();
-      ScrollTrigger.create({
-        animation: scene3,
-        trigger: '.scrollElement',
-        start: 'top 100%',
-        end: 'bottom 100%',
-        scrub: 3,
-      });
-      scene3.fromTo(
-        '#form',
-        { opacity: 0, y: 500 },
-        { opacity: 0.7, y: 150 },
-        0.25
-      );
-    }
-  }, []);
-
   return !isSubmitForm ? (
     <StyledForm onFinish={onFinish} layout="vertical" size="middle" id="form">
       <Row gutter={8} justify="center">
@@ -232,7 +212,13 @@ const ContactForm = ({ withAnimation = true }: { withAnimation?: boolean }) => {
                         src={p.flag}
                         alt={p.label}
                       />
-                      <b style={{ margin: '0 5px', display: 'inline-block' }}>
+                      <b
+                        style={{
+                          margin: '0 5px',
+                          display: 'inline-flex',
+                          alignItems: 'baseline',
+                        }}
+                      >
                         {p.label}
                       </b>
                     </Option>

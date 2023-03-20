@@ -19,7 +19,7 @@ const StyledSection = styled('section')({
     margin: '2em',
     zIndex: 100,
     fontSize: 'clamp(0.9rem, 4vw, 1rem)',
-    background: 'linear-gradient(to right,#fff , #9773ff 70%, #fff)',
+    background: 'linear-gradient(to right,#fff , #f3b91d 70%, #fff)',
     WebkitBackgroundClip: 'text',
     backgroundClip: 'text',
   },

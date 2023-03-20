@@ -9,7 +9,7 @@ export default class MyDocument extends Document {
         <Head>
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="theme-color" content="#6f31a0" />
+
           <meta name="robots" content="index, nofollow" />
           <link rel="canonical" href="https://murshiduk.com/" />
           <link rel="manifest" href="/site.webmanifest" />
@@ -20,12 +20,29 @@ export default class MyDocument extends Document {
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="format-detection" content="telephone=no" />
 
+          <link rel="shortcut icon" href="/pwa/favicon.ico" />
+
           <link
             rel="icon"
             type="image/png"
-            sizes="196x196"
-            href="/pwa/favicon-196.png"
+            sizes="32x32"
+            href="/pwa/favicon-32x32.png"
           />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/pwa/favicon-16x16.png"
+          />
+          <link
+            rel="mask-icon"
+            href="/pwa/safari-pinned-tab.svg"
+            color="#5bbad5"
+          />
+          <meta name="msapplication-TileColor" content="#2d89ef" />
+          <meta name="msapplication-config" content="/pwa/browserconfig.xml" />
+          <meta name="theme-color" content="#122639" />
+
           <link rel="apple-touch-icon" href="/pwa/apple-icon-180.png" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <link

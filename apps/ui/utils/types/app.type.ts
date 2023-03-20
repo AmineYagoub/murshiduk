@@ -11,6 +11,14 @@ export type App = {
   title?: string;
   description?: string;
   bio?: Bio[];
+  address?: {
+    addressLocality: string;
+    addressRegion: string;
+    latitude: string;
+    longitude: string;
+    postalCode: string;
+    streetAddress: string;
+  };
   carousel?: string[];
   whyUsContent?: string;
   agreement?: string;

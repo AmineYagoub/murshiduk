@@ -9,7 +9,7 @@ import { memo } from 'react';
 const StyledSection = styled('section')({
   minHeight: '100vh',
   textAlign: 'center',
-  color: '#123524',
+  color: '#122639',
   padding: 50,
   h3: {
     fontSize: 'clamp(0.8rem, 3vw, 1rem)',

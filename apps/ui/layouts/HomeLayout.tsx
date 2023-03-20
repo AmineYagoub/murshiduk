@@ -11,16 +11,15 @@ import Navigation, {
   sideMenuItems,
   menuItems,
 } from '@/components/common/Navigation';
-
 const { Content } = Layout;
 
-const StyledButton = styled(Button)(
+export const StyledButton = styled(Button)(
   mq({
     background: 'linear-gradient(to right, #29323c, #485563, #29323c)',
-    color: '#fff',
+    color: '#f3b91d',
     position: 'fixed',
     left: 15,
-    top: 20,
+    top: 12,
     display: ['block', 'block', 'none'],
     zIndex: 1000,
   })
@@ -56,7 +55,7 @@ const HomeLayout = ({ children }) => {
         onClose={onClose}
         open={open}
       >
-        <Navigation mode="vertical" items={sideMenuItems} />
+        <Navigation mode="vertical" items={sideMenuItems} onSelect={onClose} />
       </Drawer>
     </Layout>
   );

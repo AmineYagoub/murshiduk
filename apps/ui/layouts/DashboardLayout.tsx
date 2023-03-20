@@ -34,7 +34,7 @@ const getOpenKeys = (route: AppRoutes) => {
 export const StyledContent = styled(Content)({
   width: '95% !important',
   backgroundColor: 'rgba(255, 255, 255, 0.3)',
-  minHeight: '90vh !important',
+  minHeight: '80vh !important',
   padding: '2em',
   '.page': {
     backgroundColor: '#fff',

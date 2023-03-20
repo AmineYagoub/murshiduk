@@ -2,7 +2,7 @@ import { ThemeConfig } from 'antd/es/config-provider/context';
 
 const theme: ThemeConfig = {
   token: {
-    colorPrimary: '#00b96b',
+    colorPrimary: '#1cafbf',
     // colorBgBase: 'cadetblue',
     fontSize: 14,
     borderRadius: 16,

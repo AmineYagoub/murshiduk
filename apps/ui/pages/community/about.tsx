@@ -1,30 +1,25 @@
 import Head from 'next/head';
 import BlogLayout from '@/layout/BlogLayout';
-
-import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { getTitleMeta } from '@/utils/index';
-import { withAuth } from '@/components/auth/withAuth';
-import { dehydrate, QueryClient } from '@tanstack/react-query';
-import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import Loading from '@/components/common/Loading';
-import { StyledArticle } from './terms';
+import { withAuth } from '@/components/auth/withAuth';
+import { fetchApp, useApp } from '@/hooks/app/query.hook';
+import { dehydrate, QueryClient } from '@tanstack/react-query';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
+import TimeLineSection from '@/components/home/TimeLineSection';
 
 const field = 'aboutUs';
 
 export function AboutUsPage() {
-  const { data, isLoading } = useApp(field);
+  const { data, isLoading } = useApp();
   return (
-    <StyledArticle>
+    <>
       <Head>
-        <title>{getTitleMeta(data?.title, 'حول الموقع')}</title>
+        <title>{getTitleMeta(data?.title, 'من نحن')}</title>
         <meta name="description" content={data?.description} />
       </Head>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div dangerouslySetInnerHTML={{ __html: data.aboutUs }} />
-      )}
-    </StyledArticle>
+      {isLoading ? <Loading /> : <TimeLineSection bio={data.bio} />}
+    </>
   );
 }
 

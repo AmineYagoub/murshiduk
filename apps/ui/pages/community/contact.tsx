@@ -7,22 +7,54 @@ import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import dynamic from 'next/dynamic';
-
+import { Col, Row, List } from 'antd';
+import {
+  WhatsAppOutlined,
+  MailOutlined,
+  BankOutlined,
+} from '@ant-design/icons';
 const ContactForm = dynamic(() => import('@/components/home/ContactForm'), {
   ssr: false,
 });
 
-const StyledSection = styled('section')(
+const StyledSection = styled(Row)(
   mq({
-    height: ['120vh', '120vh', '100vh'],
-    form: {
-      top: '15vh',
-      backgroundImage: 'linear-gradient(to right, #29323c, #485563, #29323c)',
-      maxWidth: 750,
-      padding: ['75px 10px', '75px 20px', '75px 75px 25px'],
-      borderRadius: ['35px', '35px', '25% 0'],
-      textAlign: 'center',
-      filter: 'drop-shadow(5px 5px 10px #666)',
+    maxWidth: 1200,
+    border: '5px solid #1cafbf',
+    borderRadius: 15,
+    margin: '1em auto',
+
+    address: {
+      borderRadius: 15,
+      backgroundColor: '#fff',
+      backgroundImage: "url('/img/contact-us.jpeg')",
+      backgroundSize: '75%',
+      height: '100%',
+      backgroundPosition: 'bottom',
+      backgroundRepeat: 'no-repeat',
+      minHeight: 630,
+    },
+    ul: {
+      padding: '1em !important',
+      '.anticon': {
+        color: '#1cafbf',
+        fontSize: '1.5em',
+      },
+      li: {
+        flexDirection: 'column',
+        alignItems: 'normal !important',
+      },
+    },
+    h5: {
+      color: '#1cafbf',
+      fontSize: '1em',
+    },
+    b: {
+      color: '#1cafbf',
+      fontSize: '1em',
+      marginLeft: 40,
+      marginTop: 10,
+      display: 'inline-block',
     },
     '.ant-result-title': {
       color: '#222 !important',
@@ -35,14 +67,64 @@ const StyledSection = styled('section')(
 
 export function ContactUsPage() {
   const { data } = useApp();
+  const list = [
+    {
+      title: 'ارسل لنا رسالة',
+      description: 'فريقنا الودود هنا للمساعدة',
+      icon: <MailOutlined />,
+      data: data.contactEmail,
+    },
+    {
+      title: 'تحدث معنا',
+      description: 'كل أيام الأسبوع',
+      icon: <WhatsAppOutlined />,
+      data: data.whatsApp,
+    },
+    {
+      title: 'قم بزيارتنا',
+      description: 'تعال قل مرحبا في مكتبنا',
+      icon: <BankOutlined />,
+      data: (
+        <>
+          <div>{data.address.streetAddress}</div>
+          <div>
+            {data.address.postalCode} {data.address.addressLocality}
+          </div>
+          <div>{data.address.addressRegion}</div>
+        </>
+      ),
+    },
+  ];
   return (
-    <StyledSection>
+    <>
       <Head>
-        <title>{getTitleMeta(data?.title, 'تواصل معي')}</title>
+        <title>{getTitleMeta(data?.title, 'تواصل معنا')}</title>
         <meta name="description" content={data?.description} />
       </Head>
-      <ContactForm withAnimation={false} />
-    </StyledSection>
+      <StyledSection>
+        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+          <address>
+            <List
+              itemLayout="horizontal"
+              dataSource={list}
+              renderItem={(item, index) => (
+                <List.Item>
+                  <List.Item.Meta
+                    avatar={item.icon}
+                    title={<h5>{item.title}</h5>}
+                    description={item.description}
+                  />
+                  <b dir="ltr">{item.data}</b>
+                </List.Item>
+              )}
+            />
+          </address>
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={16} xl={16}>
+          <ContactForm withAnimation={false} />
+        </Col>
+      </StyledSection>
+    </>
   );
 }
 
