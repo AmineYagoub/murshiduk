@@ -12,42 +12,26 @@ import { useRouter } from 'next/router';
 import { AppRoutes } from '../utils/index';
 import Logo from '@/components/common/Logo';
 import { createElement, useState } from 'react';
-import { Layout, Menu, MenuProps, theme } from 'antd';
-
+import { Layout, Menu, MenuProps } from 'antd';
+import { mq } from '../utils';
 const { Header, Footer, Sider, Content } = Layout;
 
-const getOpenKeys = (route: AppRoutes) => {
-  let current = [AppRoutes.AdminManageDashboard];
-  if (
-    [AppRoutes.AdminManageBlogs, AppRoutes.AdminManageComments].includes(route)
-  ) {
-    current = [AppRoutes.AdminManageCategories];
-  }
-  if (
-    [AppRoutes.AdminManagePages, AppRoutes.AdminManageProfile].includes(route)
-  ) {
-    current = [AppRoutes.AdminManageSettings];
-  }
-  return current;
-};
-
-export const StyledContent = styled(Content)({
-  width: '95% !important',
-  backgroundColor: 'rgba(255, 255, 255, 0.3)',
-  minHeight: '80vh !important',
-  padding: '2em',
-  '.page': {
-    backgroundColor: '#fff',
+export const StyledContent = styled(Content)(
+  mq({
+    width: '95% !important',
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
     minHeight: '80vh !important',
-    padding: '2em',
-  },
-});
+    padding: ['2em 0', '2em 0', '2em'],
+  })
+);
 
 export const StyledHeader = styled(Header)({
   boxShadow:
     '0px 2px 4px rgba(31, 41, 55, 0.06), 0px 4px 6px rgba(100, 116, 139, 0.12)',
+  backgroundImage: 'linear-gradient(to right, #29323c, #122639, #29323c)',
   '.trigger': {
     margin: '0 10px',
+    color: '#ccc',
   },
 });
 
@@ -129,12 +113,9 @@ const items: MenuProps['items'] = [
 const DashboardLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
-  const {
-    token: { colorPrimaryBg },
-  } = theme.useToken();
   return (
     <Layout>
-      <StyledHeader style={{ background: colorPrimaryBg }}>
+      <StyledHeader>
         <Logo />
         {createElement(collapsed ? MenuFoldOutlined : MenuUnfoldOutlined, {
           className: 'trigger',
