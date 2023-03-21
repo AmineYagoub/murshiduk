@@ -66,7 +66,11 @@ const BlogFooter = ({
       </Row>
       <Row justify="center" align="middle">
         <Space>
-          <a href={siteData?.facebookUrl} target="_blank" rel="noreferrer">
+          <a
+            href={siteData?.facebookUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image
               src="/icons/social/facebook.png"
               width={32}
@@ -74,7 +78,11 @@ const BlogFooter = ({
               alt="follow us on facebook"
             />
           </a>
-          <a href={siteData?.twitterUrl} target="_blank" rel="noreferrer">
+          <a
+            href={siteData?.twitterUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image
               src="/icons/social/twitter.png"
               width={32}
@@ -82,7 +90,11 @@ const BlogFooter = ({
               alt="follow us on twitter"
             />
           </a>
-          <a href={siteData?.instagramUrl} target="_blank" rel="noreferrer">
+          <a
+            href={siteData?.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image
               src="/icons/social/instagram.png"
               width={32}
@@ -90,7 +102,11 @@ const BlogFooter = ({
               alt="follow us on instagram"
             />
           </a>
-          <a href={siteData?.youtubeUrl} target="_blank" rel="noreferrer">
+          <a
+            href={siteData?.youtubeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Image
               src="/icons/social/youtube.png"
               width={32}

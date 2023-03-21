@@ -8,6 +8,7 @@ import {
   DatePicker,
   InputNumber,
   Result,
+  Space,
 } from 'antd';
 import Image from 'next/image';
 import styled from '@emotion/styled';
@@ -176,7 +177,7 @@ const ContactForm = ({ withAnimation = true }: { withAnimation?: boolean }) => {
         </Col>
         <Col xs={24} sm={24} md={12}>
           <Form.Item label="رقم الواتس آب" required>
-            <Input.Group compact>
+            <Space.Compact>
               <Form.Item
                 noStyle
                 name="phone"
@@ -196,7 +197,11 @@ const ContactForm = ({ withAnimation = true }: { withAnimation?: boolean }) => {
                   showArrow
                   filterOption={false}
                   showSearch
-                  style={{ width: '30%', border: '1px solid #fff' }}
+                  style={{
+                    width: '30%',
+                    border: '1px solid #fff',
+                    borderRadius: '25px 0 0 25px',
+                  }}
                   placeholder="الرمز الدولي"
                   onFocus={handleFetchPhones}
                   onChange={handleFetchPhones}
@@ -225,7 +230,7 @@ const ContactForm = ({ withAnimation = true }: { withAnimation?: boolean }) => {
                   ))}
                 </Select>
               </Form.Item>
-            </Input.Group>
+            </Space.Compact>
           </Form.Item>
         </Col>
       </Row>

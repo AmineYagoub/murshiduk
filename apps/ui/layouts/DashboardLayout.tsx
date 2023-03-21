@@ -33,6 +33,11 @@ export const StyledHeader = styled(Header)({
     margin: '0 10px',
     color: '#ccc',
   },
+  '.ant-menu-item-active': {
+    ':hover': {
+      color: '#f3b91d !important',
+    },
+  },
 });
 
 type MenuItem = Required<MenuProps>['items'][number];

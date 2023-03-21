@@ -7,7 +7,7 @@ import { StyledHeader } from '@/layout/DashboardLayout';
 import isMobile from 'is-mobile';
 
 const scrollToSection = (e) => {
-  const el = document.querySelector(e.target.hash) as HTMLDivElement;
+  const el = document?.querySelector(e.target.hash) as HTMLDivElement;
   if (el) {
     window.scrollTo({ top: 500, behavior: 'smooth' });
   }

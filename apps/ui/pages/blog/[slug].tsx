@@ -27,6 +27,8 @@ import Loading from '@/components/common/Loading';
 
 export const StyledRow = styled(Row)(
   mq({
+    maxWidth: 1300,
+    margin: '0 auto',
     '.ant-card-meta-title': {
       fontSize: ['0.7rem', '0.7rem', '1rem'],
     },
@@ -78,6 +80,7 @@ const itemJsonLd = (data: Blog, siteTitle: string) => {
 
 export const StyledArticle = styled('article')({
   color: '#374151 !important',
+
   h1: {
     fontSize: 'clamp(1.2rem, 5vw, 2.5rem)',
     fontWeight: 'bold',
