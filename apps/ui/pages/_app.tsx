@@ -5,6 +5,7 @@ import {
 } from '@tanstack/react-query';
 import '../public/global.css';
 import 'antd/dist/reset.css';
+import 'react-multi-carousel/lib/styles.css';
 import theme from '@/config/Theme';
 import { AppProps } from 'next/app';
 import ar from 'antd/lib/locale/ar_EG';

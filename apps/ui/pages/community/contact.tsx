@@ -45,9 +45,8 @@ const StyledSection = styled(Row)(
         alignItems: 'normal !important',
       },
     },
-    h5: {
-      color: '#1cafbf',
-      fontSize: '1em',
+    strong: {
+      color: '#122639',
     },
     b: {
       color: '#1cafbf',
@@ -111,7 +110,7 @@ export function ContactUsPage() {
                 <List.Item>
                   <List.Item.Meta
                     avatar={item.icon}
-                    title={<h5>{item.title}</h5>}
+                    title={<strong>{item.title}</strong>}
                     description={item.description}
                   />
                   <b dir="ltr">{item.data}</b>

@@ -1,7 +1,6 @@
 import { mq } from '@/utils/index';
 import styled from '@emotion/styled';
 import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
 import { useServices } from '@/hooks/ourService/query.hook';
 import ShowServiceCard from '../ourServices/ShowServiceCard';
 import isMobile from 'is-mobile';
@@ -30,9 +29,12 @@ export const StyledSection = styled('section')(
     position: 'relative',
     width: '100%',
     color: '#122639',
-    maxHeight: 1500,
     textAlign: 'center',
     padding: '3em',
+    '.react-multi-carousel-list': {
+      maxWidth: 1300,
+      margin: '0 auto',
+    },
     h1: {
       fontSize: 'clamp(1rem, 5vw, 1.3rem)',
       lineHeight: 1.6,

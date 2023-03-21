@@ -1,10 +1,8 @@
-import { mq } from '@/utils/index';
-import styled from '@emotion/styled';
+import isMobile from 'is-mobile';
 import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import { StyledSection } from './OurServices';
 import { useServices } from '@/hooks/ourService/query.hook';
 import ShowServiceCard from '../ourServices/ShowServiceCard';
-import isMobile from 'is-mobile';
 
 const responsive = {
   desktop: {
@@ -23,33 +21,6 @@ const responsive = {
     slidesToSlide: 1,
   },
 };
-
-export const StyledSection = styled('section')(
-  mq({
-    backgroundColor: '#1cafbf',
-    position: 'relative',
-    width: '100%',
-    color: '#122639',
-    maxHeight: 1500,
-    textAlign: 'center',
-    padding: '3em',
-
-    h2: {
-      fontSize: 'clamp(1.3rem, 6vw, 2.5rem)',
-      lineHeight: 1.6,
-      fontWeight: 'bold',
-      marginBottom: 50,
-    },
-    img: {
-      objectFit: 'cover',
-      minHeight: 350,
-    },
-
-    '.ant-card-meta-title': {
-      color: '#122639',
-    },
-  })
-);
 
 const OurTravels = () => {
   const { data } = useServices('TRAVEL');

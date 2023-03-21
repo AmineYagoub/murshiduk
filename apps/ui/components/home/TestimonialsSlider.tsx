@@ -53,7 +53,7 @@ const TestimonialsSlider = ({ images }: { images: string[] }) => {
   return (
     <>
       <StyledSection className="testimonial">
-        <h1 className="testimonial__title">💖💘💞 أراء العملاء 💞💘💖</h1>
+        <b className="testimonial__title">💖💘💞 أراء العملاء 💞💘💖</b>
         <div className="cardList">
           <Button
             shape="circle"
@@ -90,20 +90,20 @@ const TestimonialsSlider = ({ images }: { images: string[] }) => {
         <div className="infoList">
           <div className="info__wrapper">
             <div className="info current--info">
-              <h1 className="text name">عبد المنعم الجليح</h1>
-              <h4 className="text location">الإمارات</h4>
+              <strong className="text name">عبد المنعم الجليح</strong>
+              <b className="text location">الإمارات</b>
               <p className="text description">رحلة إلى الشمال التركي</p>
             </div>
 
             <div className="info previous--info">
-              <h1 className="text name">أ . خالد</h1>
-              <h4 className="text location">الإمارات</h4>
+              <strong className="text name">أ . خالد</strong>
+              <b className="text location">الإمارات</b>
               <p className="text description">رحلة إلى الشمال التركي</p>
             </div>
 
             <div className="info next--info">
-              <h1 className="text name">علي الدوسري</h1>
-              <h4 className="text location">السعودية</h4>
+              <strong className="text name">علي الدوسري</strong>
+              <b className="text location">السعودية</b>
               <p className="text description">رحلة إلى إسطنبول</p>
             </div>
           </div>

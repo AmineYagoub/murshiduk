@@ -3,13 +3,8 @@
 html {
   --timeLine-opacity: 0;
   scroll-behavior: smooth;
-  overflow: hidden;
-  height: 100%;
 }
-#__next {
-  overflow: auto;
-  height: 100%;
-}
+
 /* Firefox */
 * {
   scrollbar-width: auto;

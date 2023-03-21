@@ -26,6 +26,8 @@ export const StyledSection = styled('section')(
     textAlign: 'center',
     padding: [0, 0, '2em'],
     color: '#374151 !important',
+    maxWidth: 1300,
+    margin: '0 auto',
     h1: {
       fontSize: ['1.1rem', '1.2rem', '1.5rem'],
       fontWeight: 'bold',

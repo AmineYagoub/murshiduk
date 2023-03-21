@@ -30,7 +30,7 @@ const StyledSection = styled('section')({
       height: 'clamp(500px, 50vw, 600px)',
       width: 'clamp(300px, 30vw, 400px)',
     },
-    h6: {
+    h5: {
       fontSize: 'clamp(1rem, 10vw, 1.5rem)',
     },
   },
@@ -80,7 +80,7 @@ const LatestBlogsSection = () => {
               />
               <figcaption>
                 <Link href={`/blog/${el.slug}`}>
-                  <h6>{el.title}</h6>
+                  <h5>{el.title}</h5>
                 </Link>
 
                 <Divider orientation="right">
