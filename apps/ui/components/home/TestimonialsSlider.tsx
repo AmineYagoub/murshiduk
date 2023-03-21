@@ -23,19 +23,25 @@ const StyledSection = styled('section')({
     WebkitBackgroundClip: 'text',
     backgroundClip: 'text',
   },
+  b: {
+    display: 'inline-block',
+  },
+  strong: {
+    display: 'inline-block',
+  },
 });
 
 const testimonialImages = [
   {
-    title: 'عنوان 1',
+    title: 'الدوسري',
     src: '/img/our-clients/client-2.png',
   },
   {
-    title: 'عنوان 2',
+    title: 'عبد المنعم الجليح',
     src: '/img/our-clients/client-3.png',
   },
   {
-    title: 'عنوان 3',
+    title: 'خالد',
     src: '/img/our-clients/client-4.png',
   },
 ];
@@ -90,19 +96,19 @@ const TestimonialsSlider = ({ images }: { images: string[] }) => {
         <div className="infoList">
           <div className="info__wrapper">
             <div className="info current--info">
-              <strong className="text name">عبد المنعم الجليح</strong>
+              <h6 className="text name">عبد المنعم الجليح</h6>
               <b className="text location">الإمارات</b>
               <p className="text description">رحلة إلى الشمال التركي</p>
             </div>
 
             <div className="info previous--info">
-              <strong className="text name">أ . خالد</strong>
+              <h6 className="text name">أ . خالد</h6>
               <b className="text location">الإمارات</b>
               <p className="text description">رحلة إلى الشمال التركي</p>
             </div>
 
             <div className="info next--info">
-              <strong className="text name">علي الدوسري</strong>
+              <h6 className="text name">علي الدوسري</h6>
               <b className="text location">السعودية</b>
               <p className="text description">رحلة إلى إسطنبول</p>
             </div>
