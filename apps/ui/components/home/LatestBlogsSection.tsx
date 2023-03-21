@@ -7,10 +7,11 @@ import Link from 'next/link';
 import { memo } from 'react';
 
 const StyledSection = styled('section')({
-  minHeight: '100vh',
   textAlign: 'center',
   color: '#122639',
   padding: 50,
+  backgroundImage: "url('/img/waves-background.svg')",
+  backgroundSize: 'cover',
   h3: {
     fontSize: 'clamp(0.8rem, 3vw, 1rem)',
   },
