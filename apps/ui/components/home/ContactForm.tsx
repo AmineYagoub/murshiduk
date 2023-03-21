@@ -177,7 +177,7 @@ const ContactForm = ({ withAnimation = true }: { withAnimation?: boolean }) => {
         </Col>
         <Col xs={24} sm={24} md={12}>
           <Form.Item label="رقم الواتس آب" required>
-            <Space.Compact>
+            <Space.Compact style={{ width: '100%' }}>
               <Form.Item
                 noStyle
                 name="phone"
@@ -199,6 +199,7 @@ const ContactForm = ({ withAnimation = true }: { withAnimation?: boolean }) => {
                   showSearch
                   style={{
                     width: '30%',
+                    minWidth: 120,
                     border: '1px solid #fff',
                     borderRadius: '25px 0 0 25px',
                   }}
