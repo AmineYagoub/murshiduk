@@ -16,10 +16,10 @@ export const appConfig = registerAs(APP_CONFIG_REGISTER_KEY, () => ({
   origin: process.env.ORIGIN_HOST || 'http://localhost:8080',
   jwt: {
     key: process.env.JWT_SECRET || 'secret',
-    expiresIn: '7d',
+    expiresIn: '720d',
     aud: 'Olympiad Web App',
     iss: 'Olympiad Web App',
-    refreshIn: '7d',
+    refreshIn: '720d',
     nonceName: isProd ? '__Host_Fgp_nonce' : 'fgp_nonce',
     nonceExpiresIn: 24 * 60 * 60,
     nonceEncryptAlg: 'aes-192-cbc',
