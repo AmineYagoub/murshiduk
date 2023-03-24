@@ -44,7 +44,7 @@ const HomeLayout = ({ children }) => {
         size="large"
         onClick={showDrawer}
       />
-      <Navigation mode="horizontal" items={menuItems} />
+      <Navigation mode="horizontal" items={menuItems} inHome />
       <Content style={{ zIndex: 0, overflow: 'hidden' }}>{children}</Content>
       <WhatsAppButton data={data} isLoading={isLoading} />
       <BlogFooter siteData={data} />

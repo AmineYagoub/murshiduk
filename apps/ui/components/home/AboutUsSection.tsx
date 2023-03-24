@@ -47,7 +47,7 @@ export const StyledSection = styled('section')(
 );
 
 const AboutUsSection = ({ bio }: { bio: Bio[] }) => {
-  const lastBio = bio.pop();
+  const first = bio.shift();
   return (
     <StyledSection className="travel__whyUs" id="about-us">
       <Row className="travel__desc">
@@ -60,12 +60,12 @@ const AboutUsSection = ({ bio }: { bio: Bio[] }) => {
           className="travel__desc-main"
         >
           <h1 className="travel__fatih-h3">من نحن ؟</h1>
-          <article dangerouslySetInnerHTML={{ __html: lastBio?.content }} />
+          <article dangerouslySetInnerHTML={{ __html: first?.content }} />
           <Link href={AppRoutes.About}>قراءة المزيد ... </Link>
         </Col>
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <Image
-            src={`${baseS3Url}/${lastBio?.image}`}
+            src={`${baseS3Url}/${first?.image}`}
             width={420}
             height={780}
             alt="مرشد سياحي في تركيا"

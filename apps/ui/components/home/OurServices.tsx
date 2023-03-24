@@ -5,7 +5,7 @@ import { useServices } from '@/hooks/ourService/query.hook';
 import ShowServiceCard from '../ourServices/ShowServiceCard';
 import isMobile from 'is-mobile';
 
-const responsive = {
+export const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
     items: 3,
@@ -25,10 +25,10 @@ const responsive = {
 
 export const StyledSection = styled('section')(
   mq({
-    backgroundColor: '#1cafbf',
+    backgroundColor: '#122639',
+    color: '#f3b91d',
     position: 'relative',
     width: '100%',
-    color: '#122639',
     textAlign: 'center',
     padding: '3em',
     '.react-multi-carousel-list': {

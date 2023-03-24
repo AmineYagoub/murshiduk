@@ -2,7 +2,7 @@ import Logo from './Logo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AppRoutes } from '@/utils/AppRoutes';
-import { Menu, MenuProps, theme } from 'antd';
+import { Menu, MenuProps } from 'antd';
 import { StyledHeader } from '@/layout/DashboardLayout';
 import isMobile from 'is-mobile';
 
@@ -69,10 +69,12 @@ const Navigation = ({
   mode,
   items,
   onSelect,
+  inHome = false,
 }: {
   mode?: 'horizontal' | 'inline' | 'vertical';
   items: MenuProps['items'];
   onSelect?: () => void;
+  inHome?: boolean;
 }) => {
   const router = useRouter();
 
@@ -88,9 +90,11 @@ const Navigation = ({
   ) : (
     <StyledHeader
       style={{
-        backgroundImage: 'linear-gradient(to right, #29323c, #122639, #29323c)',
+        background: inHome ? 'transparent' : '',
+        position: inHome ? 'absolute' : 'relative',
         zIndex: 100,
         display: 'flex',
+        width: '100%',
         justifyContent: isMobile() ? 'center' : 'normal',
       }}
     >
