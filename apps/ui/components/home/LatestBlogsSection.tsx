@@ -42,21 +42,8 @@ const StyledSection = styled('section')({
     marginBottom: '1em',
     fontWeight: 'bold',
   },
-  figure: {
-    overflow: 'hidden',
-    figcaption: {
-      fontSize: '1.8rem',
-      margin: '65px auto',
-      maxWidth: 250,
-    },
-    img: {
-      objectFit: 'cover',
-      height: 'clamp(500px, 50vw, 600px)',
-      width: 'clamp(300px, 30vw, 400px)',
-    },
-    h5: {
-      fontSize: 'clamp(1rem, 10vw, 1.5rem)',
-    },
+  img: {
+    blockSize: '200px !important',
   },
 });
 
