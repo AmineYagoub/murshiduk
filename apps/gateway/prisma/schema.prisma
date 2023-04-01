@@ -21,9 +21,9 @@ model App {
   agreement         String    @db.Text
   privacy           String    @db.Text
   aboutUs           String    @db.Text
-  contactEmail      String?   @db.VarChar(20) @default("")
-  whatsApp          String?   @db.VarChar(20) @default("")
-  messengerId       String?   @db.VarChar(20) @default("")
+  contactEmail      String?   @db.VarChar(100) @default("")
+  whatsApp          String?   @db.VarChar(100) @default("")
+  messengerId       String?   @db.VarChar(100) @default("")
   youtubeUrl        String?   @db.VarChar(100) @default("")
   twitterUrl        String?   @db.VarChar(100) @default("")
   facebookUrl       String?   @db.VarChar(100) @default("")
@@ -103,9 +103,9 @@ model Blog {
   id                    String     @id @default(uuid())
   author                User       @relation(fields: [authorId], references: [id], onDelete: NoAction)
   authorId              String
-  title                 String     @db.VarChar(100)
-  slug                  String     @db.VarChar(100) @unique
-  descriptionMeta       String     @db.VarChar(200) @unique
+  title                 String     @db.VarChar(500)
+  slug                  String     @db.VarChar(500) @unique
+  descriptionMeta       String     @db.VarChar(500) @unique
   content               String     @db.Text
   published             Boolean?   @default(true)
   created               DateTime   @default(now())

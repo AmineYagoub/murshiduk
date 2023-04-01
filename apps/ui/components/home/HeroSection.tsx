@@ -1,6 +1,7 @@
+import { baseS3Url } from '@/utils/index';
+import { CarouselEl } from '@/utils/types';
 import styled from '@emotion/styled';
 import { Carousel } from 'antd';
-import Image from 'next/image';
 import { memo } from 'react';
 const StyledCarousel = styled(Carousel)({
   width: '100%',
@@ -10,17 +11,17 @@ const StyledCarousel = styled(Carousel)({
     height: '100vh !important',
   },
 });
-const HeroSection = ({ images }: { images: string[] }) => {
+
+const HeroSection = ({ images }: { images: CarouselEl[] }) => {
   return (
     <StyledCarousel autoplay fade>
-      {images.map((el) => (
-        <Image
-          key={el}
-          src={el}
-          width={1600}
-          height={1100}
-          sizes="100vw"
-          alt="رحلة إلى إسطنبول"
+      {images.map((el, i) => (
+        <img
+          key={i}
+          src={`${baseS3Url}/${el.lg}`}
+          alt="مرشد سياحي في تركيا"
+          srcSet={`${baseS3Url}/${el.sm} 480w, ${baseS3Url}/${el.md} 800w`}
+          sizes="(max-width: 600px) 480px, 100vw"
         />
       ))}
     </StyledCarousel>

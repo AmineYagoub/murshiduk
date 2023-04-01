@@ -54,15 +54,33 @@ const BlogFooter = ({
   return (
     <NewFooter color={color}>
       <Row justify="center" align="middle">
-        <Link href="/blog">المدونة</Link>
+        <Link href="/blog" rel="noopener noreferrer" target="_blank">
+          المدونة
+        </Link>
         <Divider type="vertical" />
-        <Link href="/community/about">حول الموقع</Link>
+        <Link href="/community/about" rel="noopener noreferrer" target="_blank">
+          حول الموقع
+        </Link>
         <Divider type="vertical" />
-        <Link href="/community/terms">الشروط و الأحكام</Link>
+        <Link href="/community/terms" rel="noopener noreferrer" target="_blank">
+          الشروط و الأحكام
+        </Link>
         <Divider type="vertical" />
-        <Link href="/community/privacy">سياسة الخصوصية</Link>
+        <Link
+          href="/community/privacy"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          سياسة الخصوصية
+        </Link>
         <Divider type="vertical" />
-        <Link href="/community/contact">تواصل معي</Link>
+        <Link
+          href="/community/contact"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          تواصل معنا
+        </Link>
       </Row>
       <Row justify="center" align="middle">
         <Space>

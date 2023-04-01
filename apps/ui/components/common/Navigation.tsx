@@ -2,9 +2,11 @@ import Logo from './Logo';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AppRoutes } from '@/utils/AppRoutes';
-import { Menu, MenuProps } from 'antd';
+import { Button, Menu, MenuProps } from 'antd';
 import { StyledHeader } from '@/layout/DashboardLayout';
 import isMobile from 'is-mobile';
+import { useAuthState } from '@/hooks/auth/mutation.hook';
+import { User } from '@/utils/types';
 
 const scrollToSection = (e) => {
   const el = document?.querySelector(e.target.hash) as HTMLDivElement;
@@ -69,14 +71,13 @@ const Navigation = ({
   mode,
   items,
   onSelect,
-  inHome = false,
 }: {
   mode?: 'horizontal' | 'inline' | 'vertical';
   items: MenuProps['items'];
   onSelect?: () => void;
-  inHome?: boolean;
 }) => {
   const router = useRouter();
+  const [user] = useAuthState<User>();
 
   return mode === 'vertical' ? (
     <Menu
@@ -90,8 +91,6 @@ const Navigation = ({
   ) : (
     <StyledHeader
       style={{
-        background: inHome ? 'transparent' : '',
-        position: inHome ? 'absolute' : 'relative',
         zIndex: 100,
         display: 'flex',
         width: '100%',
@@ -111,6 +110,21 @@ const Navigation = ({
           selectedKeys={[router.pathname]}
           items={items}
         />
+      )}
+      {!isMobile() && user && (
+        <Button
+          type="primary"
+          ghost
+          href={AppRoutes.AdminManageDashboard}
+          style={{
+            position: 'absolute',
+            left: 100,
+            top: 15,
+            color: '#fff',
+          }}
+        >
+          لوحة التحكم
+        </Button>
       )}
     </StyledHeader>
   );

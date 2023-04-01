@@ -34,8 +34,8 @@ export class AuthService {
   async signUp() {
     try {
       const data = await this.buildUser({
-        email: 'user@example.com',
-        password: '12345',
+        email: 'majd.alsabbagh@mushiduk.com',
+        password: 'VPDHafEwv2AYDS4M',
         role: RoleTitle.ADMIN,
       });
       await this.prisma.user.create({ data });

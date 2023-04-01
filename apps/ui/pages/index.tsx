@@ -40,7 +40,10 @@ const itemJsonLd = (data: App) => {
       "@context": "https://schema.org/",
       "@type": "TravelAgency",
       "name": "${data.title}",
-      "image": "${data.carousel}",
+      "logo": "${baseS3Url}/carousel/logo.svg",
+      "image": "[${data.bio
+        .map((el) => baseS3Url + '/' + el.image)
+        .join(',')}]",
       "url": "${baseUrl}",
       "priceRange": "$$$",
       "telephone": "${data.whatsApp}",
@@ -80,7 +83,62 @@ const itemJsonLd = (data: App) => {
          "addressRegion": "${data.address?.addressRegion}",
          "postalCode": "${data.address?.postalCode}",
          "addressCountry": "Türkiye"
-       }
+       },
+       "keywords":["اسطنبول","انطاليا","تركيا","دليل","سياحة","سياحي","طرابزون","مترجم","مرشد","مرشدة"],
+       "articleSection":["المدونة"],
+       "inLanguage":"ar",
+       "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "3"
+      },
+       "review": [
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "عبد المنعم الجليح"
+          },
+          "datePublished": "2020-04-01",
+          "reviewBody": "شركة تثق بها بكل اطمئنان.",
+          "reviewRating": {
+            "@type": "Rating",
+            "bestRating": "5",
+            "ratingValue": "5",
+            "worstRating": "0"
+          }
+        },
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "علي الدويسري"
+          },
+          "datePublished": "2020-03-25",
+          "reviewBody": "شكر خاص للاستاذ مجد الصباغ على حسن التعامل.",
+          "reviewRating": {
+            "@type": "Rating",
+            "bestRating": "5",
+            "ratingValue": "4",
+            "worstRating": "0"
+          }
+        },
+        {
+          "@type": "Review",
+          "author": {
+            "@type": "Person",
+            "name": "خالد"
+          },
+          "datePublished": "2020-06-05",
+          "reviewBody": "أشكركم كثيرا وبالاخص اخ مجد لتعامله اللطيف",
+          "reviewRating": {
+            "@type": "Rating",
+            "bestRating": "5",
+            "ratingValue": "5",
+            "worstRating": "0"
+          }
+        }
+      ]
     }`,
   };
 };
@@ -124,7 +182,7 @@ const Home = () => {
           key="jsonld"
         />
       </Head>
-      <HeroSection images={carouselImages} />
+      <HeroSection images={data.carousel} />
 
       <AboutUsSection bio={data.bio} />
       <WhyUsSection content={data.whyUsContent} />

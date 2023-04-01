@@ -61,7 +61,13 @@ const AboutUsSection = ({ bio }: { bio: Bio[] }) => {
         >
           <h1 className="travel__fatih-h3">من نحن ؟</h1>
           <article dangerouslySetInnerHTML={{ __html: first?.content }} />
-          <Link href={AppRoutes.About}>قراءة المزيد ... </Link>
+          <Link
+            href={AppRoutes.About}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            قراءة المزيد ...{' '}
+          </Link>
         </Col>
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <Image

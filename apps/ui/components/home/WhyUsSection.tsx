@@ -48,7 +48,11 @@ const WhyUsSection = ({ content }: { content: string }) => {
         </Col>
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <p>{content}</p>
-          <Link href={AppRoutes.Contact}>
+          <Link
+            href={AppRoutes.Contact}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
             <Button type="ghost" size="large">
               تواصل معنا
             </Button>

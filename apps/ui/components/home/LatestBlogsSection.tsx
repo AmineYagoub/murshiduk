@@ -86,7 +86,11 @@ const LatestBlogsSection = () => {
               title={el.title}
               description={`${el.descriptionMeta.slice(0, 100)} ... `}
             />
-            <Link href={`/blog/${el.slug}`}>
+            <Link
+              href={`/blog/${el.slug}`}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
               <Button
                 type="primary"
                 style={{
