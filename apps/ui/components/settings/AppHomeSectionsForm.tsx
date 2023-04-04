@@ -44,7 +44,7 @@ const AppHomeSectionsForm = () => {
     <Loading />
   ) : (
     <Form
-      wrapperCol={{ span: 18 }}
+      style={{ maxWidth: 750 }}
       form={form}
       size="large"
       layout="vertical"
@@ -59,7 +59,7 @@ const AppHomeSectionsForm = () => {
       <Button
         type="primary"
         htmlType="submit"
-        style={{ width: '150px' }}
+        style={{ width: '250px', display: 'block', margin: '50px auto' }}
         loading={updating}
       >
         حفظ

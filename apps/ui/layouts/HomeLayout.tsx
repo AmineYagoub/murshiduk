@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Logo from '@/components/common/Logo';
 import { Button, Drawer, Layout } from 'antd';
 import { useApp } from '@/hooks/app/query.hook';
-import { MenuFoldOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, CloseOutlined } from '@ant-design/icons';
 import BlogFooter from '@/components/partials/BlogFooter';
 import WhatsAppButton from '@/components/partials/WhatsAppButton';
 import Navigation, {
@@ -54,6 +54,8 @@ const HomeLayout = ({ children }) => {
         closable={true}
         onClose={onClose}
         open={open}
+        headerStyle={{ backgroundColor: '#122639' }}
+        closeIcon={<CloseOutlined style={{ color: '#fff', fontSize: 16 }} />}
       >
         <Navigation mode="vertical" items={sideMenuItems} onSelect={onClose} />
       </Drawer>

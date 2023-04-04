@@ -7,6 +7,12 @@ export type Bio = {
   content: string;
 };
 
+export type CarouselEl = {
+  lg: string;
+  md: string;
+  sm: string;
+};
+
 export type App = {
   title?: string;
   description?: string;
@@ -19,7 +25,7 @@ export type App = {
     postalCode: string;
     streetAddress: string;
   };
-  carousel?: string[];
+  carousel?: CarouselEl[];
   whyUsContent?: string;
   agreement?: string;
   privacy?: string;

@@ -25,7 +25,11 @@ const ShowServiceCard: FC<{ service: Service }> = ({ service }) => {
         title={service.title}
         description={`${service.description.slice(0, 100)} ... `}
       />
-      <Link href={`${path}/${service.slug}`}>
+      <Link
+        href={`${path}/${service.slug}`}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
         <Button
           type="primary"
           style={{

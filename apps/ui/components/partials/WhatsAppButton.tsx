@@ -24,6 +24,7 @@ const WhatsAppButton = ({
           icon={<PhoneIcon />}
           type="link"
           href={`tel:${data.whatsApp}`}
+          target="_blank"
         />
       ) : (
         <Popover
@@ -43,12 +44,14 @@ const WhatsAppButton = ({
         )}&text&type=phone_number&app_absent=0`}
         icon={<WhatsAppIcon />}
         type="link"
+        target="_blank"
       />
       {data?.messengerId && (
         <Button
           icon={<MessengerIcon />}
           href={`https://m.me/${data.messengerId}`}
           type="link"
+          target="_blank"
         />
       )}
     </FloatButton.Group>

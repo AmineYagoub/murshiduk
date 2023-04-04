@@ -53,20 +53,20 @@ const AppSettingsForm = () => {
         <Loading />
       ) : (
         <Form
-          wrapperCol={{ span: 18 }}
           form={form}
           size="large"
           layout="vertical"
           scrollToFirstError
           onFinish={onFinish}
           onSubmitCapture={onSubmit}
+          style={{ maxWidth: 750 }}
         >
           <Form.Item label="إسم الموقع" name="title" required>
             <Input />
           </Form.Item>
 
           <Form.Item label="وصف الموقع" required name="description">
-            <Input.TextArea />
+            <Input.TextArea rows={4} />
           </Form.Item>
 
           <StyledH2>بيانات التواصل</StyledH2>
@@ -89,26 +89,26 @@ const AppSettingsForm = () => {
           </Space>
 
           <Form.Item label="عنوان الشارع" name={['address', 'streetAddress']}>
-            <Input style={{ maxWidth: 730 }} />
+            <Input />
           </Form.Item>
           <Space size={15}>
             <Form.Item label="البلدية" name={['address', 'addressLocality']}>
-              <Input style={{ minWidth: 230 }} />
+              <Input style={{ minWidth: 240 }} />
             </Form.Item>
             <Form.Item label="المحافظة" name={['address', 'addressRegion']}>
-              <Input style={{ minWidth: 230 }} />
+              <Input style={{ minWidth: 240 }} />
             </Form.Item>
             <Form.Item label="رمز بريدي" name={['address', 'postalCode']}>
-              <Input style={{ minWidth: 230 }} />
+              <Input style={{ minWidth: 240 }} />
             </Form.Item>
           </Space>
 
           <Space size={15}>
             <Form.Item label="خط العرض" name={['address', 'latitude']}>
-              <Input style={{ minWidth: 230 }} placeholder="latitude" />
+              <Input style={{ minWidth: 240 }} placeholder="latitude" />
             </Form.Item>
             <Form.Item label="خط الطول" name={['address', 'longitude']}>
-              <Input style={{ minWidth: 230 }} placeholder="longitude" />
+              <Input style={{ minWidth: 240 }} placeholder="longitude" />
             </Form.Item>
           </Space>
 
@@ -151,10 +151,11 @@ const AppSettingsForm = () => {
           >
             {(fields, { add, remove }, { errors }) => (
               <>
-                {fields.map((field, index) => (
-                  <Form.Item required={false} key={field.key}>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Form.Item required={false} key={key}>
                     <Form.Item
-                      {...field}
+                      {...restField}
+                      name={[name, 'lg']}
                       validateTrigger={['onChange', 'onBlur']}
                       rules={[
                         {
@@ -166,9 +167,53 @@ const AppSettingsForm = () => {
                       noStyle
                     >
                       <Input
+                        placeholder="مقاس أكبر من 1080px"
                         addonAfter={`/${baseS3Url}`}
                         style={{
-                          width: '80%',
+                          marginLeft: 5,
+                          textAlign: 'left',
+                        }}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'md']}
+                      validateTrigger={['onChange', 'onBlur']}
+                      rules={[
+                        {
+                          required: true,
+                          whitespace: true,
+                          message: 'يرجى إضافة رابط الصورة أو حذف هذا الحقل.',
+                        },
+                      ]}
+                      noStyle
+                    >
+                      <Input
+                        placeholder="مقاس 1080px"
+                        addonAfter={`/${baseS3Url}`}
+                        style={{
+                          marginLeft: 5,
+                          textAlign: 'left',
+                        }}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'sm']}
+                      validateTrigger={['onChange', 'onBlur']}
+                      rules={[
+                        {
+                          required: true,
+                          whitespace: true,
+                          message: 'يرجى إضافة رابط الصورة أو حذف هذا الحقل.',
+                        },
+                      ]}
+                      noStyle
+                    >
+                      <Input
+                        placeholder="مقاس 420px"
+                        addonAfter={`/${baseS3Url}`}
+                        style={{
                           marginLeft: 5,
                           textAlign: 'left',
                         }}
@@ -177,11 +222,12 @@ const AppSettingsForm = () => {
                     {fields.length > 1 ? (
                       <Button
                         icon={<CloseCircleOutlined />}
-                        onClick={() => remove(field.name)}
+                        onClick={() => remove(name)}
                         type="primary"
                         shape="circle"
                         ghost
                         danger
+                        style={{ position: 'absolute', top: '35%' }}
                       />
                     ) : null}
                   </Form.Item>
@@ -190,8 +236,8 @@ const AppSettingsForm = () => {
                   <Button
                     type="dashed"
                     onClick={() => add()}
-                    style={{ width: '60%' }}
                     icon={<PlusOutlined />}
+                    block
                   >
                     أضف رابط صورة
                   </Button>
@@ -205,7 +251,7 @@ const AppSettingsForm = () => {
           <Button
             type="primary"
             htmlType="submit"
-            style={{ width: '150px' }}
+            style={{ width: '250px', display: 'block', margin: '50px auto' }}
             loading={updating}
           >
             حفظ
