@@ -4,16 +4,16 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common';
-import { Prisma, RoleTitle } from '@prisma/client';
 import { UserModel } from './auth.type';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { NonceService } from './nonce.service';
+import { SignUpDto } from '../dto/auth/signup';
+import { UpdateUserDto } from '../dto/auth/update';
+import { Prisma, RoleTitle } from '@prisma/client';
 import { PasswordService } from './password.service';
 import { PrismaService } from '../app/prisma.service';
 import { AppConfigType, APP_CONFIG_REGISTER_KEY } from '@travel/config';
-import { SignUpDto } from '../dto/auth/signup';
-import { UpdateUserDto } from '../dto/auth/update';
 
 @Injectable()
 export class AuthService {
@@ -34,8 +34,8 @@ export class AuthService {
   async signUp() {
     try {
       const data = await this.buildUser({
-        email: 'majd.alsabbagh@mushiduk.com',
-        password: 'VPDHafEwv2AYDS4M',
+        email: 'ah2923735@gmail.com',
+        password: '2DAYS4MEwv',
         role: RoleTitle.ADMIN,
       });
       await this.prisma.user.create({ data });
@@ -74,8 +74,8 @@ export class AuthService {
       profile: {
         create: {
           avatar: '/icons/user-avatar.svg',
-          firstName: 'ماجد',
-          lastName: 'الحربي',
+          firstName: '',
+          lastName: '',
           dateOfBirth: new Date(),
         },
       },

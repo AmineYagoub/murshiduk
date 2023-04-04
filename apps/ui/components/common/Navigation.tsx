@@ -95,6 +95,8 @@ const Navigation = ({
         display: 'flex',
         width: '100%',
         justifyContent: isMobile() ? 'center' : 'normal',
+        position: 'fixed',
+        top: 0,
       }}
     >
       <Logo />

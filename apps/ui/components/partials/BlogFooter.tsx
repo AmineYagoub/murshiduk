@@ -37,6 +37,7 @@ const NewFooter = styled(Footer)((props) =>
       width: '100%',
       margin: 5,
       textAlign: 'center',
+      lineHeight: 1.5,
     },
     a: {
       color: 'inherit',
