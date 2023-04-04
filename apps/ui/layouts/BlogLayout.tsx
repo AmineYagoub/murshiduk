@@ -16,7 +16,7 @@ import { MenuFoldOutlined } from '@ant-design/icons';
 
 export const StyledBlogContent = styled(StyledContent)({
   backgroundColor: 'transparent',
-  margin: '0 auto',
+  margin: '65px auto',
 });
 
 const BlogLayout = ({ children }: { children: EmotionJSX.Element }) => {
