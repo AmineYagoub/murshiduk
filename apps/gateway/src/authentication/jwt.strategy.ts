@@ -26,7 +26,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     request: Request,
     { sub, nonce }: { sub: string; nonce: string }
   ) {
-    const cookies = request.headers['cookie'];
+    /*     const cookies = request.headers['cookie'];
 
     if (!cookies) {
       throw new UnauthorizedException();
@@ -40,8 +40,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (nonces[nonceName] !== nonce) {
       // TODO You should log the ip of requester,
       throw new UnauthorizedException();
-    }
+    } */
     // TODO looking up the userId in a list of revoked tokens,
+    console.log(sub);
     const user = await this.prismaService.user.findUniqueOrThrow({
       where: { id: sub },
       include: { profile: true, role: true },
