@@ -189,7 +189,7 @@ const Home = () => {
       <OurServices />
       <OurTravels />
       <LatestBlogsSection />
-      <TestimonialsSlider images={carouselImages} />
+      <TestimonialsSlider />
     </>
   );
 };

@@ -15,9 +15,9 @@ const StyledCarousel = styled(Carousel)({
 const HeroSection = ({ images }: { images: CarouselEl[] }) => {
   return (
     <StyledCarousel autoplay fade>
-      {images.map((el, i) => (
+      {images.map((el) => (
         <img
-          key={i}
+          key={Math.random()}
           src={`${baseS3Url}/${el.lg}`}
           alt="مرشد سياحي في تركيا"
           srcSet={`${baseS3Url}/${el.sm} 480w, ${baseS3Url}/${el.md} 800w`}
