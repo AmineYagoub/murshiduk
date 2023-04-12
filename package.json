@@ -5,7 +5,7 @@
   "scripts": {
     "pwa": "pwa-asset-generator apps/ui/public/img/logo.svg ./apps/ui/public/pwa -i ./apps/ui/public/index.html -m ./apps/ui/public/site.webmanifest -b 'linear-gradient(to right, #122639 0%, #122639 100%)' --xhtml --favicon",
     "ui": "rimraf apps/ui/.next && nx run ui:serve --port 8080",
-    "ui:build": "rimraf apps/ui/.next && nx run ui:build",
+    "ui:build": "rimraf dist/apps/ui && nx run ui:build:production",
     "api": "nx run gateway:serve",
     "api:dev": "(cd apps/gateway/ && npx prisma migrate dev)",
     "api:show": "(cd apps/gateway/ && npx prisma studio)",

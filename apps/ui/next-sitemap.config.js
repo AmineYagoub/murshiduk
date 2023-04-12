@@ -4,7 +4,7 @@ module.exports = {
   siteUrl: 'https://murshiduk.com',
   generateRobotsTxt: true, // (optional)
   exclude: ['/admin/*', '/auth/*'],
-  sourceDir: 'dist/apps/ui/.next',
+  sourceDir: 'apps/ui/.next',
   outDir: 'dist/apps/ui/public',
   robotsTxtOptions: {
     policies: [
