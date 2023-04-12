@@ -66,6 +66,10 @@ const BlogsInCategoryPage = () => {
                     getFirstImageFromContent(item.content) ||
                     '/img/no-image.svg'
                   }
+                  loader={() =>
+                    getFirstImageFromContent(item.content) ||
+                    '/img/no-image.svg'
+                  }
                 />
               }
             >

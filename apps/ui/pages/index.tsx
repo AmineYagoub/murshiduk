@@ -5,33 +5,31 @@ import {
   extractTwitterUserName,
 } from '../utils';
 import Head from 'next/head';
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import HomeLayout from '@/layout/HomeLayout';
+import { register } from 'swiper/element/bundle';
 import { App, ServiceType } from '@/utils/types';
 import { withAuth } from '@/components/auth/withAuth';
-import OurTravels from '@/components/home/OurTravels';
 import HeroSection from '@/components/home/HeroSection';
-import OurServices from '@/components/home/OurServices';
 import WhyUsSection from '@/components/home/WhyUsSection';
 import { fetchApp, useApp } from '@/hooks/app/query.hook';
-import { fetchServices } from '@/hooks/ourService/query.hook';
 import AboutUsSection from '@/components/home/AboutUsSection';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import LatestBlogsSection from '@/components/home/LatestBlogsSection';
+import { fetchServices, useServices } from '@/hooks/ourService/query.hook';
 
 const TestimonialsSlider = dynamic(
   () => import('@/components/home/TestimonialsSlider'),
   { ssr: false }
 );
-
-const getPaginationParams = (type: ServiceType) => {
-  return {
-    take: 20,
-    skip: 0,
-    where: { type },
-  };
-};
+const GridCarousel = dynamic(
+  () => import('@/components/carousel/GridCarousel'),
+  {
+    ssr: false,
+  }
+);
 
 const itemJsonLd = (data: App) => {
   return {
@@ -143,14 +141,13 @@ const itemJsonLd = (data: App) => {
   };
 };
 
-const images = ['/img/istanbul.webp', '/img/cappadocia.webp'];
-
 const Home = () => {
   const { data } = useApp();
-  const carouselImages =
-    data.carousel.length > 0
-      ? data.carousel.map((el) => `${baseS3Url}/${el}`)
-      : images;
+  const { data: services } = useServices();
+
+  useEffect(() => {
+    register();
+  }, []);
   return (
     <>
       <Head>
@@ -186,8 +183,23 @@ const Home = () => {
 
       <AboutUsSection bio={data.bio} />
       <WhyUsSection content={data.whyUsContent} />
-      <OurServices />
-      <OurTravels />
+      <GridCarousel
+        data={services.filter((el) => el.type === ServiceType.SERVICE)}
+        title="خدماتنا"
+        description="خدمات سياحية و مميزات متكاملة"
+      />
+      <GridCarousel
+        data={services.filter((el) => el.type === ServiceType.TRAVEL)}
+        title="رحلاتنا السياحية"
+        description="رحلات سياحية بأسعار مناسبة وخدمات خمس نجوم"
+      />
+
+      <GridCarousel
+        data={services.filter((el) => el.type === ServiceType.PROGRAM)}
+        title="برامجنا السياحية"
+        description="نتكفل بكافة الإجراءات والترتيبات الخاصة ببرنامجك السياحي"
+      />
+
       <LatestBlogsSection />
       <TestimonialsSlider />
     </>
@@ -199,8 +211,6 @@ Home.getLayout = (page: EmotionJSX.Element) => <HomeLayout>{page}</HomeLayout>;
 export default withAuth(Home, true);
 
 export async function getServerSideProps() {
-  const serviceType: ServiceType = 'SERVICE';
-  const travelType: ServiceType = 'TRAVEL';
   try {
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery({
@@ -208,13 +218,14 @@ export async function getServerSideProps() {
       queryFn: () => fetchApp(),
     });
     await queryClient.prefetchQuery({
-      queryKey: [serviceType, getPaginationParams(serviceType)],
-      queryFn: () => fetchServices(getPaginationParams(serviceType)),
+      queryKey: ['getServices'],
+      queryFn: () =>
+        fetchServices({
+          take: 50,
+          skip: 0,
+        }),
     });
-    await queryClient.prefetchQuery({
-      queryKey: [travelType, getPaginationParams(travelType)],
-      queryFn: () => fetchServices(getPaginationParams(travelType)),
-    });
+
     return {
       props: {
         dehydratedState: dehydrate(queryClient),

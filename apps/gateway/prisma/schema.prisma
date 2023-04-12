@@ -155,6 +155,7 @@ enum ContactStatus {
 enum ServiceType {
   TRAVEL
   SERVICE
+  PROGRAM
 }
 
 model Service {

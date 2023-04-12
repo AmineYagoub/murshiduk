@@ -30,12 +30,28 @@ html {
   --card-height: 140px;
   --card-transition-duration: 800ms;
   --card-transition-easing: ease;
+  --swiper-navigation-color: #f3b91d;
+  --swiper-theme-color: #f3b91d;
 }
 
 * {
   font-family: 'Noto Kufi Arabic', sans-serif;
   font-display: swap;
   font-style: normal;
+}
+
+swiper-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+swiper-slide {
+  width: 350px;
+  border-radius: 25px;
+}
+.swiper-slide-shadow-right,
+.swiper-slide-shadow-left {
+  display: none;
 }
 
 .testimonial__bg {

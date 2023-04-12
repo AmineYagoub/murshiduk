@@ -1,12 +1,12 @@
 import Logo from './Logo';
 import Link from 'next/link';
+import isMobile from 'is-mobile';
 import { useRouter } from 'next/router';
 import { AppRoutes } from '@/utils/AppRoutes';
 import { Button, Menu, MenuProps } from 'antd';
+import { ServiceType, User } from '@/utils/types';
 import { StyledHeader } from '@/layout/DashboardLayout';
-import isMobile from 'is-mobile';
 import { useAuthState } from '@/hooks/auth/mutation.hook';
-import { User } from '@/utils/types';
 
 const scrollToSection = (e) => {
   const el = document?.querySelector(e.target.hash) as HTMLDivElement;
@@ -31,16 +31,36 @@ export const menuItems: MenuProps['items'] = [
   {
     key: AppRoutes.Services,
     label: (
-      <Link href="/#our-services" onClick={scrollToSection} scroll={false}>
+      <Link
+        href={`#our-${ServiceType.SERVICE}`}
+        onClick={scrollToSection}
+        scroll={false}
+      >
         خدماتنا
+      </Link>
+    ),
+  },
+  {
+    key: AppRoutes.Travels,
+    label: (
+      <Link
+        href={`#our-${ServiceType.TRAVEL}`}
+        onClick={scrollToSection}
+        scroll={false}
+      >
+        رحلاتنا
       </Link>
     ),
   },
   {
     key: AppRoutes.Programs,
     label: (
-      <Link href="/#our-travels" onClick={scrollToSection} scroll={false}>
-        رحلاتنا
+      <Link
+        href={`#our-${ServiceType.PROGRAM}`}
+        onClick={scrollToSection}
+        scroll={false}
+      >
+        برامجنا
       </Link>
     ),
   },
@@ -106,6 +126,7 @@ const Navigation = ({
             marginRight: 10,
             backgroundColor: 'transparent',
             color: '#fff',
+            width: '100%',
           }}
           mode={mode}
           defaultSelectedKeys={[AppRoutes.Home]}

@@ -7,16 +7,16 @@ import { Service, ServiceType } from '@/utils/types';
 import { withAuth } from '@/components/auth/withAuth';
 import DashboardLayout from '@/layout/DashboardLayout';
 import NewService from '@/components/services/NewService';
-import EditService from '@/components/services/EditService';
 import { useServices } from '@/hooks/ourService/query.hook';
+import EditService from '@/components/services/EditService';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import DeleteService from '@/components/services/DeleteService';
 import { baseS3Url, formatDate, getTitleMeta } from '@/utils/index';
 import PreviewOurService from '@/components/services/PreviewOurService';
 
-const AdminManageServices = () => {
-  const { methods, data, isLoading } = useServices(ServiceType.SERVICE);
+const AdminManagePrograms = () => {
+  const { methods, data, isLoading } = useServices(ServiceType.PROGRAM);
   const columns: ColumnsType<Service> = [
     {
       title: 'الصورة',
@@ -26,7 +26,7 @@ const AdminManageServices = () => {
         <Image
           src={`${baseS3Url}/${url}`}
           loader={() => `${baseS3Url}/${url}`}
-          alt="service"
+          alt="program"
           width={50}
           height={50}
         />
@@ -65,9 +65,9 @@ const AdminManageServices = () => {
   return (
     <>
       <Head>
-        <title>{getTitleMeta('لوحة التحكم', 'إدارة الخدمات')}</title>
+        <title>{getTitleMeta('لوحة التحكم', 'إدارة البرامج')}</title>
       </Head>
-      <NewService type={ServiceType.SERVICE} />
+      <NewService type={ServiceType.PROGRAM} />
       <Table
         columns={columns}
         dataSource={data}
@@ -80,7 +80,7 @@ const AdminManageServices = () => {
   );
 };
 
-AdminManageServices.getLayout = (page: EmotionJSX.Element) => (
+AdminManagePrograms.getLayout = (page: EmotionJSX.Element) => (
   <DashboardLayout>{page}</DashboardLayout>
 );
 
@@ -100,4 +100,4 @@ export async function getServerSideProps() {
   }
 }
 
-export default withAuth(AdminManageServices);
+export default withAuth(AdminManagePrograms);

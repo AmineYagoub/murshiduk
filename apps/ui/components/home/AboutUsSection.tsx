@@ -71,6 +71,7 @@ const AboutUsSection = ({ bio }: { bio: Bio[] }) => {
         </Col>
         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
           <Image
+            loader={() => `${baseS3Url}/${first?.image}`}
             src={`${baseS3Url}/${first?.image}`}
             width={420}
             height={780}

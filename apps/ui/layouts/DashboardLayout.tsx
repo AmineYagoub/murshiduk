@@ -69,12 +69,16 @@ const items: MenuProps['items'] = [
         AppRoutes.AdminManageOrders
       ),
       getItem(
-        <Link href={AppRoutes.AdminManageServices}>الخدمات</Link>,
+        <Link href={AppRoutes.AdminManageServices}>الخدمات السياحية</Link>,
         AppRoutes.AdminManageServices
       ),
       getItem(
-        <Link href={AppRoutes.AdminManageTravels}>الرحلات</Link>,
+        <Link href={AppRoutes.AdminManageTravels}>الرحلات السياحية</Link>,
         AppRoutes.AdminManageTravels
+      ),
+      getItem(
+        <Link href={AppRoutes.AdminManagePrograms}>البرامج السياحية</Link>,
+        AppRoutes.AdminManagePrograms
       ),
     ]
   ),

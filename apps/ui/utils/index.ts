@@ -5,8 +5,9 @@ export * from './Logger';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ar';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { User } from './types';
+import { Service, ServiceType, User } from './types';
 import facepaint from 'facepaint';
+import { AppRoutes } from './AppRoutes';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ar');
@@ -79,6 +80,13 @@ export const extractTwitterUserName = (url?: string) => {
   const match = url.match(/^https?:\/\/(www\.)?twitter.com\/@?(?<handle>\w+)/);
   return match?.groups?.handle ? `@${match.groups.handle}` : null;
 };
+
+export const getServiceLink = (service: Service) =>
+  service.type === ServiceType.SERVICE
+    ? `${AppRoutes.Services}/${service.slug}`
+    : service.type === ServiceType.TRAVEL
+    ? `${AppRoutes.Travels}/${service.slug}`
+    : `${AppRoutes.Programs}/${service.slug}`;
 
 export const baseUrl = 'https://murshiduk.com';
 export const baseS3Url = 'https://s3.murshiduk.com';

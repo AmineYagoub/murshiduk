@@ -3,21 +3,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button, Card } from 'antd';
 import { Service } from '@/utils/types';
-import { baseS3Url } from '@/utils/index';
+import { baseS3Url, getServiceLink } from '@/utils/index';
 
 const { Meta } = Card;
 
 const ShowServiceCard: FC<{ service: Service }> = ({ service }) => {
-  const path = service.type === 'SERVICE' ? 'our-services' : 'our-travels';
   return (
     <Card
-      style={{ maxWidth: 350, height: 550 }}
+      style={{ maxWidth: 350, height: 550, borderRadius: 25 }}
       cover={
         <Image
-          alt={service.title}
-          src={`${baseS3Url}/${service.image}`}
           width={350}
           height={350}
+          alt={service.title}
+          loader={() => `${baseS3Url}/${service.image}`}
+          src={`${baseS3Url}/${service.image}`}
         />
       }
     >
@@ -26,7 +26,7 @@ const ShowServiceCard: FC<{ service: Service }> = ({ service }) => {
         description={`${service.description.slice(0, 100)} ... `}
       />
       <Link
-        href={`${path}/${service.slug}`}
+        href={getServiceLink(service)}
         rel="noopener noreferrer"
         target="_blank"
       >

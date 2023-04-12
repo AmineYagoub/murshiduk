@@ -29,7 +29,10 @@ const nextConfig = {
   },
   transpilePackages: ['antd', 'echarts', 'zrender'],
   images: {
-    domains: ['flagcdn.com', 's3.murshiduk.com', 's3.enjoystickk.com'],
+    remotePatterns: [
+      { hostname: 's3.murshiduk.com' },
+      { hostname: 'flagcdn.com' },
+    ],
   },
   nx: {
     svgr: false,

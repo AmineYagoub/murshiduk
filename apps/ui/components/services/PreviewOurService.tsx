@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import { LinkOutlined } from '@ant-design/icons';
 import type { Service } from '@/utils/types';
+import { getServiceLink } from '@/utils/index';
 
 const PreviewOurService = ({ record }: { record: Service }) => {
   return (
@@ -9,7 +10,7 @@ const PreviewOurService = ({ record }: { record: Service }) => {
       icon={<LinkOutlined style={{ color: 'blue' }} />}
       type="primary"
       ghost
-      href={`/our-services/${record.slug}`}
+      href={getServiceLink(record)}
     />
   );
 };
