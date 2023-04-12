@@ -11,7 +11,7 @@ const StyledSection = styled('section')({
   textAlign: 'center',
   backgroundColor: '#122639',
   color: '#f3b91d',
-  padding: 50,
+  padding: 10,
   backgroundImage: "url('/img/waves-background.svg')",
   backgroundSize: 'cover',
   h3: {
