@@ -17,8 +17,8 @@ import { fetchApp, useApp } from '@/hooks/app/query.hook';
 import AboutUsSection from '@/components/home/AboutUsSection';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import LatestBlogsSection from '@/components/home/LatestBlogsSection';
 import { fetchServices, useServices } from '@/hooks/ourService/query.hook';
+import { useBlogs } from '@/hooks/blog/query.hook';
 
 const TestimonialsSlider = dynamic(
   () => import('@/components/home/TestimonialsSlider'),
@@ -26,6 +26,12 @@ const TestimonialsSlider = dynamic(
 );
 const GridCarousel = dynamic(
   () => import('@/components/carousel/GridCarousel'),
+  {
+    ssr: false,
+  }
+);
+const LatestBlogsSection = dynamic(
+  () => import('@/components/home/LatestBlogsSection'),
   {
     ssr: false,
   }
@@ -144,6 +150,7 @@ const itemJsonLd = (data: App) => {
 const Home = () => {
   const { data } = useApp();
   const { data: services } = useServices();
+  const { data: blogs } = useBlogs();
 
   useEffect(() => {
     register();
@@ -200,7 +207,7 @@ const Home = () => {
         description="نتكفل بكافة الإجراءات والترتيبات الخاصة ببرنامجك السياحي"
       />
 
-      <LatestBlogsSection />
+      <LatestBlogsSection data={blogs} />
       <TestimonialsSlider />
     </>
   );

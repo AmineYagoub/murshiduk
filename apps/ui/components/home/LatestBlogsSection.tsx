@@ -1,11 +1,10 @@
 import { memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import isMobile from 'is-mobile';
 import { Button, Card } from 'antd';
 import styled from '@emotion/styled';
-import { useBlogs } from '@/hooks/blog/query.hook';
 import { getFirstImageFromContent } from '@/utils/index';
-import isMobile from 'is-mobile';
 
 const StyledSection = styled('section')({
   textAlign: 'center',
@@ -28,22 +27,20 @@ const StyledSection = styled('section')({
   },
 });
 
-const LatestBlogsSection = () => {
-  const { data } = useBlogs();
-
+const LatestBlogsSection = ({ data }) => {
   return (
     <StyledSection>
       <h3>قم بزيارة المدونة لتحصل على لمحة عما يمكنك تجربته</h3>
       <h4>آخر التدوينات</h4>
       <swiper-container
         navigation
-        space-between={isMobile() ? '1' : '50'}
-        slides-per-view={isMobile() ? '1' : '5'}
+        space-between="1"
+        slides-per-view={isMobile() ? '1' : screen.width <= 1366 ? '3' : '5'}
         free-mode="true"
         grab-cursor="true"
         centered-slides="true"
+        centered-slides-bounds="true"
         round-lengths="true"
-        initial-slide="5"
       >
         {data.map((el) => (
           <swiper-slide key={el.id}>

@@ -10,7 +10,7 @@ const { Meta } = Card;
 const ShowServiceCard: FC<{ service: Service }> = ({ service }) => {
   return (
     <Card
-      style={{ width: 350, height: 550, borderRadius: 25 }}
+      style={{ width: 350, height: 550, borderRadius: 25, zIndex: 1000 }}
       cover={
         <Image
           width={350}

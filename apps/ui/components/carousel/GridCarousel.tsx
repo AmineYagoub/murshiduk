@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { mq } from '@/utils/index';
 import styled from '@emotion/styled';
 import { Service } from '@/utils/types';
-import ShowServiceCard from '../services/ShowServiceCard';
+import ShowServiceCard from './ShowServiceCard';
 import isMobile from 'is-mobile';
 
 export const StyledSection = styled('section')(
@@ -48,9 +48,9 @@ const GridCarousel: FC<{
       <swiper-container
         navigation
         effect="coverflow"
-        space-between={isMobile() ? '1' : '50'}
-        slides-per-view={isMobile() ? '1' : '5'}
-        grab-cursor="true"
+        space-between={isMobile() ? '1' : '10'}
+        slides-per-view={isMobile() ? '1' : screen.width <= 1366 ? '3' : '4'}
+        grab-cursor="false"
         autoplay-delay="2500"
         centered-slides="true"
         coverflow-effect-rotate="50"
