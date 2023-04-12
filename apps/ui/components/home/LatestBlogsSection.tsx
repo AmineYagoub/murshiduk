@@ -48,7 +48,7 @@ const LatestBlogsSection = () => {
         {data.map((el) => (
           <swiper-slide key={el.id}>
             <Card
-              style={{ maxWidth: 350, height: 400 }}
+              style={{ width: 350, height: 400 }}
               cover={
                 <Image
                   alt={el.title}
