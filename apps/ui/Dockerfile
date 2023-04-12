@@ -20,7 +20,7 @@ RUN adduser -S nextjs -u 1001
 
 COPY --from=builder --chown=nextjs:nodejs /app/dist/apps/ui ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/ui/.next ./.next
-COPY package.json /app/package.json
+COPY apps/ui/package.json /app/package.json
 RUN npm pkg set dependencies.sharp="latest" && npm pkg set dependencies.ky="latest" && npm install && npm cache clean --force
 
 USER nextjs
