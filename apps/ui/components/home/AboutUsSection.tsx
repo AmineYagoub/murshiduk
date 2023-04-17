@@ -60,7 +60,14 @@ const AboutUsSection = ({ bio }: { bio: Bio[] }) => {
           className="travel__desc-main"
         >
           <h1 className="travel__fatih-h3">من نحن ؟</h1>
-          <article dangerouslySetInnerHTML={{ __html: first?.content }} />
+          <article>
+            أنا مجد الصباغ، مرشدك في تركيا، أعمل في مجال السياحة في تركيا منذ 8
+            سنوات، ساعدت خلالها مئات السائحين في شمال تركيا، واكتسبت خلالها
+            الكثير من الخبرات والمهارات التي أضعها بين يديك الآن. أقدّم لك كل ما
+            تحتاجه من خدمات وتسهيلات لتكون رحلتك إلى تركيا هي الأسهل، ولتكون
+            لحظاتك في تركيا هي الأمتع في حياتك، فكل ما عليك هو إعداد حقائبك،
+            ومرشدك سيتولّى كافة المسؤوليات والترتيبات الأخرى...
+          </article>
           <Link
             href={AppRoutes.About}
             rel="noopener noreferrer"

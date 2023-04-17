@@ -22,8 +22,6 @@ export const mq = facepaint([
 
 export const api = ky.create({
   prefixUrl: config.API_URL,
-  credentials: 'include',
-  mode: 'cors',
   headers: {
     'content-type': 'application/json',
   },

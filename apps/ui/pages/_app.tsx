@@ -15,6 +15,7 @@ import { ReactElement, useEffect, useState } from 'react';
 import { ConfigProvider, notification, Spin } from 'antd';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import CreateEmotionCache from '@/config/CreateEmotionCache';
+import { GoogleAnalytics } from 'nextjs-google-analytics';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 Spin.setDefaultIndicator(<Spin indicator={antIcon} />);
@@ -48,6 +49,7 @@ export default function CustomApp(props: MyAppProps) {
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <ConfigProvider locale={ar} direction="rtl" theme={theme}>
+              <GoogleAnalytics trackPageViews />
               <Component {...pageProps} />
             </ConfigProvider>
           </Hydrate>
