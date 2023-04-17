@@ -35,15 +35,15 @@ const StyledSection = styled('section')({
 const testimonialImages = [
   {
     title: 'الدوسري',
-    src: '/img/our-clients/client-2.png',
+    src: '/img/our-clients/ali.jpeg',
   },
   {
     title: 'عبد المنعم الجليح',
-    src: '/img/our-clients/client-3.png',
+    src: '/img/our-clients/julaih.jpeg',
   },
   {
     title: 'خالد',
-    src: '/img/our-clients/client-4.png',
+    src: '/img/our-clients/khalid.jpeg',
   },
 ];
 

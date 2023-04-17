@@ -23,15 +23,12 @@ const HeroSection = ({ images }: { images: CarouselEl[] }) => {
   return (
     <StyledCarousel autoplay fade>
       {images.map((el) => (
-        <Image
-          key={Math.random()}
+        <img
+          key={i}
           src={`${baseS3Url}/${el.lg}`}
-          loader={() => `${baseS3Url}/${el.lg}`}
           alt="مرشد سياحي في تركيا"
-          fill
-          sizes="(max-width: 768px) 100vw,
-              (max-width: 1200px) 50vw,
-              33vw"
+          srcSet={`${baseS3Url}/${el.sm} 480w, ${baseS3Url}/${el.md} 800w`}
+          sizes="(max-width: 600px) 480px, 100vw"
         />
       ))}
     </StyledCarousel>
