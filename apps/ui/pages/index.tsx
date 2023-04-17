@@ -39,7 +39,8 @@ const LatestBlogsSection = dynamic(
 
 const itemJsonLd = (data: App) => {
   return {
-    __html: `
+    __html: data
+      ? `
     {
       "@context": "https://schema.org/",
       "@type": "TravelAgency",
@@ -143,7 +144,8 @@ const itemJsonLd = (data: App) => {
           }
         }
       ]
-    }`,
+    }`
+      : '',
   };
 };
 
@@ -158,27 +160,27 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>{getTitleMeta(data.title)}</title>
-        <meta name="description" content={data.description} />
+        <title>{getTitleMeta(data?.title)}</title>
+        <meta name="description" content={data?.description} />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:url" content={baseUrl} />
-        <meta name="twitter:title" content={data.title} />
-        <meta name="twitter:description" content={data.description} />
+        <meta name="twitter:title" content={data?.title} />
+        <meta name="twitter:description" content={data?.description} />
         <meta name="twitter:domain" content={baseUrl} />
 
         <meta
           name="twitter:creator"
-          content={extractTwitterUserName(data.twitterUrl)}
+          content={extractTwitterUserName(data?.twitterUrl)}
         />
         <meta
           name="twitter:site"
-          content={extractTwitterUserName(data.twitterUrl)}
+          content={extractTwitterUserName(data?.twitterUrl)}
         />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="ar_SA" />
-        <meta property="og:title" content={data.title} />
-        <meta property="og:description" content={data.description} />
-        <meta property="og:site_name" content={data.title} />
+        <meta property="og:title" content={data?.title} />
+        <meta property="og:description" content={data?.description} />
+        <meta property="og:site_name" content={data?.title} />
         <meta property="og:url" content={baseUrl} />
         <script
           type="application/ld+json"
@@ -186,10 +188,10 @@ const Home = () => {
           key="jsonld"
         />
       </Head>
-      <HeroSection images={data.carousel} />
+      <HeroSection images={data?.carousel} />
 
-      <AboutUsSection bio={data.bio} />
-      <WhyUsSection content={data.whyUsContent} />
+      <AboutUsSection bio={data?.bio} />
+      <WhyUsSection content={data?.whyUsContent} />
       <GridCarousel
         data={services.filter((el) => el.type === ServiceType.SERVICE)}
         title="خدماتنا"
