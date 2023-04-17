@@ -8,6 +8,7 @@ const StyledCarousel = styled(Carousel)({
   width: '100%',
   height: '100vh',
   position: 'relative',
+  marginTop: 65,
   img: {
     height: '100vh !important',
     objectFit: 'fill',

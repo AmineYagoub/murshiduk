@@ -24,6 +24,11 @@ const StyledSection = styled('section')({
   },
   img: {
     blockSize: '200px !important',
+    objectPosition: 'bottom',
+  },
+  '.latest-blogs': {
+    maxWidth: 350,
+    margin: '0 auto',
   },
 });
 
@@ -33,6 +38,7 @@ const LatestBlogsSection = ({ data }) => {
       <h3>قم بزيارة المدونة لتحصل على لمحة عما يمكنك تجربته</h3>
       <h4>آخر التدوينات</h4>
       <swiper-container
+        className={isMobile() ? 'latest-blogs' : ''}
         navigation
         space-between="1"
         slides-per-view={isMobile() ? '1' : screen.width <= 1366 ? '3' : '5'}

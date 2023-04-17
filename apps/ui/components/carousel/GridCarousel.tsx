@@ -12,7 +12,7 @@ export const StyledSection = styled('section')(
     position: 'relative',
     width: '100%',
     textAlign: 'center',
-    padding: '3em',
+    padding: ['0.5em', '0.5em', '3em'],
     h1: {
       fontSize: 'clamp(1rem, 5vw, 1.3rem)',
       lineHeight: 1.6,
