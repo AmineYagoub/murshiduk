@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import Image from 'next/image';
 import { Carousel } from 'antd';
 import styled from '@emotion/styled';
 import { baseS3Url } from '@/utils/index';
@@ -22,7 +21,7 @@ const StyledCarousel = styled(Carousel)({
 const HeroSection = ({ images }: { images: CarouselEl[] }) => {
   return (
     <StyledCarousel autoplay fade>
-      {images.map((el) => (
+      {images.map((el, i) => (
         <img
           key={i}
           src={`${baseS3Url}/${el.lg}`}
