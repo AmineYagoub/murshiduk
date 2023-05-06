@@ -37,6 +37,7 @@ const nextConfig = {
   nx: {
     svgr: false,
   },
+  output: 'standalone',
 };
 
 module.exports = withPWA(withNx(nextConfig));
