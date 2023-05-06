@@ -24,7 +24,7 @@ const itemJsonLd = (data: Service, siteTitle: string) => {
       "@type": "Service",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "${baseUrl}/our-travels/${data.slug}"
+        "@id": "${baseUrl}/our-programs/${data.slug}"
       },
       "headline": "${data.title}",
       "description": "${data.description}",
@@ -56,7 +56,7 @@ const itemJsonLd = (data: Service, siteTitle: string) => {
   };
 };
 
-const TravelPage = () => {
+const ProgramPage = () => {
   const { data } = useService();
   const { data: appData } = useApp();
   return appData && data ? (
@@ -105,16 +105,16 @@ const TravelPage = () => {
 };
 
 export async function getServerSideProps({ req, query }) {
-  const slug = String(query?.slug);
-  if (!slug) {
+  const serviceSlug = String(query?.slug);
+  if (!serviceSlug) {
     return {
       notFound: true,
     };
   }
   try {
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery(['getTravel', slug], () =>
-      fetchService(slug)
+    await queryClient.prefetchQuery(['getProgram', serviceSlug], () =>
+      fetchService(serviceSlug)
     );
     await queryClient.prefetchQuery({
       queryKey: ['getApp'],
@@ -132,7 +132,7 @@ export async function getServerSideProps({ req, query }) {
   }
 }
 
-TravelPage.getLayout = (page: EmotionJSX.Element) => (
+ProgramPage.getLayout = (page: EmotionJSX.Element) => (
   <BlogLayout>{page}</BlogLayout>
 );
-export default withAuth(TravelPage, true);
+export default withAuth(ProgramPage, true);

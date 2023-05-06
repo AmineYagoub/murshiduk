@@ -5,7 +5,7 @@
   "scripts": {
     "pwa": "pwa-asset-generator apps/ui/public/img/logo.svg ./apps/ui/public/pwa -i ./apps/ui/public/index.html -m ./apps/ui/public/site.webmanifest -b 'linear-gradient(to right, #122639 0%, #122639 100%)' --xhtml --favicon",
     "ui": "rimraf apps/ui/.next && nx run ui:serve --port 8080",
-    "ui:build": "rimraf apps/ui/.next && nx run ui:build",
+    "ui:build": "rimraf dist/apps/ui && nx run ui:build:production",
     "api": "nx run gateway:serve",
     "api:dev": "(cd apps/gateway/ && npx prisma migrate dev)",
     "api:show": "(cd apps/gateway/ && npx prisma studio)",
@@ -46,7 +46,7 @@
     "isomorphic-dompurify": "^0.26.0",
     "jodit": "^3.24.4",
     "ky-universal": "^0.11.0",
-    "minio": "^7.0.32",
+    "minio": "^0.2.9",
     "multiparty": "^4.2.3",
     "next": "13.1.2",
     "next-pwa": "^5.6.0",
@@ -55,11 +55,11 @@
     "passport-jwt": "^4.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-multi-carousel": "^2.8.2",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "0.13.7",
     "rxjs": "^7.0.0",
     "stylis-plugin-rtl": "^2.1.1",
+    "swiper": "^9.2.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

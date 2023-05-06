@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { TestimonialAnimation } from '@/utils/animation/Testimonial';
+import { alternateRefs } from 'next-sitemap.config';
 
 const StyledSection = styled('section')({
   position: 'relative',
@@ -34,24 +35,19 @@ const StyledSection = styled('section')({
 const testimonialImages = [
   {
     title: 'الدوسري',
-    src: '/img/our-clients/client-2.png',
+    src: '/img/our-clients/ali.jpeg',
   },
   {
     title: 'عبد المنعم الجليح',
-    src: '/img/our-clients/client-3.png',
+    src: '/img/our-clients/julaih.jpeg',
   },
   {
     title: 'خالد',
-    src: '/img/our-clients/client-4.png',
+    src: '/img/our-clients/khalid.jpeg',
   },
 ];
 
-const TestimonialsSlider = ({ images }: { images: string[] }) => {
-  if (images.length < 3) {
-    images.push(
-      ...['/img/amasya.webp', '/img/antalya.webp', '/img/istanbul.webp']
-    );
-  }
+const TestimonialsSlider = () => {
   useEffect(() => {
     const anime = new TestimonialAnimation();
     anime.initAnimation();
@@ -116,9 +112,9 @@ const TestimonialsSlider = ({ images }: { images: string[] }) => {
         </div>
 
         <div className="testimonial__bg">
-          {images.slice(0, 3).map((el, i) => (
+          {testimonialImages.map((el, i) => (
             <div
-              key={el}
+              key={i}
               className={`testimonial__bg__image ${
                 i <= 0
                   ? 'previous--image'
@@ -128,11 +124,11 @@ const TestimonialsSlider = ({ images }: { images: string[] }) => {
               }`}
             >
               <Image
-                src={el}
+                src={el.src}
                 width={1600}
                 height={1100}
                 sizes="100vw"
-                alt="رحلة إلى الشمال التركي"
+                alt={el.title}
               />
             </div>
           ))}

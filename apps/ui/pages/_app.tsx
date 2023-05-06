@@ -3,19 +3,21 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import '../public/global.css';
 import 'antd/dist/reset.css';
-import 'react-multi-carousel/lib/styles.css';
+import Head from 'next/head';
+import '../public/global.css';
 import theme from '@/config/Theme';
 import { AppProps } from 'next/app';
 import ar from 'antd/lib/locale/ar_EG';
 import { NextComponentType } from 'next';
-import { ReactElement, useEffect, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
+import { ReactElement, useEffect, useState } from 'react';
 import { ConfigProvider, notification, Spin } from 'antd';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import CreateEmotionCache from '@/config/CreateEmotionCache';
-import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { GTM_ID, pageView } from '../utils';
+import Script from 'next/script';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 Spin.setDefaultIndicator(<Spin indicator={antIcon} />);
@@ -31,6 +33,7 @@ interface MyAppProps extends AppProps {
 export default function CustomApp(props: MyAppProps) {
   const [queryClient] = useState(() => new QueryClient());
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const router = useRouter();
 
   useEffect(() => {
     notification.config({
@@ -39,6 +42,13 @@ export default function CustomApp(props: MyAppProps) {
       rtl: true,
     });
   }, []);
+
+  useEffect(() => {
+    router.events.on('routeChangeComplete', pageView);
+    return () => {
+      router.events.off('routeChangeComplete', pageView);
+    };
+  }, [router.events]);
 
   return (
     <>
@@ -49,6 +59,19 @@ export default function CustomApp(props: MyAppProps) {
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <ConfigProvider locale={ar} direction="rtl" theme={theme}>
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
+                strategy="afterInteractive"
+              />
+              <Script id="google-analytics" strategy="afterInteractive">
+                {`
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){window.dataLayer.push(arguments);}
+                  gtag('js', new Date());
+
+                  gtag('config', ${GTM_ID});
+              `}
+              </Script>
               <Component {...pageProps} />
             </ConfigProvider>
           </Hydrate>

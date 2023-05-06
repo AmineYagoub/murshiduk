@@ -4,33 +4,13 @@ import Image from 'next/image';
 import isMobile from 'is-mobile';
 import { Button, Card } from 'antd';
 import styled from '@emotion/styled';
-import Carousel from 'react-multi-carousel';
-import { useBlogs } from '@/hooks/blog/query.hook';
 import { getFirstImageFromContent } from '@/utils/index';
-
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1400 },
-    items: 5,
-    slidesToSlide: 5,
-  },
-  laptop: {
-    breakpoint: { max: 1400, min: 1024 },
-    items: 3,
-    slidesToSlide: 3,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-    slidesToSlide: 1,
-  },
-};
 
 const StyledSection = styled('section')({
   textAlign: 'center',
   backgroundColor: '#122639',
   color: '#f3b91d',
-  padding: 50,
+  padding: 10,
   backgroundImage: "url('/img/waves-background.svg')",
   backgroundSize: 'cover',
   h3: {
@@ -44,69 +24,74 @@ const StyledSection = styled('section')({
   },
   img: {
     blockSize: '200px !important',
+    objectPosition: 'bottom',
+  },
+  '.latest-blogs': {
+    maxWidth: 350,
+    margin: '0 auto',
   },
 });
 
-const LatestBlogsSection = () => {
-  const { data } = useBlogs();
-
+const LatestBlogsSection = ({ data }) => {
   return (
     <StyledSection>
       <h3>قم بزيارة المدونة لتحصل على لمحة عما يمكنك تجربته</h3>
       <h4>آخر التدوينات</h4>
-      <Carousel
-        infinite
-        responsive={responsive}
-        partialVisible
-        slidesToSlide={1}
-        deviceType={
-          isMobile()
-            ? 'mobile'
-            : isMobile({ tablet: true })
-            ? 'tablet'
-            : 'desktop'
-        }
+      <swiper-container
+        className={isMobile() ? 'latest-blogs' : ''}
+        navigation
+        space-between="1"
+        slides-per-view={isMobile() ? '1' : screen.width <= 1366 ? '3' : '5'}
+        free-mode="true"
+        grab-cursor="true"
+        centered-slides="true"
+        centered-slides-bounds="true"
+        round-lengths="true"
       >
         {data.map((el) => (
-          <Card
-            key={el.id}
-            style={{ maxWidth: 350, height: 400 }}
-            cover={
-              <Image
-                alt={el.title}
-                src={
-                  getFirstImageFromContent(el.content) || '/img/no-image.svg'
-                }
-                width={350}
-                height={350}
-              />
-            }
-          >
-            <Card.Meta
-              title={el.title}
-              description={`${el.descriptionMeta.slice(0, 100)} ... `}
-            />
-            <Link
-              href={`/blog/${el.slug}`}
-              rel="noopener noreferrer"
-              target="_blank"
+          <swiper-slide key={el.id}>
+            <Card
+              style={{ width: 350, height: 400 }}
+              cover={
+                <Image
+                  alt={el.title}
+                  src={
+                    getFirstImageFromContent(el.content) || '/img/no-image.svg'
+                  }
+                  width={350}
+                  height={350}
+                  loader={() =>
+                    getFirstImageFromContent(el.content) || '/img/no-image.svg'
+                  }
+                />
+              }
             >
-              <Button
-                type="primary"
-                style={{
-                  padding: '0 1.5em',
-                  position: 'absolute',
-                  bottom: 20,
-                  left: '50%',
-                  transform: 'translate(-50%, 0)',
-                }}
+              <Card.Meta
+                title={el.title}
+                description={`${el.descriptionMeta.slice(0, 100)} ... `}
+              />
+              <Link
+                href={`/blog/${el.slug}`}
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                طالع أكثر
-              </Button>
-            </Link>
-          </Card>
+                <Button
+                  type="primary"
+                  style={{
+                    padding: '0 1.5em',
+                    position: 'absolute',
+                    bottom: 20,
+                    left: '50%',
+                    transform: 'translate(-50%, 0)',
+                  }}
+                >
+                  طالع أكثر
+                </Button>
+              </Link>
+            </Card>
+          </swiper-slide>
         ))}
-      </Carousel>
+      </swiper-container>
     </StyledSection>
   );
 };

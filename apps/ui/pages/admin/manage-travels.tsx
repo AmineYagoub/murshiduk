@@ -1,22 +1,22 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { Space, Table } from 'antd';
-import { Service } from '@/utils/types';
+import { Service, ServiceType } from '@/utils/types';
 import type { ColumnsType } from 'antd/es/table';
 import { fetchApp } from '@/hooks/app/query.hook';
 import { withAuth } from '@/components/auth/withAuth';
 import DashboardLayout from '@/layout/DashboardLayout';
 import { useServices } from '@/hooks/ourService/query.hook';
-import NewService from '@/components/ourServices/NewService';
-import EditService from '@/components/ourServices/EditService';
+import NewService from '@/components/services/NewService';
+import EditService from '@/components/services/EditService';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import DeleteService from '@/components/ourServices/DeleteService';
+import DeleteService from '@/components/services/DeleteService';
 import { baseS3Url, formatDate, getTitleMeta } from '@/utils/index';
-import PreviewOurService from '@/components/ourServices/PreviewOurService';
+import PreviewOurService from '@/components/services/PreviewOurService';
 
 const AdminManageTravels = () => {
-  const { methods, data, isLoading } = useServices('TRAVEL');
+  const { methods, data, isLoading } = useServices(ServiceType.TRAVEL);
   const columns: ColumnsType<Service> = [
     {
       title: 'الصورة',
@@ -25,7 +25,8 @@ const AdminManageTravels = () => {
       render: (url) => (
         <Image
           src={`${baseS3Url}/${url}`}
-          alt="service"
+          loader={() => `${baseS3Url}/${url}`}
+          alt="travel"
           width={50}
           height={50}
         />
@@ -66,7 +67,7 @@ const AdminManageTravels = () => {
       <Head>
         <title>{getTitleMeta('لوحة التحكم', 'إدارة الرحلات')}</title>
       </Head>
-      <NewService type="TRAVEL" />
+      <NewService type={ServiceType.TRAVEL} />
       <Table
         columns={columns}
         dataSource={data}

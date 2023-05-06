@@ -1,7 +1,8 @@
 export enum AppRoutes {
   Home = '/',
-  Services = '/products/our-service',
-  Programs = '/products/our-programs',
+  Services = '/our-services',
+  Programs = '/our-programs',
+  Travels = '/our-travels',
   About = '/community/about',
   Contact = '/community/contact',
   Terms = '/community/terms',
@@ -14,6 +15,7 @@ export enum AppRoutes {
 
   AdminManageDashboard = '/admin/dashboard',
   AdminManageServices = '/admin/manage-services',
+  AdminManagePrograms = '/admin/manage-programs',
   AdminManageTravels = '/admin/manage-travels',
   AdminManageOrders = '/admin/manage-orders',
   AdminManageCategories = '/admin/manage-categories',

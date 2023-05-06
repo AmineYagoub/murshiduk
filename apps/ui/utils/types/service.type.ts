@@ -29,7 +29,11 @@ export const ServiceFields: { [P in ServiceDataIndex]: P } = {
   updated: 'updated',
 };
 
-export type ServiceType = 'SERVICE' | 'TRAVEL';
+export enum ServiceType {
+  SERVICE = 'SERVICE',
+  TRAVEL = 'TRAVEL',
+  PROGRAM = 'PROGRAM',
+}
 
 export type WhereServiceParams = {
   type: ServiceType;

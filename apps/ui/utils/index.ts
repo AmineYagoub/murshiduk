@@ -5,8 +5,9 @@ export * from './Logger';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ar';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { User } from './types';
+import { Service, ServiceType, User } from './types';
 import facepaint from 'facepaint';
+import { AppRoutes } from './AppRoutes';
 
 dayjs.extend(relativeTime);
 dayjs.locale('ar');
@@ -21,8 +22,6 @@ export const mq = facepaint([
 
 export const api = ky.create({
   prefixUrl: config.API_URL,
-  credentials: 'include',
-  mode: 'cors',
   headers: {
     'content-type': 'application/json',
   },
@@ -78,6 +77,23 @@ export const extractTwitterUserName = (url?: string) => {
   if (!url) return null;
   const match = url.match(/^https?:\/\/(www\.)?twitter.com\/@?(?<handle>\w+)/);
   return match?.groups?.handle ? `@${match.groups.handle}` : null;
+};
+
+export const getServiceLink = (service: Service) =>
+  service.type === ServiceType.SERVICE
+    ? `${AppRoutes.Services}/${service.slug}`
+    : service.type === ServiceType.TRAVEL
+    ? `${AppRoutes.Travels}/${service.slug}`
+    : `${AppRoutes.Programs}/${service.slug}`;
+
+export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID;
+
+export const pageView = (url: string) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'pageview',
+    page: url,
+  });
 };
 
 export const baseUrl = 'https://murshiduk.com';

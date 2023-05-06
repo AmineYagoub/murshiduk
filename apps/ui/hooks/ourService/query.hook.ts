@@ -1,46 +1,45 @@
-import { useQuery } from '@tanstack/react-query';
-import { api } from '@/utils/index';
-import { useEffect, useState } from 'react';
 import type {
   ColumnType,
-  FilterConfirmProps,
   FilterValue,
   SorterResult,
+  FilterConfirmProps,
 } from 'antd/es/table/interface';
-import { TableProps } from 'antd/es/table';
-import { useRouter } from 'next/router';
 import {
   Service,
-  ServiceDataIndex,
-  ServiceFields,
-  ServicePaginationDto,
-  ServiceResponse,
-  OrderServiceByParams,
-  OrderByType,
   Pagination,
-  WhereServiceParams,
+  OrderByType,
   ServiceType,
+  ServiceFields,
+  ServiceResponse,
+  ServiceDataIndex,
+  WhereServiceParams,
+  ServicePaginationDto,
+  OrderServiceByParams,
 } from '@/utils/types';
+import { api } from '@/utils/index';
+import { useRouter } from 'next/router';
+import { TableProps } from 'antd/es/table';
+import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 const fetchServices = async (
   params: ServicePaginationDto
 ): Promise<ServiceResponse> => {
   const { take, skip, orderBy, where } = params;
-  const path = where.type === 'SERVICE' ? 'filter-service' : 'filter-travel';
   const query = new URLSearchParams({ take: String(take), skip: String(skip) });
   for (const [key, val] of Object.entries({ ...where, ...orderBy })) {
     if (val) {
       query.append(key, val);
     }
   }
-  return await api.get(`our-services/${path}?${query.toString()}`).json();
+  return await api.get(`our-services?${query.toString()}`).json();
 };
 
 const fetchService = async (slug: string): Promise<Service> => {
   return await api.get(`our-services/slug/${slug}`).json();
 };
 
-const useServices = (type: ServiceType = 'SERVICE') => {
+const useServices = (type?: ServiceType) => {
   const router = useRouter();
   const { query } = router;
   const [pagination, setPagination] = useState<Pagination>({
@@ -168,12 +167,6 @@ const useServices = (type: ServiceType = 'SERVICE') => {
         orderBy,
       }),
   });
-
-  useEffect(() => {
-    if (data) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [data]);
 
   const methods = {
     handleReset,

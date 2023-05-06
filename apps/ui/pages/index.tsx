@@ -5,37 +5,42 @@ import {
   extractTwitterUserName,
 } from '../utils';
 import Head from 'next/head';
+import { useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import HomeLayout from '@/layout/HomeLayout';
+import { register } from 'swiper/element/bundle';
 import { App, ServiceType } from '@/utils/types';
 import { withAuth } from '@/components/auth/withAuth';
-import OurTravels from '@/components/home/OurTravels';
 import HeroSection from '@/components/home/HeroSection';
-import OurServices from '@/components/home/OurServices';
 import WhyUsSection from '@/components/home/WhyUsSection';
 import { fetchApp, useApp } from '@/hooks/app/query.hook';
-import { fetchServices } from '@/hooks/ourService/query.hook';
 import AboutUsSection from '@/components/home/AboutUsSection';
 import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
-import LatestBlogsSection from '@/components/home/LatestBlogsSection';
+import { fetchServices, useServices } from '@/hooks/ourService/query.hook';
+import { useBlogs } from '@/hooks/blog/query.hook';
 
 const TestimonialsSlider = dynamic(
   () => import('@/components/home/TestimonialsSlider'),
   { ssr: false }
 );
-
-const getPaginationParams = (type: ServiceType) => {
-  return {
-    take: 20,
-    skip: 0,
-    where: { type },
-  };
-};
+const GridCarousel = dynamic(
+  () => import('@/components/carousel/GridCarousel'),
+  {
+    ssr: false,
+  }
+);
+const LatestBlogsSection = dynamic(
+  () => import('@/components/home/LatestBlogsSection'),
+  {
+    ssr: false,
+  }
+);
 
 const itemJsonLd = (data: App) => {
   return {
-    __html: `
+    __html: data
+      ? `
     {
       "@context": "https://schema.org/",
       "@type": "TravelAgency",
@@ -139,42 +144,43 @@ const itemJsonLd = (data: App) => {
           }
         }
       ]
-    }`,
+    }`
+      : '',
   };
 };
 
-const images = ['/img/istanbul.webp', '/img/cappadocia.webp'];
-
 const Home = () => {
   const { data } = useApp();
-  const carouselImages =
-    data.carousel.length > 0
-      ? data.carousel.map((el) => `${baseS3Url}/${el}`)
-      : images;
+  const { data: services } = useServices();
+  const { data: blogs } = useBlogs();
+
+  useEffect(() => {
+    register();
+  }, []);
   return (
     <>
       <Head>
-        <title>{getTitleMeta(data.title)}</title>
-        <meta name="description" content={data.description} />
+        <title>{getTitleMeta(data?.title)}</title>
+        <meta name="description" content={data?.description} />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:url" content={baseUrl} />
-        <meta name="twitter:title" content={data.title} />
-        <meta name="twitter:description" content={data.description} />
+        <meta name="twitter:title" content={data?.title} />
+        <meta name="twitter:description" content={data?.description} />
         <meta name="twitter:domain" content={baseUrl} />
 
         <meta
           name="twitter:creator"
-          content={extractTwitterUserName(data.twitterUrl)}
+          content={extractTwitterUserName(data?.twitterUrl)}
         />
         <meta
           name="twitter:site"
-          content={extractTwitterUserName(data.twitterUrl)}
+          content={extractTwitterUserName(data?.twitterUrl)}
         />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="ar_SA" />
-        <meta property="og:title" content={data.title} />
-        <meta property="og:description" content={data.description} />
-        <meta property="og:site_name" content={data.title} />
+        <meta property="og:title" content={data?.title} />
+        <meta property="og:description" content={data?.description} />
+        <meta property="og:site_name" content={data?.title} />
         <meta property="og:url" content={baseUrl} />
         <script
           type="application/ld+json"
@@ -182,14 +188,29 @@ const Home = () => {
           key="jsonld"
         />
       </Head>
-      <HeroSection images={data.carousel} />
+      <HeroSection images={data?.carousel} />
 
-      <AboutUsSection bio={data.bio} />
-      <WhyUsSection content={data.whyUsContent} />
-      <OurServices />
-      <OurTravels />
-      <LatestBlogsSection />
-      <TestimonialsSlider images={carouselImages} />
+      <AboutUsSection bio={data?.bio} />
+      <WhyUsSection content={data?.whyUsContent} />
+      <GridCarousel
+        data={services.filter((el) => el.type === ServiceType.SERVICE)}
+        title="خدماتنا"
+        description="خدمات سياحية و مميزات متكاملة"
+      />
+      <GridCarousel
+        data={services.filter((el) => el.type === ServiceType.TRAVEL)}
+        title="رحلاتنا السياحية"
+        description="رحلات سياحية بأسعار مناسبة وخدمات خمس نجوم"
+      />
+
+      <GridCarousel
+        data={services.filter((el) => el.type === ServiceType.PROGRAM)}
+        title="برامجنا السياحية"
+        description="نتكفل بكافة الإجراءات والترتيبات الخاصة ببرنامجك السياحي"
+      />
+
+      <LatestBlogsSection data={blogs} />
+      <TestimonialsSlider />
     </>
   );
 };
@@ -199,8 +220,6 @@ Home.getLayout = (page: EmotionJSX.Element) => <HomeLayout>{page}</HomeLayout>;
 export default withAuth(Home, true);
 
 export async function getServerSideProps() {
-  const serviceType: ServiceType = 'SERVICE';
-  const travelType: ServiceType = 'TRAVEL';
   try {
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery({
@@ -208,13 +227,14 @@ export async function getServerSideProps() {
       queryFn: () => fetchApp(),
     });
     await queryClient.prefetchQuery({
-      queryKey: [serviceType, getPaginationParams(serviceType)],
-      queryFn: () => fetchServices(getPaginationParams(serviceType)),
+      queryKey: ['getServices'],
+      queryFn: () =>
+        fetchServices({
+          take: 50,
+          skip: 0,
+        }),
     });
-    await queryClient.prefetchQuery({
-      queryKey: [travelType, getPaginationParams(travelType)],
-      queryFn: () => fetchServices(getPaginationParams(travelType)),
-    });
+
     return {
       props: {
         dehydratedState: dehydrate(queryClient),

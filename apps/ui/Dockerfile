@@ -4,7 +4,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npx nx build ui --optimization && npx nx run ui:postbuild
+RUN npm run ui:build && npx nx run ui:postbuild
 
 
 # Production image, copy all the files and run next
@@ -19,7 +19,10 @@ RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
 COPY --from=builder --chown=nextjs:nodejs /app/dist/apps/ui ./
-RUN npm pkg set dependencies.sharp="latest" && npm pkg set dependencies.ky="latest" && npm install
+COPY --from=builder --chown=nextjs:nodejs /app/apps/ui/.next ./.next
+COPY apps/ui/package.json /app/package.json
+# RUN npm pkg set dependencies.sharp="latest" && npm pkg set dependencies.ky="latest" && npm install && npm cache clean --force
+RUN npm install && npm cache clean --force
 
 USER nextjs
 

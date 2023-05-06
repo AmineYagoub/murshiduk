@@ -6,7 +6,6 @@ import {
   extractTwitterUserName,
 } from '@/utils/index';
 import Head from 'next/head';
-import { Card } from 'antd';
 import styled from '@emotion/styled';
 import { Service } from '@/utils/types';
 import BlogLayout from '@/layout/BlogLayout';
@@ -25,7 +24,7 @@ const itemJsonLd = (data: Service, siteTitle: string) => {
       "@type": "Service",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "${baseUrl}/our-service/${data.slug}"
+        "@id": "${baseUrl}/our-services/${data.slug}"
       },
       "headline": "${data.title}",
       "description": "${data.description}",
@@ -93,24 +92,6 @@ export const StyledArticle = styled('article')({
   },
   '.travel__blog-card': {
     backgroundColor: 'rgba(31,41,55) !important',
-  },
-});
-
-export const StyledCard = styled(Card)({
-  background: 'linear-gradient(#2b2346, #232135)',
-  position: 'sticky',
-  top: 65,
-  div: {
-    color: '#fff !important',
-  },
-  h5: {
-    fontSize: '0.9rem',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    margin: '2em auto',
-  },
-  '.ant-card-meta-description': {
-    fontSize: 12,
   },
 });
 

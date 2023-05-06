@@ -10,7 +10,7 @@ import { PrismaService } from './prisma.service';
 import { ContactModule } from '../contact/contact.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JWTAuthGuard } from '../guards/auth.guard';
-import { OurServiceModule } from '../ourService/ourService.module';
+import { OurServiceModule } from '../services/ourService.module';
 
 @Module({
   imports: [

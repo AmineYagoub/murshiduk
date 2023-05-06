@@ -65,6 +65,7 @@ const TimeLineSection = ({ bio }: { bio: Bio[] }) => {
             <Col md={10} xs={24}>
               <figure className="section__figure">
                 <Image
+                  loader={() => `${baseS3Url}/${el.image}`}
                   src={`${baseS3Url}/${el.image}`}
                   width={550}
                   height={700}

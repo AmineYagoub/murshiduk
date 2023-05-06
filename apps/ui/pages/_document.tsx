@@ -1,6 +1,7 @@
 import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import CreateEmotionCache from '@/config/CreateEmotionCache';
+import { GTM_ID } from '../utils';
 
 export default class MyDocument extends Document {
   render() {
@@ -196,10 +197,23 @@ export default class MyDocument extends Document {
             media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
           />
 
+          <meta
+            name="google-site-verification"
+            content="4FfvhoRXPotzFK80e4jgDxQGrzedrPlsTwgt8DmNzL0"
+          />
+
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
         </Head>
         <body>
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
           <Main />
           <NextScript />
         </body>
