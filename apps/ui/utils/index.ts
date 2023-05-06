@@ -86,7 +86,7 @@ export const getServiceLink = (service: Service) =>
     ? `${AppRoutes.Travels}/${service.slug}`
     : `${AppRoutes.Programs}/${service.slug}`;
 
-export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID;
+export const GTM_ID = 'G-075S5QQ5Y0';
 
 export const pageView = (url: string) => {
   window.dataLayer = window.dataLayer || [];
