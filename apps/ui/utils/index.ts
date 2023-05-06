@@ -86,5 +86,15 @@ export const getServiceLink = (service: Service) =>
     ? `${AppRoutes.Travels}/${service.slug}`
     : `${AppRoutes.Programs}/${service.slug}`;
 
+export const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID;
+
+export const pageView = (url: string) => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'pageview',
+    page: url,
+  });
+};
+
 export const baseUrl = 'https://murshiduk.com';
 export const baseS3Url = 'https://s3.murshiduk.com';
