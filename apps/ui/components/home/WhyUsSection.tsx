@@ -10,7 +10,7 @@ export const StyledSection = styled('section')(
     backgroundSize: ['cover', 'cover', 'contain'],
     position: 'relative',
     width: '100%',
-    height: '125vh',
+    height: '80vh',
     textAlign: 'center',
     padding: ['1.5em', '1.5em', '3em'],
     maxHeight: ['', '', 800],
