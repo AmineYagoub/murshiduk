@@ -10,13 +10,15 @@
       "defaultConfiguration": "production",
       "options": {
         "root": "apps/ui",
-        "outputPath": "dist/apps/ui"
+        "outputPath": "../../dist/apps/ui"
       },
       "configurations": {
         "development": {
-          "outputPath": "apps/ui"
+          "outputPath": "../../dist/apps/ui"
         },
-        "production": {}
+        "production": {
+          "outputPath": "../../dist/apps/ui"
+        }
       }
     },
     "postbuild": {
