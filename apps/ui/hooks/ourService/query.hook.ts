@@ -39,12 +39,12 @@ const fetchService = async (slug: string): Promise<Service> => {
   return await api.get(`our-services/slug/${slug}`).json();
 };
 
-const useServices = (type?: ServiceType) => {
+const useServices = (limit = 10, type?: ServiceType) => {
   const router = useRouter();
   const { query } = router;
   const [pagination, setPagination] = useState<Pagination>({
     offset: (Number(query?.page) - 1) * Number(query?.pageSize) || 0,
-    limit: Number(query?.pageSize) || 10,
+    limit: Number(query?.pageSize) || limit,
     total: 0,
     hasNextPage: false,
     hasPrevPage: false,

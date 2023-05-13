@@ -10,21 +10,13 @@
       "defaultConfiguration": "production",
       "options": {
         "root": "apps/ui",
-        "outputPath": "../../dist/apps/ui"
+        "outputPath": "dist/apps/ui"
       },
       "configurations": {
         "development": {
-          "outputPath": "../../dist/apps/ui"
+          "outputPath": "apps/ui"
         },
-        "production": {
-          "outputPath": "../../dist/apps/ui"
-        }
-      }
-    },
-    "postbuild": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "next-sitemap --config apps/ui/next-sitemap.config.js"
+        "production": {}
       }
     },
     "serve": {

@@ -16,7 +16,7 @@ import { baseS3Url, formatDate, getTitleMeta } from '@/utils/index';
 import PreviewOurService from '@/components/services/PreviewOurService';
 
 const AdminManageServices = () => {
-  const { methods, data, isLoading } = useServices(ServiceType.SERVICE);
+  const { methods, data, isLoading } = useServices(10, ServiceType.SERVICE);
   const columns: ColumnsType<Service> = [
     {
       title: 'الصورة',

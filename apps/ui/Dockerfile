@@ -4,7 +4,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm run ui:build && npx nx run ui:postbuild
+RUN npm run ui:build
 
 
 # Production image, copy all the files and run next

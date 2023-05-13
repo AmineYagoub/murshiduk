@@ -151,7 +151,7 @@ const itemJsonLd = (data: App) => {
 
 const Home = () => {
   const { data } = useApp();
-  const { data: services } = useServices();
+  const { data: services } = useServices(50);
   const { data: blogs } = useBlogs();
 
   useEffect(() => {
