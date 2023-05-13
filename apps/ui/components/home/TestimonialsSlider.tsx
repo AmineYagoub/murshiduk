@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { TestimonialAnimation } from '@/utils/animation/Testimonial';
-import { alternateRefs } from 'next-sitemap.config';
 
 const StyledSection = styled('section')({
   position: 'relative',
