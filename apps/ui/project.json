@@ -21,12 +21,6 @@
         }
       }
     },
-    "postbuild": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "next-sitemap --config apps/ui/next-sitemap.config.js"
-      }
-    },
     "serve": {
       "executor": "@nrwl/next:server",
       "defaultConfiguration": "development",
