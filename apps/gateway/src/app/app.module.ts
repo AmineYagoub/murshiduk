@@ -11,10 +11,12 @@ import { ContactModule } from '../contact/contact.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JWTAuthGuard } from '../guards/auth.guard';
 import { OurServiceModule } from '../services/ourService.module';
+import { ReviewsModule } from '../review/review.module';
 
 @Module({
   imports: [
     BlogModule,
+    ReviewsModule,
     AuthModule,
     RoleModule,
     ContactModule,

@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import { TestimonialAnimation } from '@/utils/animation/Testimonial';
+import Link from 'next/link';
+import { AppRoutes } from '@/utils/AppRoutes';
 
 const StyledSection = styled('section')({
   position: 'relative',
@@ -28,6 +30,21 @@ const StyledSection = styled('section')({
   },
   strong: {
     display: 'inline-block',
+  },
+  button: {
+    backgroundImage: 'linear-gradient(to top, #f3b91d 0%, #eadaaf 100%)',
+    border: 'none',
+    color: '#122639',
+  },
+});
+
+const StyledAction = styled('section')({
+  textAlign: 'center',
+  position: 'absolute',
+  padding: '0.5em 0 !important',
+  bottom: 0,
+  button: {
+    padding: '0 2em !important',
   },
 });
 
@@ -132,6 +149,17 @@ const TestimonialsSlider = () => {
             </div>
           ))}
         </div>
+        <StyledAction>
+          <Link
+            href={AppRoutes.Reviews}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <Button type="ghost" size="middle">
+              قراءة كل الآراء
+            </Button>
+          </Link>
+        </StyledAction>
       </StyledSection>
     </>
   );

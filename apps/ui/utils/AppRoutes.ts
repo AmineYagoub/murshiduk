@@ -5,6 +5,7 @@ export enum AppRoutes {
   Travels = '/our-travels',
   About = '/community/about',
   Contact = '/community/contact',
+  Reviews = '/community/reviews',
   Terms = '/community/terms',
   Privacy = '/community/privacy',
   Blog = '/blog',

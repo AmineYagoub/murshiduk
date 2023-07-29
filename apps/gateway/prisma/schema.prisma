@@ -171,3 +171,14 @@ model Service {
   created               DateTime        @default(now())
   updated               DateTime        @updatedAt
 }
+
+model Reviews {
+  id                    String     @id @default(uuid())
+  name                  String
+  email                 String
+  rate                  String
+  country               String?
+  details               String?    @db.Text
+  published             Boolean?   @default(true)
+  created               DateTime   @default(now())
+}
