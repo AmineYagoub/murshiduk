@@ -34,6 +34,7 @@ main {
   height: 110vh;
   overflow: hidden;
   padding-top: 15px;
+  margin: 0 auto;
 }
 
 .oh {
