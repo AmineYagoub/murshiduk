@@ -72,7 +72,7 @@ export function ReviewsPage() {
                   <div
                     key={el}
                     className={`intro-grid__img pos-${el}`}
-                    style={{ display: r ? 'block' : 'none' }}
+                    style={{ display: r ? 'grid' : 'none', maxHeight: 100 }}
                   >
                     <Avatar
                       onClick={() => setReview(r)}
