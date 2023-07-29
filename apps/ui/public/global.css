@@ -27,7 +27,7 @@ html {
 }
 :root {
   --card-width: 300px;
-  --card-height: 140px;
+  --card-height: 130px;
   --card-transition-duration: 800ms;
   --card-transition-easing: ease;
   --swiper-navigation-color: #f3b91d;
@@ -298,7 +298,7 @@ swiper-slide {
 @media only screen and (min-width: 800px) {
   :root {
     --card-width: 600px;
-    --card-height: 240px;
+    --card-height: 230px;
   }
 }
 @media only screen and (max-width: 630px) {

@@ -55,7 +55,7 @@ export default function CustomApp(props: MyAppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <Script
+      {/*       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
         strategy="afterInteractive"
       />
@@ -67,7 +67,7 @@ export default function CustomApp(props: MyAppProps) {
 
           gtag('config', ${GTM_ID});
         `}
-      </Script>
+      </Script> */}
       <CacheProvider value={emotionCache}>
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
