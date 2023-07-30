@@ -211,7 +211,7 @@ const Home = () => {
       />
 
       <LatestBlogsSection data={blogs} />
-      <AddReview />
+      <AddReview isHomePage />
       <TestimonialsSlider />
     </>
   );

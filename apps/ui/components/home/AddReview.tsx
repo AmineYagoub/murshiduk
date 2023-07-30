@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Rate, message, Row, Col } from 'antd';
+import { useState } from 'react';
+import { Button, Form, Input, Rate, message, Row, Col } from 'antd';
 import { useCreateReview } from '@/hooks/review/mutation.hook';
 import { ReviewCreateInput } from '@/utils/types';
 import { useQueryClient } from '@tanstack/react-query';
-import { StyledSection } from './AboutUsSection';
 import styled from '@emotion/styled';
-import { Bio } from '@/utils/types';
-import { AppRoutes, baseS3Url, mq } from '@/utils/index';
+import { AppRoutes, mq } from '@/utils/index';
+import Link from 'next/link';
+import { SaveOutlined } from '@ant-design/icons';
+import isMobile from 'is-mobile';
 
 export const StyledRow = styled(Row)(
   mq({
@@ -46,11 +47,10 @@ const validateMessages = {
 const desc = ['فظيع', 'سيئ', 'عادي', 'جيد', 'رائع'];
 const key = 'updatable';
 
-const AddReview = () => {
-  const [open, setOpen] = useState(false);
+const AddReview = ({ isHomePage = false }: { isHomePage?: boolean }) => {
   const [rate, setRate] = useState(0);
   const [form] = Form.useForm();
-  const { mutateAsync, isLoading } = useCreateReview();
+  const { mutateAsync } = useCreateReview();
   const queryClient = useQueryClient();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -69,33 +69,34 @@ const AddReview = () => {
         details: user.details,
       });
       if (res.ok) {
-        setOpen(false);
+        messageApi.open({
+          key,
+          type: 'success',
+          content: 'تم الحفظ شكرا لك!',
+          duration: 2,
+        });
+        form.resetFields();
       }
     } catch (error) {
       console.error(error);
     } finally {
-      messageApi.open({
-        key,
-        type: 'success',
-        content: 'تم الحفظ شكرا لك!',
-        duration: 2,
-      });
       queryClient.invalidateQueries();
-      form.resetFields();
     }
   };
 
   return (
     <StyledRow gutter={8} justify="center" align="middle">
-      <Col
-        xs={24}
-        sm={24}
-        md={10}
-        style={{ textAlign: 'center' }}
-        id="add-review"
-      >
-        <h3>كيف كان أداؤنا؟</h3>
-      </Col>
+      {isHomePage && (
+        <Col
+          xs={24}
+          sm={24}
+          md={10}
+          style={{ textAlign: 'center' }}
+          id="add-review"
+        >
+          <h3>كيف كان أداؤنا؟</h3>
+        </Col>
+      )}
       <Col xs={24} sm={24} md={10}>
         <Form
           {...layout}
@@ -131,10 +132,27 @@ const AddReview = () => {
             <Input.TextArea rows={5} />
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
+          <Form.Item wrapperCol={isMobile() ? {} : { offset: 8, span: 16 }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              icon={<SaveOutlined />}
+              style={{ marginLeft: 5 }}
+            >
               أرسل
             </Button>
+            {isHomePage && (
+              <Link
+                href={AppRoutes.Reviews}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <Button type="primary" size="large" ghost>
+                  قراءة كل الآراء
+                </Button>
+              </Link>
+            )}
             {contextHolder}
           </Form.Item>
         </Form>

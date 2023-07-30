@@ -11,6 +11,7 @@ import { useReviews } from '@/hooks/review/query.hook';
 import { LikeOutlined } from '@ant-design/icons';
 import { List, Space } from 'antd';
 import { useUpdateLikes } from '@/hooks/review/mutation.hook';
+import AddReview from '@/components/home/AddReview';
 
 const field = 'privacy';
 
@@ -70,6 +71,7 @@ export function ReviewsPage() {
           pageSize: 50,
         }}
         dataSource={reviewsData}
+        footer={<AddReview />}
         renderItem={(item) => (
           <List.Item
             key={item.email}

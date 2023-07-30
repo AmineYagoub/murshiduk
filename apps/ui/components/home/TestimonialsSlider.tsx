@@ -38,16 +38,6 @@ const StyledSection = styled('section')({
   },
 });
 
-const StyledAction = styled('section')({
-  textAlign: 'center',
-  position: 'absolute',
-  padding: '0.5em 0 !important',
-  bottom: 0,
-  button: {
-    padding: '0 2em !important',
-  },
-});
-
 const testimonialImages = [
   {
     title: 'الدوسري',
@@ -149,17 +139,6 @@ const TestimonialsSlider = () => {
             </div>
           ))}
         </div>
-        <StyledAction>
-          <Link
-            href={AppRoutes.Reviews}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <Button type="ghost" size="middle">
-              قراءة كل الآراء
-            </Button>
-          </Link>
-        </StyledAction>
       </StyledSection>
     </>
   );
