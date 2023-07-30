@@ -5,6 +5,7 @@ export type Review = {
   name: string;
   email: string;
   rate: string;
+  likes: number;
   country: string;
   published: boolean;
   details: string;
@@ -26,6 +27,7 @@ export const ReviewFields: { [P in ReviewDataIndex]: P } = {
   name: 'name',
   email: 'email',
   country: 'country',
+  likes: 'likes',
   published: 'published',
   rate: 'rate',
   details: 'details',

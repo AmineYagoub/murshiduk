@@ -176,6 +176,7 @@ model Reviews {
   id                    String     @id @default(uuid())
   name                  String
   email                 String
+  likes                 Int        @default(0)
   rate                  String
   country               String?
   details               String?    @db.Text

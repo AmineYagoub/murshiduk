@@ -1,8 +1,34 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, Rate, message } from 'antd';
+import { Button, Modal, Form, Input, Rate, message, Row, Col } from 'antd';
 import { useCreateReview } from '@/hooks/review/mutation.hook';
 import { ReviewCreateInput } from '@/utils/types';
 import { useQueryClient } from '@tanstack/react-query';
+import { StyledSection } from './AboutUsSection';
+import styled from '@emotion/styled';
+import { Bio } from '@/utils/types';
+import { AppRoutes, baseS3Url, mq } from '@/utils/index';
+
+export const StyledRow = styled(Row)(
+  mq({
+    backgroundImage: 'linear-gradient(to top, #122639, #004953)',
+    color: '#fff',
+    position: 'relative',
+    width: '100%',
+
+    padding: '3em',
+    margin: '0 auto',
+
+    h3: {
+      fontSize: 'clamp(1.5rem, 5vw, 3rem)',
+      lineHeight: 1.6,
+      fontWeight: 'bold',
+      color: '#f3b91d',
+    },
+    label: {
+      color: '#f3b91d !important',
+    },
+  })
+);
 
 const layout = {
   labelCol: { span: 8 },
@@ -27,14 +53,6 @@ const AddReview = () => {
   const { mutateAsync, isLoading } = useCreateReview();
   const queryClient = useQueryClient();
   const [messageApi, contextHolder] = message.useMessage();
-
-  const showModal = () => {
-    setOpen(true);
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
-  };
 
   const onFinish = async ({ user }: { user: ReviewCreateInput }) => {
     try {
@@ -63,39 +81,29 @@ const AddReview = () => {
         duration: 2,
       });
       queryClient.invalidateQueries();
+      form.resetFields();
     }
   };
 
   return (
-    <>
-      <Button type="primary" onClick={showModal}>
-        أضف تعليقك
-      </Button>
-      {contextHolder}
-      <Modal
-        title="أضف تعليقك"
-        okText="حفظ"
-        open={open}
-        confirmLoading={isLoading}
-        onCancel={handleCancel}
-        onOk={() => {
-          form
-            .validateFields()
-            .then((values) => {
-              form.resetFields();
-              onFinish(values);
-            })
-            .catch((info) => {
-              console.log('Validate Failed:', info);
-            });
-        }}
+    <StyledRow gutter={8} justify="center" align="middle">
+      <Col
+        xs={24}
+        sm={24}
+        md={10}
+        style={{ textAlign: 'center' }}
+        id="add-review"
       >
+        <h3>كيف كان أداؤنا؟</h3>
+      </Col>
+      <Col xs={24} sm={24} md={10}>
         <Form
           {...layout}
           name="review"
           form={form}
           style={{ maxWidth: 600 }}
           validateMessages={validateMessages}
+          onFinish={onFinish}
         >
           <Form.Item
             name={['user', 'name']}
@@ -122,9 +130,16 @@ const AddReview = () => {
           <Form.Item name={['user', 'details']} label="التعليق">
             <Input.TextArea rows={5} />
           </Form.Item>
+
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit">
+              أرسل
+            </Button>
+            {contextHolder}
+          </Form.Item>
         </Form>
-      </Modal>
-    </>
+      </Col>
+    </StyledRow>
   );
 };
 

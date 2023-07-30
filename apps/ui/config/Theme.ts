@@ -8,6 +8,11 @@ const theme: ThemeConfig = {
     borderRadius: 16,
     wireframe: true,
   },
+  components: {
+    Rate: {
+      colorFillContent: '#ccc',
+    },
+  },
 };
 
 export default theme;

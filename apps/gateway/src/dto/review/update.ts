@@ -1,3 +1,4 @@
 export class UpdateReviewDto {
-  published: boolean;
+  published?: boolean;
+  like?: boolean;
 }
