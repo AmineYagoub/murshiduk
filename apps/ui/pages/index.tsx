@@ -19,6 +19,7 @@ import { dehydrate, QueryClient } from '@tanstack/react-query';
 import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 import { fetchServices, useServices } from '@/hooks/ourService/query.hook';
 import { useBlogs } from '@/hooks/blog/query.hook';
+import AddReview from '@/components/home/AddReview';
 
 const TestimonialsSlider = dynamic(
   () => import('@/components/home/TestimonialsSlider'),
@@ -210,6 +211,7 @@ const Home = () => {
       />
 
       <LatestBlogsSection data={blogs} />
+      <AddReview />
       <TestimonialsSlider />
     </>
   );

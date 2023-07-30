@@ -14,6 +14,18 @@ const useCreateReview = () => {
   });
 };
 
+const useUpdateLikes = () => {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, like }: { id: string; like: boolean }) => {
+      return api.put(`review/likes/${id}`, {
+        body: JSON.stringify({ like }),
+      });
+    },
+    onSuccess: () => client.invalidateQueries({ queryKey: ['getReviews'] }),
+  });
+};
+
 const useUpdateReview = () => {
   const client = useQueryClient();
   return useMutation({
@@ -36,4 +48,4 @@ const useDeleteReview = () => {
   });
 };
 
-export { useCreateReview, useDeleteReview, useUpdateReview };
+export { useCreateReview, useDeleteReview, useUpdateReview, useUpdateLikes };

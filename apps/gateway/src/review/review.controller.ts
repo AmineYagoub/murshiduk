@@ -42,8 +42,17 @@ export class ReviewsController {
   async updateReview(@Param('id') id: string, @Body() body: UpdateReviewDto) {
     return this.reviewService.updateReview({
       where: { id },
-
       data: body,
+    });
+  }
+
+  @isPublic()
+  @Put('likes/:id')
+  async updateLikes(@Param('id') id: string, @Body() body: UpdateReviewDto) {
+    const { like } = body;
+    return this.reviewService.updateReview({
+      where: { id },
+      data: { likes: like ? { increment: 1 } : { decrement: 1 } },
     });
   }
 

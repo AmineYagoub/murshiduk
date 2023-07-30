@@ -62,14 +62,11 @@ export class ReviewsService {
 
   async updateReview(params: {
     where: Prisma.ReviewsWhereUniqueInput;
-
     data: Prisma.ReviewsUpdateInput;
   }) {
     const { where, data } = params;
-
     return this.prisma.reviews.update({
       data,
-
       where,
     });
   }
